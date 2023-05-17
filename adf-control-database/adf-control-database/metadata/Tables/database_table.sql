@@ -2,7 +2,6 @@ CREATE TABLE [metadata].[database_table]
 (
   [id] int IDENTITY(1,1) not null,
   [project_id] int not null,	
-  [database_service_id] int not null,	
   [table]	varchar(132) not null,
   [select]	varchar(max) not null default('*'),
   [where]	varchar(max) not null default('1=1'),

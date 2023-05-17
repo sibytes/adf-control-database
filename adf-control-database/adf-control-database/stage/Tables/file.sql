@@ -7,7 +7,6 @@ CREATE TABLE [stage].[file]
   [imported] DATETIME NULL,
   [imported_by] VARCHAR(200),
   [project] varchar(250) not null,  
-  [file_service] varchar(100) not null,
   [file]	varchar(100) not null,
   [ext]	varchar(5) not null,
   [frequency]	varchar(15) not null,
@@ -21,6 +20,6 @@ CREATE TABLE [stage].[file]
   [escape_character]	varchar(100) null,
   [quote_character]	varchar(100) null,
   [first_row_as_header]	bit not null,
-  [null_value]	varchar(100) not null,
-  CONSTRAINT pk_stage_file_id PRIMARY KEY CLUSTERED (id)
+  [null_value]	varchar(100) null,
+  CONSTRAINT pk_stage_file_id PRIMARY KEY CLUSTERED ([id])
 )

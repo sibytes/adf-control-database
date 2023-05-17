@@ -2,7 +2,6 @@ CREATE TABLE [metadata].[file]
 (
   [id] int IDENTITY(1,1) not null,
   [project_id] int not null,	
-  [file_service_id] int not null,	
   [file]	varchar(100) not null,
   [ext]	varchar(5) not null,
   [frequency]	varchar(15) not null,
@@ -16,11 +15,12 @@ CREATE TABLE [metadata].[file]
   [escape_character]	varchar(100) null,
   [quote_character]	varchar(100) null,
   [first_row_as_header]	bit not null,
-  [null_value]	varchar(100) not null,
+  [null_value]	varchar(100) null,
   [created] DATETIME not null default(GETUTCDATE()),
-  [last_modified]	DATETIME not null default(GETUTCDATE()),
+  [modified]	DATETIME not null default(GETUTCDATE()),
+  [deleted]      DATETIME       NULL,
   [created_by] varchar(150) not null default(SUSER_SNAME()),
-  [last_modified_by] varchar(150) not null default(SUSER_SNAME()),
+  [modified_by] varchar(150) not null default(SUSER_SNAME()),
   CONSTRAINT [pk_metadata_file_id] PRIMARY KEY CLUSTERED ([id] ASC)
 )
 

@@ -11,5 +11,5 @@ CREATE TABLE [stage].[database_service]
   [database] varchar(132) not null,
   [schema]	varchar(132) not null,
   [service_account] varchar(150) not null,
-  CONSTRAINT pk_stage_database_service_id PRIMARY KEY CLUSTERED (id)
+  CONSTRAINT pk_stage_database_service_id PRIMARY KEY CLUSTERED ([id])
 )
