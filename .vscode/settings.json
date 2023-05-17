@@ -1,0 +1,7 @@
+{
+    "python.envFile": "${workspaceFolder}/.databricks/.databricks.env",
+    "databricks.python.envFile": "${workspaceFolder}/.env",
+    "dataworkspace.excludedProjects": [
+        "adf-control-database/adf-control-database.sqlproj"
+    ]
+}
