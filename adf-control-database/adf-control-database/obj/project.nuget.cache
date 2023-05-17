@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "g19deApYBQmRP/+Crn4ykkCZQhT3KbSFLM5LfCbidMsGjBlh47lADDE/YdsrzyAykQU8uUuvXnL8ylYjlFx+Vg==",
+  "success": true,
+  "projectFilePath": "/Users/shaunryan/adf-control-db/adf-control-database/adf-control-database/adf-control-database.sqlproj",
+  "expectedPackageFiles": [
+    "/Users/shaunryan/.nuget/packages/microsoft.netframework.referenceassemblies/1.0.0/microsoft.netframework.referenceassemblies.1.0.0.nupkg.sha512",
+    "/Users/shaunryan/.nuget/packages/microsoft.netframework.referenceassemblies.net46/1.0.0/microsoft.netframework.referenceassemblies.net46.1.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,9 @@
+/Users/shaunryan/adf-control-db/adf-control-database/adf-control-database/bin/Debug/adf-control-database.dacpac
+/Users/shaunryan/adf-control-db/adf-control-database/adf-control-database/bin/Debug/adf-control-database.dll
+/Users/shaunryan/adf-control-db/adf-control-database/adf-control-database/bin/Debug/adf-control-database.pdb
+/Users/shaunryan/adf-control-db/adf-control-database/adf-control-database/obj/Debug/Model.xml
+/Users/shaunryan/adf-control-db/adf-control-database/adf-control-database/obj/Debug/refactor.xml
+/Users/shaunryan/adf-control-db/adf-control-database/adf-control-database/obj/Debug/postdeploy.sql
+/Users/shaunryan/adf-control-db/adf-control-database/adf-control-database/obj/Debug/predeploy.sql
+/Users/shaunryan/adf-control-db/adf-control-database/adf-control-database/obj/Debug/adf-control-database.dll
+/Users/shaunryan/adf-control-db/adf-control-database/adf-control-database/obj/Debug/adf-control-database.pdb
