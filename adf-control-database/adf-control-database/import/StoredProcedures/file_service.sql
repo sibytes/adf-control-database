@@ -86,6 +86,3 @@ BEGIN
     AND sp.[imported] IS NULL
 
 END
-
-GO
-

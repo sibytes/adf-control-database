@@ -58,5 +58,3 @@ BEGIN
 
 END
 
-GO
-

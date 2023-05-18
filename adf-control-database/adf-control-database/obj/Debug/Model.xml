@@ -40,16 +40,16 @@
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[('1=1')]]></Value>
+				<Value><![CDATA[(getdate())]]></Value>
 			</Property>
 			<Relationship Name="DefiningTable">
 				<Entry>
-					<References Name="[metadata].[database_table]" />
+					<References Name="[metadata].[map]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="ForColumn">
 				<Entry>
-					<References Name="[metadata].[database_table].[where]" />
+					<References Name="[metadata].[map].[modified]" />
 				</Entry>
 			</Relationship>
 			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="3" />
@@ -60,63 +60,15 @@
 			</Property>
 			<Relationship Name="DefiningTable">
 				<Entry>
-					<References Name="[stage].[source_destination]" />
+					<References Name="[metadata].[project]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="ForColumn">
 				<Entry>
-					<References Name="[stage].[source_destination].[import_created]" />
+					<References Name="[metadata].[project].[created]" />
 				</Entry>
 			</Relationship>
 			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="4" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[(GETUTCDATE())]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[metadata].[database_table]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[metadata].[database_table].[created]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="5" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[(1)]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[stage].[project]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[stage].[project].[enabled]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="6" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[(GETUTCDATE())]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[metadata].[file_service]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[metadata].[file_service].[modified]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="7" />
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
@@ -132,23 +84,7 @@
 					<References Name="[stage].[database_table].[where]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="8" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[('utf-8')]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[stage].[file]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[stage].[file].[encoding]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="9" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="5" />
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
@@ -164,11 +100,43 @@
 					<References Name="[metadata].[file_service].[modified_by]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="10" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="6" />
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[('table')]]></Value>
+				<Value><![CDATA[('utf-8')]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[file]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[file].[encoding]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="7" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[('default')]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[map]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[map].[process_group]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="8" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[('1=1')]]></Value>
 			</Property>
 			<Relationship Name="DefiningTable">
 				<Entry>
@@ -177,26 +145,74 @@
 			</Relationship>
 			<Relationship Name="ForColumn">
 				<Entry>
-					<References Name="[metadata].[database_table].[type]" />
+					<References Name="[metadata].[database_table].[where]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="9" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(GETUTCDATE())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[file_service]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[file_service].[created]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="10" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(SUSER_SNAME())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[database_service]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[database_service].[created_by]" />
 				</Entry>
 			</Relationship>
 			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="11" />
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[(getdate())]]></Value>
+				<Value><![CDATA[(1)]]></Value>
 			</Property>
 			<Relationship Name="DefiningTable">
 				<Entry>
-					<References Name="[stage].[database_service]" />
+					<References Name="[stage].[project]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="ForColumn">
 				<Entry>
-					<References Name="[stage].[database_service].[import_created]" />
+					<References Name="[stage].[project].[enabled]" />
 				</Entry>
 			</Relationship>
 			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="12" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(GETUTCDATE())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[dataset_type]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[dataset_type].[created]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="13" />
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
@@ -212,7 +228,7 @@
 					<References Name="[stage].[file_service].[import_created]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="13" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="14" />
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
@@ -220,47 +236,15 @@
 			</Property>
 			<Relationship Name="DefiningTable">
 				<Entry>
-					<References Name="[metadata].[database_service]" />
+					<References Name="[metadata].[dataset_type]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="ForColumn">
 				<Entry>
-					<References Name="[metadata].[database_service].[created]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="14" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[('table')]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[stage].[database_table]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[stage].[database_table].[type]" />
+					<References Name="[metadata].[dataset_type].[modified]" />
 				</Entry>
 			</Relationship>
 			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="15" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[('default')]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[metadata].[database_table]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[metadata].[database_table].[partition]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="16" />
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
@@ -276,20 +260,36 @@
 					<References Name="[metadata].[project].[created_by]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="17" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="16" />
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[(SUSER_SNAME())]]></Value>
+				<Value><![CDATA[(getdate())]]></Value>
 			</Property>
 			<Relationship Name="DefiningTable">
 				<Entry>
-					<References Name="[metadata].[project]" />
+					<References Name="[stage].[database_table]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="ForColumn">
 				<Entry>
-					<References Name="[metadata].[project].[modified_by]" />
+					<References Name="[stage].[database_table].[import_created]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="17" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(getdate())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[database_service]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[database_service].[modified]" />
 				</Entry>
 			</Relationship>
 			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="18" />
@@ -312,102 +312,6 @@
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[((1))]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[metadata].[project]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[metadata].[project].[enabled]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="20" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[(SUSER_SNAME())]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[metadata].[source_destination]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[metadata].[source_destination].[last_modified_by]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="21" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[('*')]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[stage].[database_table]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[stage].[database_table].[select]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="22" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[(GETUTCDATE())]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[metadata].[file]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[metadata].[file].[created]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="23" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[(SUSER_SNAME())]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[metadata].[source_destination]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[metadata].[source_destination].[created_by]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="24" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[(GETUTCDATE())]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[metadata].[source_destination]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[metadata].[source_destination].[created]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="25" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
 				<Value><![CDATA[('*')]]></Value>
 			</Property>
 			<Relationship Name="DefiningTable">
@@ -420,75 +324,11 @@
 					<References Name="[metadata].[database_table].[select]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="26" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="20" />
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[('default')]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[stage].[database_table]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[stage].[database_table].[partition]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="27" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[(GETUTCDATE())]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[metadata].[database_table]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[metadata].[database_table].[last_modified]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="28" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[(SUSER_SNAME())]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[metadata].[file]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[metadata].[file].[created_by]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="29" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[(GETUTCDATE())]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[metadata].[file_service]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[metadata].[file_service].[created]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="30" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[(SUSER_SNAME())]]></Value>
+				<Value><![CDATA[(getdate())]]></Value>
 			</Property>
 			<Relationship Name="DefiningTable">
 				<Entry>
@@ -497,10 +337,10 @@
 			</Relationship>
 			<Relationship Name="ForColumn">
 				<Entry>
-					<References Name="[metadata].[database_service].[last_modified_by]" />
+					<References Name="[metadata].[database_service].[created]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="31" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="21" />
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
@@ -508,15 +348,31 @@
 			</Property>
 			<Relationship Name="DefiningTable">
 				<Entry>
-					<References Name="[metadata].[project]" />
+					<References Name="[stage].[database_service]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="ForColumn">
 				<Entry>
-					<References Name="[metadata].[project].[created]" />
+					<References Name="[stage].[database_service].[import_created]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="32" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="22" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(SUSER_SNAME())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[database_table]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[database_table].[modified_by]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="23" />
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
@@ -524,79 +380,15 @@
 			</Property>
 			<Relationship Name="DefiningTable">
 				<Entry>
-					<References Name="[stage].[project]" />
+					<References Name="[stage].[map]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="ForColumn">
 				<Entry>
-					<References Name="[stage].[project].[import_created]" />
+					<References Name="[stage].[map].[import_created]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="33" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[(SUSER_SNAME())]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[metadata].[file_service]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[metadata].[file_service].[created_by]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="34" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[('utf-8')]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[metadata].[file]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[metadata].[file].[encoding]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="35" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[(GETUTCDATE())]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[metadata].[file]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[metadata].[file].[modified]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="36" />
-		</Element>
-		<Element Type="SqlDefaultConstraint">
-			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[(SUSER_SNAME())]]></Value>
-			</Property>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[metadata].[file]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForColumn">
-				<Entry>
-					<References Name="[metadata].[file].[modified_by]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="37" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="24" />
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
@@ -612,7 +404,71 @@
 					<References Name="[metadata].[project].[modified]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="38" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="25" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(getdate())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[stage].[project]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[stage].[project].[import_created]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="26" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(getdate())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[database_table]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[database_table].[modified]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="27" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(getdate())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[map]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[map].[created]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="28" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[('*')]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[stage].[database_table]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[stage].[database_table].[select]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="29" />
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
@@ -620,15 +476,47 @@
 			</Property>
 			<Relationship Name="DefiningTable">
 				<Entry>
-					<References Name="[metadata].[source_destination]" />
+					<References Name="[metadata].[file]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="ForColumn">
 				<Entry>
-					<References Name="[metadata].[source_destination].[last_modified]" />
+					<References Name="[metadata].[file].[created]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="39" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="30" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(SUSER_SNAME())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[file]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[file].[modified_by]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="31" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[('table')]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[database_table]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[database_table].[type]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="32" />
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
@@ -644,27 +532,75 @@
 					<References Name="[metadata].[database_table].[created_by]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="40" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="33" />
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[(getdate())]]></Value>
+				<Value><![CDATA[('default')]]></Value>
 			</Property>
 			<Relationship Name="DefiningTable">
 				<Entry>
-					<References Name="[stage].[database_table]" />
+					<References Name="[stage].[map]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="ForColumn">
 				<Entry>
-					<References Name="[stage].[database_table].[import_created]" />
+					<References Name="[stage].[map].[process_group]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="41" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="34" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[('utf-8')]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[stage].[file]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[stage].[file].[encoding]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="35" />
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
 				<Value><![CDATA[(SUSER_SNAME())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[database_service]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[database_service].[modified_by]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="36" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(SUSER_SNAME())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[project]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[project].[modified_by]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="37" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(getdate())]]></Value>
 			</Property>
 			<Relationship Name="DefiningTable">
 				<Entry>
@@ -673,26 +609,26 @@
 			</Relationship>
 			<Relationship Name="ForColumn">
 				<Entry>
-					<References Name="[metadata].[database_table].[last_modified_by]" />
+					<References Name="[metadata].[database_table].[created]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="42" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="38" />
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
-				<Value><![CDATA[(GETUTCDATE())]]></Value>
+				<Value><![CDATA[((1))]]></Value>
 			</Property>
 			<Relationship Name="DefiningTable">
 				<Entry>
-					<References Name="[metadata].[database_service]" />
+					<References Name="[metadata].[project]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="ForColumn">
 				<Entry>
-					<References Name="[metadata].[database_service].[last_modified]" />
+					<References Name="[metadata].[project].[enabled]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="43" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="39" />
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
@@ -700,15 +636,47 @@
 			</Property>
 			<Relationship Name="DefiningTable">
 				<Entry>
-					<References Name="[metadata].[database_service]" />
+					<References Name="[metadata].[file]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="ForColumn">
 				<Entry>
-					<References Name="[metadata].[database_service].[created_by]" />
+					<References Name="[metadata].[file].[created_by]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="44" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="40" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(SUSER_SNAME())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[map]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[map].[modified_by]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="41" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[('default')]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[database_table]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[database_table].[partition]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="42" />
 		</Element>
 		<Element Type="SqlDefaultConstraint">
 			<Property Name="DefaultExpressionScript">
@@ -724,7 +692,244 @@
 					<References Name="[stage].[file].[import_created]" />
 				</Entry>
 			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="43" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(GETUTCDATE())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[file]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[file].[modified]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="44" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[('table')]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[stage].[database_table]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[stage].[database_table].[type]" />
+				</Entry>
+			</Relationship>
 			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="45" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[('default')]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[stage].[database_table]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[stage].[database_table].[partition]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="46" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(SUSER_SNAME())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[map]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[map].[created_by]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="47" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(SUSER_SNAME())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[dataset_type]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[dataset_type].[created_by]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="48" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(SUSER_SNAME())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[dataset_type]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[dataset_type].[modified_by]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="49" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(SUSER_SNAME())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[file_service]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[file_service].[created_by]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="50" />
+		</Element>
+		<Element Type="SqlDefaultConstraint">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(GETUTCDATE())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[file_service]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[metadata].[file_service].[modified]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="51" />
+		</Element>
+		<Element Type="SqlView" Name="[dbo].[source_destination]">
+			<Property Name="QueryScript">
+				<Value><![CDATA[
+
+  select
+    m.[id],
+    s.[source_service],
+    s.[source],
+    d.[destination_service],
+    d.[destination]
+  from metadata.map m
+  join metadata.source s on s.[id] = m.[id]
+  join metadata.destination d on d.[id] = m.[id]]]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="Columns">
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[dbo].[source_destination].[id]">
+						<Relationship Name="ExpressionDependencies">
+							<Entry>
+								<References Name="[metadata].[map].[id]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[dbo].[source_destination].[source_service]">
+						<Relationship Name="ExpressionDependencies">
+							<Entry>
+								<References Name="[metadata].[source].[source_service]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[dbo].[source_destination].[source]">
+						<Relationship Name="ExpressionDependencies">
+							<Entry>
+								<References Name="[metadata].[source].[source]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[dbo].[source_destination].[destination_service]">
+						<Relationship Name="ExpressionDependencies">
+							<Entry>
+								<References Name="[metadata].[destination].[destination_service]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[dbo].[source_destination].[destination]">
+						<Relationship Name="ExpressionDependencies">
+							<Entry>
+								<References Name="[metadata].[destination].[destination]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="QueryDependencies">
+				<Entry>
+					<References Name="[metadata].[map]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[source]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[source].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[destination]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[destination].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[source].[source_service]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[source].[source]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[destination].[destination_service]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[destination].[destination]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="269" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE VIEW [dbo].[source_destination]&#xA;  AS" />
+			</Annotation>
 		</Element>
 		<Element Type="SqlSchema" Name="[import]">
 			<Relationship Name="Authorizer">
@@ -1539,9 +1744,12 @@ BEGIN
 
   -- DECLARE @@import_batch_id UNIQUEIDENTIFIER = '7c91e8b6-366e-4ded-b64a-a5472762bed1'
   
-  EXEC [import].[project]       @@import_batch_id=@@import_batch_id
-  EXEC [import].[file_service]  @@import_batch_id=@@import_batch_id
-
+  EXEC [import].[project]           @@import_batch_id=@@import_batch_id
+  EXEC [import].[file_service]      @@import_batch_id=@@import_batch_id
+  EXEC [import].[file]              @@import_batch_id=@@import_batch_id
+  -- EXEC [import].[database_service]  @@import_batch_id=@@import_batch_id
+  -- EXEC [import].[database_table]    @@import_batch_id=@@import_batch_id
+  EXEC [import].[map]               @@import_batch_id=@@import_batch_id
 END]]></Value>
 			</Property>
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -1557,6 +1765,18 @@ END]]></Value>
 				</Entry>
 				<Entry>
 					<References Name="[import].[file_service].[@@import_batch_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[import].[file]" />
+				</Entry>
+				<Entry>
+					<References Name="[import].[file].[@@import_batch_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[import].[map]" />
+				</Entry>
+				<Entry>
+					<References Name="[import].[map].[@@import_batch_id]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="Parameters">
@@ -1582,10 +1802,725 @@ END]]></Value>
 				</Entry>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
-				<Property Name="Length" Value="339" />
+				<Property Name="Length" Value="640" />
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
 				<Property Name="HeaderContents" Value="CREATE PROCEDURE [import].[import]&#xA;(&#xA;  @@import_batch_id UNIQUEIDENTIFIER&#xA;)&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="SqlProcedure" Name="[import].[map]">
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+BEGIN
+  SET XACT_ABORT ON;
+  
+    -- DECLARE @@import_batch_id UNIQUEIDENTIFIER = '7c91e8b6-366e-4ded-b64a-a5472762bed1'
+
+    DECLARE @imported TABLE (
+      [action] VARCHAR(50) NOT NULL,
+      [project_id] INT NOT NULL,
+      [process_group] varchar(250),
+      [source_type_id] INT NOT NULL,
+      [source_service_id] INT NOT NULL,
+      [source_id] INT NOT NULL,
+      [destination_type_id] INT NOT NULL,
+      [destination_service_id] INT NOT NULL,
+      [destination_id] INT NOT NULL,
+      [id] INT NOT NULL, 
+      [modified] DATETIME NOT NULL,
+      [modified_by] VARCHAR(200) NOT NULL
+    );
+
+
+    MERGE [metadata].[map] AS [TARGET]  
+    USING (
+      SELECT 
+        p.[id] as [project_id],
+        s.[process_group],
+        st.[id] as [source_type_id],
+        coalesce(sfs.[id], sds.[id]) as [source_service_id],
+        coalesce(sf.id, sdt.id) as [source_id],
+        dt.[id] as [destination_type_id],
+        coalesce(dfs.id, dds.id) as [destination_service_id],
+        coalesce(df.id, ddt.id) as [destination_id]
+      FROM [stage].[map] s
+      --
+      JOIN [metadata].[project] p on s.[project] = p.[name]
+      JOIN [metadata].[dataset_type] st on s.[source_type] = st.[name]
+      JOIN [metadata].[dataset_type] dt on s.[destination_type] = dt.[name]
+      -- source
+      LEFT JOIN [metadata].[database_service] sds on s.[source_service] = sds.[name]
+      LEFT JOIN [metadata].[file_service] sfs on s.[source_service] = sfs.[name]
+      LEFT JOIN [metadata].[database_table] sdt on s.[source] = sdt.[table]
+      LEFT JOIN [metadata].[file] sf on s.[source] = sf.[file]
+      -- destination
+      LEFT JOIN [metadata].[database_service] dds on s.[destination_service] = dds.[name]
+      LEFT JOIN [metadata].[file_service] dfs on s.[destination_service] = dfs.[name]
+      LEFT JOIN [metadata].[database_table] ddt on s.[destination] = ddt.[table]
+      LEFT JOIN [metadata].[file] df on s.[destination] = df.[file]
+      ---
+      WHERE s.[import_batch_id] = @@import_batch_id
+        AND s.[imported] IS NULL
+    ) as [SOURCE] ON [TARGET].[project_id] = [SOURCE].[project_id]
+            AND [TARGET].[source_type_id] = [SOURCE].[source_type_id]
+            AND [TARGET].[source_service_id] = [SOURCE].[source_service_id]
+            AND [TARGET].[source_id] = [SOURCE].[source_id]
+            AND [TARGET].[destination_type_id] = [SOURCE].[destination_type_id]
+            AND [TARGET].[destination_service_id] = [SOURCE].[destination_service_id]
+            AND [TARGET].[destination_id] = [SOURCE].[destination_id]
+            and [TARGET].[deleted] is null
+    WHEN MATCHED THEN
+        UPDATE SET 
+          [process_group]           = [SOURCE].[process_group],
+          [modified]                = getdate(),
+          [modified_by]             = suser_sname()
+    WHEN NOT MATCHED BY TARGET THEN  
+        INSERT (
+          [project_id],              
+          [process_group],           
+          [source_type_id],          
+          [source_service_id],       
+          [source_id],               
+          [destination_type_id],     
+          [destination_service_id],  
+          [destination_id]           
+        )  
+        VALUES
+        (
+          [SOURCE].[project_id],
+          [SOURCE].[process_group],
+          [SOURCE].[source_type_id],
+          [SOURCE].[source_service_id],
+          [SOURCE].[source_id],
+          [SOURCE].[destination_type_id],
+          [SOURCE].[destination_service_id],
+          [SOURCE].[destination_id]
+        )
+    WHEN NOT MATCHED BY SOURCE THEN DELETE 
+    OUTPUT 
+      $action, 
+      inserted.project_id,
+      inserted.process_group,
+      inserted.source_type_id,
+      inserted.source_service_id,
+      inserted.source_id,
+      inserted.destination_type_id,
+      inserted.destination_service_id,
+      inserted.destination_id,
+      inserted.id,
+      inserted.modified,
+      inserted.modified_by 
+      INTO @imported;
+
+    UPDATE s
+    SET [import_id] = i.[id],
+        [imported] = i.[modified],
+        [imported_by] = i.[modified_by]
+    FROM [stage].[map] s
+    --
+    JOIN [metadata].[project] p on s.[project] = p.[name]
+    JOIN [metadata].[dataset_type] st on s.[source_type] = st.[name]
+    JOIN [metadata].[dataset_type] dt on s.[destination_type] = dt.[name]
+    -- source
+    LEFT JOIN [metadata].[database_service] sds on s.[source_service] = sds.[name]
+    LEFT JOIN [metadata].[file_service] sfs on s.[source_service] = sfs.[name]
+    LEFT JOIN [metadata].[database_table] sdt on s.[source] = sdt.[table]
+    LEFT JOIN [metadata].[file] sf on s.[source] = sf.[file]
+    -- destination
+    LEFT JOIN [metadata].[database_service] dds on s.[destination_service] = dds.[name]
+    LEFT JOIN [metadata].[file_service] dfs on s.[destination_service] = dfs.[name]
+    LEFT JOIN [metadata].[database_table] ddt on s.[destination] = ddt.[table]
+    LEFT JOIN [metadata].[file] df on s.[destination] = df.[file]
+    JOIN @imported i 
+      ON i.[project_id] = p.[id]
+     AND i.[source_type_id] = st.[id]
+     AND i.[source_service_id] = coalesce(sfs.[id], sds.[id])
+     AND i.[source_id] = coalesce(sf.id, sdt.id)
+     AND i.[destination_type_id] = dt.[id]
+     AND i.[destination_service_id] = coalesce(dfs.id, dds.id)
+     AND i.[destination_id] = coalesce(df.id, ddt.id)
+    WHERE s.[import_batch_id] = @@import_batch_id
+    AND s.[imported] IS NULL
+
+END]]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References Name="[stage].[map]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[project]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[project]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[project].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[dataset_type]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[source_type]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[dataset_type].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[destination_type]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[dataset_type].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[source_service]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[source_service]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[source]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[table]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[source]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[file]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[destination_service]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[destination]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[table]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[file]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[project].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[process_group]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[dataset_type].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[dataset_type].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[import_batch_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[imported]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[project_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[project].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[source_type_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[dataset_type].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[source_service_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[source_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[destination_type_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[dataset_type].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[destination_service_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[destination_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[deleted]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[process_group]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[process_group]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[modified]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[modified_by]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[project_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[source_type_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[source_service_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[source_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[destination_type_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[destination_service_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[destination_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[project].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[process_group]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[dataset_type].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[dataset_type].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[project]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[project].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[source_type]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[dataset_type].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[destination_type]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[dataset_type].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[source_service]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[source_service]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[source]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[table]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[source]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[file]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[destination_service]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[destination]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[table]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[file]" />
+				</Entry>
+				<Entry>
+					<References Name="[import].[map].[@imported].[project_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[project].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[import].[map].[@imported].[source_type_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[dataset_type].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[import].[map].[@imported].[source_service_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[import].[map].[@imported].[source_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[import].[map].[@imported].[destination_type_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[dataset_type].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[import].[map].[@imported].[destination_service_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[import].[map].[@imported].[destination_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[import_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[import].[map].[@imported].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[imported]" />
+				</Entry>
+				<Entry>
+					<References Name="[import].[map].[@imported].[modified]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[imported_by]" />
+				</Entry>
+				<Entry>
+					<References Name="[import].[map].[@imported].[modified_by]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[import_batch_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[stage].[map].[imported]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DynamicObjects">
+				<Entry>
+					<Element Type="SqlDynamicColumnSource" Name="[import].[map].[@imported]">
+						<Relationship Name="Columns">
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[import].[map].[@imported].[action]">
+									<Property Name="IsNullable" Value="False" />
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Property Name="Length" Value="50" />
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[varchar]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[import].[map].[@imported].[project_id]">
+									<Property Name="IsNullable" Value="False" />
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[int]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[import].[map].[@imported].[process_group]">
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Property Name="Length" Value="250" />
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[varchar]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[import].[map].[@imported].[source_type_id]">
+									<Property Name="IsNullable" Value="False" />
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[int]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[import].[map].[@imported].[source_service_id]">
+									<Property Name="IsNullable" Value="False" />
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[int]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[import].[map].[@imported].[source_id]">
+									<Property Name="IsNullable" Value="False" />
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[int]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[import].[map].[@imported].[destination_type_id]">
+									<Property Name="IsNullable" Value="False" />
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[int]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[import].[map].[@imported].[destination_service_id]">
+									<Property Name="IsNullable" Value="False" />
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[int]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[import].[map].[@imported].[destination_id]">
+									<Property Name="IsNullable" Value="False" />
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[int]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[import].[map].[@imported].[id]">
+									<Property Name="IsNullable" Value="False" />
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[int]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[import].[map].[@imported].[modified]">
+									<Property Name="IsNullable" Value="False" />
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[datetime]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[import].[map].[@imported].[modified_by]">
+									<Property Name="IsNullable" Value="False" />
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Property Name="Length" Value="200" />
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[varchar]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[import].[map].[@@import_batch_id]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[uniqueidentifier]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References Name="[import]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="5445" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [import].[map]&#xA;(&#xA;  @@import_batch_id UNIQUEIDENTIFIER&#xA;)&#xA;AS" />
 			</Annotation>
 		</Element>
 		<Element Type="SqlProcedure" Name="[import].[project]">
@@ -1897,6 +2832,23 @@ END]]></Value>
 					</Element>
 				</Entry>
 				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[database_service].[stage]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="100" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
 					<Element Type="SqlSimpleColumn" Name="[metadata].[database_service].[name]">
 						<Property Name="IsNullable" Value="False" />
 						<Relationship Name="TypeSpecifier">
@@ -1978,11 +2930,11 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="14" />
+						<AttachedAnnotation Disambiguator="21" />
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[metadata].[database_service].[last_modified]">
+					<Element Type="SqlSimpleColumn" Name="[metadata].[database_service].[modified]">
 						<Property Name="IsNullable" Value="False" />
 						<Relationship Name="TypeSpecifier">
 							<Entry>
@@ -1995,7 +2947,22 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="43" />
+						<AttachedAnnotation Disambiguator="18" />
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[database_service].[deleted]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
 					</Element>
 				</Entry>
 				<Entry>
@@ -2004,7 +2971,7 @@ END]]></Value>
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
-									<Property Name="Length" Value="150" />
+									<Property Name="Length" Value="200" />
 									<Relationship Name="Type">
 										<Entry>
 											<References ExternalSource="BuiltIns" Name="[varchar]" />
@@ -2013,16 +2980,16 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="44" />
+						<AttachedAnnotation Disambiguator="11" />
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[metadata].[database_service].[last_modified_by]">
+					<Element Type="SqlSimpleColumn" Name="[metadata].[database_service].[modified_by]">
 						<Property Name="IsNullable" Value="False" />
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
-									<Property Name="Length" Value="150" />
+									<Property Name="Length" Value="200" />
 									<Relationship Name="Type">
 										<Entry>
 											<References ExternalSource="BuiltIns" Name="[varchar]" />
@@ -2031,7 +2998,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="31" />
+						<AttachedAnnotation Disambiguator="36" />
 					</Element>
 				</Entry>
 			</Relationship>
@@ -2040,7 +3007,7 @@ END]]></Value>
 					<References Name="[metadata]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="46" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="52" />
 		</Element>
 		<Element Type="SqlTable" Name="[metadata].[database_table]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -2110,7 +3077,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="26" />
+						<AttachedAnnotation Disambiguator="20" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -2128,7 +3095,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="3" />
+						<AttachedAnnotation Disambiguator="9" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -2146,7 +3113,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="11" />
+						<AttachedAnnotation Disambiguator="32" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -2164,7 +3131,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="16" />
+						<AttachedAnnotation Disambiguator="42" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -2181,11 +3148,11 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="5" />
+						<AttachedAnnotation Disambiguator="38" />
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[metadata].[database_table].[last_modified]">
+					<Element Type="SqlSimpleColumn" Name="[metadata].[database_table].[modified]">
 						<Property Name="IsNullable" Value="False" />
 						<Relationship Name="TypeSpecifier">
 							<Entry>
@@ -2198,7 +3165,22 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="28" />
+						<AttachedAnnotation Disambiguator="27" />
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[database_table].[deleted]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
 					</Element>
 				</Entry>
 				<Entry>
@@ -2207,7 +3189,7 @@ END]]></Value>
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
-									<Property Name="Length" Value="150" />
+									<Property Name="Length" Value="200" />
 									<Relationship Name="Type">
 										<Entry>
 											<References ExternalSource="BuiltIns" Name="[varchar]" />
@@ -2216,11 +3198,108 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="40" />
+						<AttachedAnnotation Disambiguator="33" />
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[metadata].[database_table].[last_modified_by]">
+					<Element Type="SqlSimpleColumn" Name="[metadata].[database_table].[modified_by]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="200" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+						<AttachedAnnotation Disambiguator="23" />
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References Name="[metadata]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="53" />
+		</Element>
+		<Element Type="SqlTable" Name="[metadata].[dataset_type]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="Columns">
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[dataset_type].[id]">
+						<Property Name="IsNullable" Value="False" />
+						<Property Name="IsIdentity" Value="True" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[dataset_type].[name]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="100" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[dataset_type].[created]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+						<AttachedAnnotation Disambiguator="13" />
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[dataset_type].[modified]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+						<AttachedAnnotation Disambiguator="15" />
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[dataset_type].[created_by]">
 						<Property Name="IsNullable" Value="False" />
 						<Relationship Name="TypeSpecifier">
 							<Entry>
@@ -2234,7 +3313,25 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="42" />
+						<AttachedAnnotation Disambiguator="48" />
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[dataset_type].[modified_by]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="150" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+						<AttachedAnnotation Disambiguator="49" />
 					</Element>
 				</Entry>
 			</Relationship>
@@ -2243,7 +3340,307 @@ END]]></Value>
 					<References Name="[metadata]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="47" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="54" />
+		</Element>
+		<Element Type="SqlView" Name="[metadata].[destination]">
+			<Property Name="QueryScript">
+				<Value><![CDATA[ 
+  
+  SELECT
+    m.id,
+    dt.name as destination_type,
+    (SELECT
+
+        dfs.[stage],
+        dfs.[name],
+        dfs.[root],
+        dfs.[container],
+        dfs.[directory],
+        dfs.[filename],
+        dfs.[service_account],
+        dfs.[path_date_format],
+        dfs.[filename_date_format]
+      FROM [metadata].[map] md
+      JOIN [metadata].[file_service] dfs on md.[destination_service_id] = dfs.[id]
+      WHERE md.[id] = m.[id]
+      FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER, INCLUDE_NULL_VALUES
+    ) as destination_service,
+    (SELECT
+        df.[file],
+        df.[ext],
+        df.[frequency],
+        df.[utc_time],
+        df.[linked_service],
+        df.[compression_type],
+        df.[compression_level],
+        df.[column_delimiter],
+        df.[row_delimiter],
+        df.[encoding],
+        df.[escape_character],
+        df.[quote_character],
+        df.[first_row_as_header],
+        df.[null_value]
+      FROM [metadata].[map] md
+      JOIN [metadata].[file] df on md.[destination_id] = df.[id]
+      WHERE md.[id] = m.[id]
+      FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER, INCLUDE_NULL_VALUES
+    ) as destination
+  FROM [metadata].[map] m
+  JOIN [metadata].[dataset_type] dt on m.[destination_type_id] = dt.[id]
+  WHERE dt.name = 'file' 
+  
+  UNION ALL
+
+  SELECT
+    m.id,
+    dt.name as destination_type,
+    (SELECT
+        dds.stage,
+        dds.[name],
+        dds.[database],
+        dds.[schema],
+        dds.[service_account]
+
+      FROM [metadata].[map] md
+      JOIN [metadata].[database_service] dds on md.[destination_service_id] = dds.[id]
+      WHERE md.[id] = m.[id]
+      FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER, INCLUDE_NULL_VALUES
+    ) as destination_service,
+    (SELECT
+        dt.[table],
+        dt.[select],
+        dt.[where],
+        dt.[type],
+        dt.[partition]
+      FROM [metadata].[map] md
+      JOIN [metadata].[database_table] dt on md.[destination_id] = dt.[id]
+      WHERE md.[id] = m.[id]
+      FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER, INCLUDE_NULL_VALUES
+    ) as destination
+  FROM [metadata].[map] m
+  JOIN [metadata].[dataset_type] dt on m.[destination_type_id] = dt.[id]
+  WHERE dt.name = 'rdbms']]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="Columns">
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[metadata].[destination].[id]">
+						<Relationship Name="ExpressionDependencies">
+							<Entry>
+								<References Name="[metadata].[map].[id]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[metadata].[destination].[destination_type]">
+						<Relationship Name="ExpressionDependencies">
+							<Entry>
+								<References Name="[metadata].[dataset_type].[name]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[metadata].[destination].[destination_service]" />
+				</Entry>
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[metadata].[destination].[destination]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="QueryDependencies">
+				<Entry>
+					<References Name="[metadata].[map]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[dataset_type]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[destination_type_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[dataset_type].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[dataset_type].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[destination_service_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[stage]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[root]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[container]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[directory]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[filename]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[service_account]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[path_date_format]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[filename_date_format]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[destination_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[file]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[ext]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[frequency]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[utc_time]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[linked_service]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[compression_type]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[compression_level]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[column_delimiter]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[row_delimiter]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[encoding]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[escape_character]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[quote_character]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[first_row_as_header]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[null_value]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[dataset_type].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[destination_service_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[stage]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[database]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[schema]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[service_account]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[destination_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[table]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[select]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[where]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[type]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[partition]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References Name="[metadata]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="2201" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE VIEW [metadata].[destination]&#xA;  AS" />
+			</Annotation>
 		</Element>
 		<Element Type="SqlTable" Name="[metadata].[file]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -2444,7 +3841,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="35" />
+						<AttachedAnnotation Disambiguator="7" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -2525,7 +3922,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="23" />
+						<AttachedAnnotation Disambiguator="30" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -2542,7 +3939,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="36" />
+						<AttachedAnnotation Disambiguator="44" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -2575,7 +3972,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="29" />
+						<AttachedAnnotation Disambiguator="40" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -2593,7 +3990,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="37" />
+						<AttachedAnnotation Disambiguator="31" />
 					</Element>
 				</Entry>
 			</Relationship>
@@ -2602,7 +3999,7 @@ END]]></Value>
 					<References Name="[metadata]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="48" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="55" />
 		</Element>
 		<Element Type="SqlTable" Name="[metadata].[file_service]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -2804,7 +4201,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="30" />
+						<AttachedAnnotation Disambiguator="10" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -2821,7 +4218,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="7" />
+						<AttachedAnnotation Disambiguator="51" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -2854,7 +4251,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="34" />
+						<AttachedAnnotation Disambiguator="50" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -2872,7 +4269,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="10" />
+						<AttachedAnnotation Disambiguator="6" />
 					</Element>
 				</Entry>
 			</Relationship>
@@ -2881,7 +4278,250 @@ END]]></Value>
 					<References Name="[metadata]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="49" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="56" />
+		</Element>
+		<Element Type="SqlTable" Name="[metadata].[map]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="Columns">
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[map].[id]">
+						<Property Name="IsNullable" Value="False" />
+						<Property Name="IsIdentity" Value="True" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[map].[project_id]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[map].[process_group]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="250" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+						<AttachedAnnotation Disambiguator="8" />
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[map].[source_type_id]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[map].[source_service_id]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[map].[source_id]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[map].[destination_type_id]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[map].[destination_service_id]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[map].[destination_id]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[map].[created]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+						<AttachedAnnotation Disambiguator="28" />
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[map].[modified]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+						<AttachedAnnotation Disambiguator="3" />
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[map].[deleted]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[map].[created_by]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="200" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+						<AttachedAnnotation Disambiguator="47" />
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[metadata].[map].[modified_by]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="200" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+						<AttachedAnnotation Disambiguator="41" />
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References Name="[metadata]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="57" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[metadata].[pk_metadata_database_service_id]">
 			<Relationship Name="ColumnSpecifications">
@@ -2900,7 +4540,7 @@ END]]></Value>
 					<References Name="[metadata].[database_service]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="46" />
+			<AttachedAnnotation Disambiguator="52" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[metadata].[pk_metadata_database_table_id]">
 			<Relationship Name="ColumnSpecifications">
@@ -2919,7 +4559,26 @@ END]]></Value>
 					<References Name="[metadata].[database_table]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="47" />
+			<AttachedAnnotation Disambiguator="53" />
+		</Element>
+		<Element Type="SqlPrimaryKeyConstraint" Name="[metadata].[pk_metadata_dataset_type_id]">
+			<Relationship Name="ColumnSpecifications">
+				<Entry>
+					<Element Type="SqlIndexedColumnSpecification">
+						<Relationship Name="Column">
+							<Entry>
+								<References Name="[metadata].[dataset_type].[id]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[dataset_type]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="54" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[metadata].[pk_metadata_file_id]">
 			<Relationship Name="ColumnSpecifications">
@@ -2938,7 +4597,7 @@ END]]></Value>
 					<References Name="[metadata].[file]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="48" />
+			<AttachedAnnotation Disambiguator="55" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[metadata].[pk_metadata_file_service_id]">
 			<Relationship Name="ColumnSpecifications">
@@ -2957,7 +4616,26 @@ END]]></Value>
 					<References Name="[metadata].[file_service]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="49" />
+			<AttachedAnnotation Disambiguator="56" />
+		</Element>
+		<Element Type="SqlPrimaryKeyConstraint" Name="[metadata].[pk_metadata_map_id]">
+			<Relationship Name="ColumnSpecifications">
+				<Entry>
+					<Element Type="SqlIndexedColumnSpecification">
+						<Relationship Name="Column">
+							<Entry>
+								<References Name="[metadata].[map].[id]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[metadata].[map]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="57" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[metadata].[pk_metadata_project_id]">
 			<Relationship Name="ColumnSpecifications">
@@ -2976,26 +4654,7 @@ END]]></Value>
 					<References Name="[metadata].[project]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="50" />
-		</Element>
-		<Element Type="SqlPrimaryKeyConstraint" Name="[metadata].[pk_metadata_source_destination_id]">
-			<Relationship Name="ColumnSpecifications">
-				<Entry>
-					<Element Type="SqlIndexedColumnSpecification">
-						<Relationship Name="Column">
-							<Entry>
-								<References Name="[metadata].[source_destination].[id]" />
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[metadata].[source_destination]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="51" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="58" />
 		</Element>
 		<Element Type="SqlTable" Name="[metadata].[project]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -3065,7 +4724,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="20" />
+						<AttachedAnnotation Disambiguator="39" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -3082,7 +4741,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="32" />
+						<AttachedAnnotation Disambiguator="4" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -3099,7 +4758,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="38" />
+						<AttachedAnnotation Disambiguator="25" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -3132,7 +4791,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="17" />
+						<AttachedAnnotation Disambiguator="16" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -3150,7 +4809,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="18" />
+						<AttachedAnnotation Disambiguator="37" />
 					</Element>
 				</Entry>
 			</Relationship>
@@ -3159,161 +4818,293 @@ END]]></Value>
 					<References Name="[metadata]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="50" />
+			<AttachedAnnotation Disambiguator="58" />
 		</Element>
-		<Element Type="SqlTable" Name="[metadata].[source_destination]">
+		<Element Type="SqlView" Name="[metadata].[source]">
+			<Property Name="QueryScript">
+				<Value><![CDATA[ 
+  
+  SELECT
+    m.id,
+    st.name as source_type,
+    (SELECT
+        sfs.[stage],
+        sfs.[name],
+        sfs.[root],
+        sfs.[container],
+        sfs.[directory],
+        sfs.[filename],
+        sfs.[service_account],
+        sfs.[path_date_format],
+        sfs.[filename_date_format]
+      FROM [metadata].[map] ms
+      JOIN [metadata].[file_service] sfs on ms.[source_service_id] = sfs.[id]
+      WHERE ms.[id] = m.[id]
+      FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER, INCLUDE_NULL_VALUES
+    ) as source_service,
+    (SELECT
+        sf.[file],
+        sf.[ext],
+        sf.[frequency],
+        sf.[utc_time],
+        sf.[linked_service],
+        sf.[compression_type],
+        sf.[compression_level],
+        sf.[column_delimiter],
+        sf.[row_delimiter],
+        sf.[encoding],
+        sf.[escape_character],
+        sf.[quote_character],
+        sf.[first_row_as_header],
+        sf.[null_value]
+      FROM [metadata].[map] ms
+      JOIN [metadata].[file] sf on ms.[source_id] = sf.[id]
+      WHERE ms.[id] = m.[id]
+      FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER, INCLUDE_NULL_VALUES
+    ) as source
+  FROM [metadata].[map] m
+  JOIN [metadata].[dataset_type] st on m.[source_type_id] = st.[id]
+  WHERE st.name = 'file' 
+  
+  UNION ALL
+
+  SELECT
+    m.id,
+    st.name as source_type,
+    (SELECT
+        sds.stage,
+        sds.[name],
+        sds.[database],
+        sds.[schema],
+        sds.[service_account]
+
+      FROM [metadata].[map] ms
+      JOIN [metadata].[database_service] sds on ms.[source_service_id] = sds.[id]
+      WHERE ms.[id] = m.[id]
+      FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER, INCLUDE_NULL_VALUES
+    ) as source_service,
+    (SELECT
+        st.[table],
+        st.[select],
+        st.[where],
+        st.[type],
+        st.[partition]
+      FROM [metadata].[map] ms
+      JOIN [metadata].[database_table] st on ms.[source_id] = st.[id]
+      WHERE ms.[id] = m.[id]
+      FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER, INCLUDE_NULL_VALUES
+    ) as source
+  FROM [metadata].[map] m
+  JOIN [metadata].[dataset_type] st on m.[source_type_id] = st.[id]
+  WHERE st.name = 'rdbms']]></Value>
+			</Property>
 			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Relationship Name="Columns">
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[metadata].[source_destination].[id]">
-						<Property Name="IsNullable" Value="False" />
-						<Property Name="IsIdentity" Value="True" />
-						<Relationship Name="TypeSpecifier">
+					<Element Type="SqlComputedColumn" Name="[metadata].[source].[id]">
+						<Relationship Name="ExpressionDependencies">
 							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[int]" />
-										</Entry>
-									</Relationship>
-								</Element>
+								<References Name="[metadata].[map].[id]" />
 							</Entry>
 						</Relationship>
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[metadata].[source_destination].[from_service_id]">
-						<Property Name="IsNullable" Value="False" />
-						<Relationship Name="TypeSpecifier">
+					<Element Type="SqlComputedColumn" Name="[metadata].[source].[source_type]">
+						<Relationship Name="ExpressionDependencies">
 							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[int]" />
-										</Entry>
-									</Relationship>
-								</Element>
+								<References Name="[metadata].[dataset_type].[name]" />
 							</Entry>
 						</Relationship>
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[metadata].[source_destination].[from_id]">
-						<Property Name="IsNullable" Value="False" />
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[int]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-					</Element>
+					<Element Type="SqlComputedColumn" Name="[metadata].[source].[source_service]" />
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[metadata].[source_destination].[to_service_id]">
-						<Property Name="IsNullable" Value="False" />
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[int]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-					</Element>
+					<Element Type="SqlComputedColumn" Name="[metadata].[source].[source]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="QueryDependencies">
+				<Entry>
+					<References Name="[metadata].[map]" />
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[metadata].[source_destination].[to_id]">
-						<Property Name="IsNullable" Value="False" />
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[int]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-					</Element>
+					<References Name="[metadata].[dataset_type]" />
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[metadata].[source_destination].[created]">
-						<Property Name="IsNullable" Value="False" />
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[datetime]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-						<AttachedAnnotation Disambiguator="25" />
-					</Element>
+					<References Name="[metadata].[map].[source_type_id]" />
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[metadata].[source_destination].[last_modified]">
-						<Property Name="IsNullable" Value="False" />
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[datetime]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-						<AttachedAnnotation Disambiguator="39" />
-					</Element>
+					<References Name="[metadata].[dataset_type].[id]" />
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[metadata].[source_destination].[created_by]">
-						<Property Name="IsNullable" Value="False" />
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Property Name="Length" Value="150" />
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[varchar]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-						<AttachedAnnotation Disambiguator="24" />
-					</Element>
+					<References Name="[metadata].[map].[id]" />
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[metadata].[source_destination].[last_modified_by]">
-						<Property Name="IsNullable" Value="False" />
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Property Name="Length" Value="150" />
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[varchar]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-						<AttachedAnnotation Disambiguator="21" />
-					</Element>
+					<References Name="[metadata].[dataset_type].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[source_service_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[stage]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[root]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[container]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[directory]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[filename]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[service_account]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[path_date_format]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file_service].[filename_date_format]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[source_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[file]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[ext]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[frequency]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[utc_time]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[linked_service]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[compression_type]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[compression_level]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[column_delimiter]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[row_delimiter]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[encoding]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[escape_character]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[quote_character]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[first_row_as_header]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[file].[null_value]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[dataset_type].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[source_service_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[stage]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[name]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[database]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[schema]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_service].[service_account]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[source_id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[table]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[select]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[where]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[type]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[database_table].[partition]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[map].[id]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="Schema">
@@ -3321,7 +5112,12 @@ END]]></Value>
 					<References Name="[metadata]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="51" />
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="2135" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE VIEW [metadata].[source]&#xA;  AS" />
+			</Annotation>
 		</Element>
 		<Element Type="SqlSchema" Name="[ops]">
 			<Relationship Name="Authorizer">
@@ -3402,7 +5198,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="12" />
+						<AttachedAnnotation Disambiguator="22" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -3443,6 +5239,23 @@ END]]></Value>
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
 									<Property Name="Length" Value="250" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[stage].[database_service].[stage]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="100" />
 									<Relationship Name="Type">
 										<Entry>
 											<References ExternalSource="BuiltIns" Name="[varchar]" />
@@ -3527,7 +5340,7 @@ END]]></Value>
 					<References Name="[stage]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="52" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="59" />
 		</Element>
 		<Element Type="SqlTable" Name="[stage].[database_table]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -3594,7 +5407,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="41" />
+						<AttachedAnnotation Disambiguator="17" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -3677,7 +5490,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="22" />
+						<AttachedAnnotation Disambiguator="29" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -3695,7 +5508,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="8" />
+						<AttachedAnnotation Disambiguator="5" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -3713,7 +5526,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="15" />
+						<AttachedAnnotation Disambiguator="45" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -3731,7 +5544,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="27" />
+						<AttachedAnnotation Disambiguator="46" />
 					</Element>
 				</Entry>
 			</Relationship>
@@ -3740,7 +5553,7 @@ END]]></Value>
 					<References Name="[stage]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="53" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="60" />
 		</Element>
 		<Element Type="SqlTable" Name="[stage].[file]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -3807,7 +5620,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="45" />
+						<AttachedAnnotation Disambiguator="43" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -4021,7 +5834,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="9" />
+						<AttachedAnnotation Disambiguator="35" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -4094,7 +5907,7 @@ END]]></Value>
 					<References Name="[stage]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="54" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="61" />
 		</Element>
 		<Element Type="SqlTable" Name="[stage].[file_service]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -4161,7 +5974,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="13" />
+						<AttachedAnnotation Disambiguator="14" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -4368,7 +6181,250 @@ END]]></Value>
 					<References Name="[stage]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="55" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="62" />
+		</Element>
+		<Element Type="SqlTable" Name="[stage].[map]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="Columns">
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[stage].[map].[id]">
+						<Property Name="IsNullable" Value="False" />
+						<Property Name="IsIdentity" Value="True" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[stage].[map].[project]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="100" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[stage].[map].[process_group]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="250" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+						<AttachedAnnotation Disambiguator="34" />
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[stage].[map].[source_type]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="100" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[stage].[map].[source_service]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="100" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[stage].[map].[source]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="100" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[stage].[map].[destination_type]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="100" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[stage].[map].[destination_service]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="100" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[stage].[map].[destination]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="100" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[stage].[map].[import_id]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[stage].[map].[import_batch_id]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[uniqueidentifier]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[stage].[map].[import_created]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+						<AttachedAnnotation Disambiguator="24" />
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[stage].[map].[imported]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[stage].[map].[imported_by]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="200" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References Name="[stage]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="63" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[stage].[pk_stage_database_service_id]">
 			<Relationship Name="ColumnSpecifications">
@@ -4387,7 +6443,7 @@ END]]></Value>
 					<References Name="[stage].[database_service]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="52" />
+			<AttachedAnnotation Disambiguator="59" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[stage].[pk_stage_database_table_id]">
 			<Relationship Name="ColumnSpecifications">
@@ -4406,7 +6462,7 @@ END]]></Value>
 					<References Name="[stage].[database_table]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="53" />
+			<AttachedAnnotation Disambiguator="60" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[stage].[pk_stage_file_id]">
 			<Relationship Name="ColumnSpecifications">
@@ -4425,7 +6481,7 @@ END]]></Value>
 					<References Name="[stage].[file]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="54" />
+			<AttachedAnnotation Disambiguator="61" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[stage].[pk_stage_file_service_id]">
 			<Relationship Name="ColumnSpecifications">
@@ -4444,7 +6500,26 @@ END]]></Value>
 					<References Name="[stage].[file_service]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="55" />
+			<AttachedAnnotation Disambiguator="62" />
+		</Element>
+		<Element Type="SqlPrimaryKeyConstraint" Name="[stage].[pk_stage_map_id]">
+			<Relationship Name="ColumnSpecifications">
+				<Entry>
+					<Element Type="SqlIndexedColumnSpecification">
+						<Relationship Name="Column">
+							<Entry>
+								<References Name="[stage].[map].[id]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[stage].[map]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="63" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[stage].[pk_stage_project_id]">
 			<Relationship Name="ColumnSpecifications">
@@ -4463,26 +6538,7 @@ END]]></Value>
 					<References Name="[stage].[project]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="56" />
-		</Element>
-		<Element Type="SqlPrimaryKeyConstraint" Name="[stage].[pk_stage_source_destination_id]">
-			<Relationship Name="ColumnSpecifications">
-				<Entry>
-					<Element Type="SqlIndexedColumnSpecification">
-						<Relationship Name="Column">
-							<Entry>
-								<References Name="[stage].[source_destination].[id]" />
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[stage].[source_destination]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="57" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="64" />
 		</Element>
 		<Element Type="SqlTable" Name="[stage].[project]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -4549,7 +6605,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="33" />
+						<AttachedAnnotation Disambiguator="26" />
 					</Element>
 				</Entry>
 				<Entry>
@@ -4631,7 +6687,7 @@ END]]></Value>
 								</Element>
 							</Entry>
 						</Relationship>
-						<AttachedAnnotation Disambiguator="6" />
+						<AttachedAnnotation Disambiguator="12" />
 					</Element>
 				</Entry>
 			</Relationship>
@@ -4640,182 +6696,7 @@ END]]></Value>
 					<References Name="[stage]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="56" />
-		</Element>
-		<Element Type="SqlTable" Name="[stage].[source_destination]">
-			<Property Name="IsAnsiNullsOn" Value="True" />
-			<Relationship Name="Columns">
-				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[stage].[source_destination].[id]">
-						<Property Name="IsNullable" Value="False" />
-						<Property Name="IsIdentity" Value="True" />
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[int]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[stage].[source_destination].[from_service]">
-						<Property Name="IsNullable" Value="False" />
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Property Name="Length" Value="100" />
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[varchar]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[stage].[source_destination].[from]">
-						<Property Name="IsNullable" Value="False" />
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Property Name="Length" Value="100" />
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[varchar]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[stage].[source_destination].[to_service]">
-						<Property Name="IsNullable" Value="False" />
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Property Name="Length" Value="100" />
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[varchar]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[stage].[source_destination].[to]">
-						<Property Name="IsNullable" Value="False" />
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Property Name="Length" Value="100" />
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[varchar]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[stage].[source_destination].[import_id]">
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[int]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[stage].[source_destination].[import_batch_id]">
-						<Property Name="IsNullable" Value="False" />
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[uniqueidentifier]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[stage].[source_destination].[import_created]">
-						<Property Name="IsNullable" Value="False" />
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[datetime]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-						<AttachedAnnotation Disambiguator="4" />
-					</Element>
-				</Entry>
-				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[stage].[source_destination].[imported]">
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[datetime]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[stage].[source_destination].[imported_by]">
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Property Name="Length" Value="200" />
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[varchar]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-			</Relationship>
-			<Relationship Name="Schema">
-				<Entry>
-					<References Name="[stage]" />
-				</Entry>
-			</Relationship>
-			<AttachedAnnotation Disambiguator="57" />
+			<AttachedAnnotation Disambiguator="64" />
 		</Element>
 		<Element Type="SqlSchema" Name="[test]">
 			<Relationship Name="Authorizer">
@@ -4941,7 +6822,7 @@ end]]></Value>
 					<References Name="[test].[result]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="58" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="65" />
 		</Element>
 		<Element Type="SqlTable" Name="[test].[result]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -5064,7 +6945,7 @@ end]]></Value>
 					<References Name="[test]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="58" />
+			<AttachedAnnotation Disambiguator="65" />
 		</Element>
 	</Model>
 </DataSchemaModel>

@@ -51,9 +51,26 @@ VALUES
   (@ibi, @project, 'customer_details_2', 'csv', 'daily', cast('09:00:00' as time)     , 0),
   (@ibi, @project, 'customerdetailscomplete', 'flg', 'daily', cast('09:00:00' as time), 0);
 
+
+INSERT INTO [stage].[map](
+  [import_batch_id],
+  [project],
+  [source_type],
+  [source_service],
+  [source],
+  [destination_type],
+  [destination_service],
+  [destination]
+)
+VALUES
+  (@ibi, @project, 'file', 'source', 'customer_details_1'     , 'file', 'landing', 'customer_details_1'),
+  (@ibi, @project, 'file', 'source', 'customer_details_2'     , 'file', 'landing', 'customer_details_2'),
+  (@ibi, @project, 'file', 'source', 'customerdetailscomplete', 'file', 'landing', 'customerdetailscomplete');
+
 EXEC [import].[import] @@import_batch_id=@ibi
 EXEC [import].[file_service]  @@import_batch_id=@ibi
 EXEC [import].[file]  @@import_batch_id=@ibi
+EXEC [import].[map]  @@import_batch_id=@ibi
 /*
 
 truncate table [stage].[project]
@@ -74,5 +91,6 @@ select * from [metadata].[file]
 
 */
 
-select * from metadata.[project]
-select * from metadata.[file]
+-- select * from metadata.[project]
+-- select * from metadata.[file]
+select * from metadata.[map]

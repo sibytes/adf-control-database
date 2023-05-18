@@ -7,6 +7,7 @@ CREATE TABLE [stage].[database_service]
   [imported] DATETIME NULL,
   [imported_by] VARCHAR(200),
   [project] varchar(250) not null,  
+  [stage] varchar(100) not null,
   [name]	varchar(100) not null,
   [database] varchar(132) not null,
   [schema]	varchar(132) not null,

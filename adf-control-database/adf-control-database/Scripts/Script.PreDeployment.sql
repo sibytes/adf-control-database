@@ -13,5 +13,5 @@ declare @sql nvarchar(4000) =
             FOR XML PATH('') 
         ) as nvarchar(4000)) 
     as sql)
-
+print @sql
 exec sp_executesql @sql
