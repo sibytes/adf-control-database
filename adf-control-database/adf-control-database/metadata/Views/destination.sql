@@ -3,76 +3,57 @@ CREATE VIEW [metadata].[destination]
   
   SELECT
     m.id,
-    dt.name as destination_type,
+    [of].[destination_type],
     (SELECT
-
-        dfs.[stage],
-        dfs.[name],
-        dfs.[root],
-        dfs.[container],
-        dfs.[directory],
-        dfs.[filename],
-        dfs.[service_account],
-        dfs.[path_date_format],
-        dfs.[filename_date_format]
-      FROM [metadata].[map] md
-      JOIN [metadata].[file_service] dfs on md.[destination_service_id] = dfs.[id]
-      WHERE md.[id] = m.[id]
+      f.[stage],
+      f.[name],
+      f.[root],
+      f.[container],
+      f.[directory],
+      f.[filename],
+      f.[service_account],
+      f.[path_date_format],
+      f.[filename_date_format],
+      f.[file],
+      f.[ext],
+      f.[frequency],
+      f.[utc_time],
+      f.[linked_service],
+      f.[compression_type],
+      f.[compression_level],
+      f.[column_delimiter],
+      f.[row_delimiter],
+      f.[encoding],
+      f.[escape_character],
+      f.[quote_character],
+      f.[first_row_as_header],
+      f.[null_value]
+      FROM [metadata].[file_destination] f
+      WHERE f.[id] = m.[id]
       FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER, INCLUDE_NULL_VALUES
-    ) as destination_service,
-    (SELECT
-        df.[file],
-        df.[ext],
-        df.[frequency],
-        df.[utc_time],
-        df.[linked_service],
-        df.[compression_type],
-        df.[compression_level],
-        df.[column_delimiter],
-        df.[row_delimiter],
-        df.[encoding],
-        df.[escape_character],
-        df.[quote_character],
-        df.[first_row_as_header],
-        df.[null_value]
-      FROM [metadata].[map] md
-      JOIN [metadata].[file] df on md.[destination_id] = df.[id]
-      WHERE md.[id] = m.[id]
-      FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER, INCLUDE_NULL_VALUES
-    ) as destination
+    ) as destination_service
   FROM [metadata].[map] m
-  JOIN [metadata].[dataset_type] dt on m.[destination_type_id] = dt.[id]
-  WHERE dt.name = 'file' 
+  JOIN [metadata].[file_destination] [of] ON [of].[id] = m.[id]
   
   UNION ALL
 
   SELECT
-    m.id,
-    dt.name as destination_type,
+    m.[id],
+    od.[destination_type],
     (SELECT
-        dds.stage,
-        dds.[name],
-        dds.[database],
-        dds.[schema],
-        dds.[service_account]
-
-      FROM [metadata].[map] md
-      JOIN [metadata].[database_service] dds on md.[destination_service_id] = dds.[id]
-      WHERE md.[id] = m.[id]
+        d.[stage],
+        d.[name],
+        d.[database],
+        d.[schema],
+        d.[service_account],
+        d.[table],
+        d.[select],
+        d.[where],
+        d.[type],
+        d.[partition]
+      FROM [metadata].[database_destination] d
+      WHERE d.[id] = m.[id]
       FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER, INCLUDE_NULL_VALUES
-    ) as destination_service,
-    (SELECT
-        dt.[table],
-        dt.[select],
-        dt.[where],
-        dt.[type],
-        dt.[partition]
-      FROM [metadata].[map] md
-      JOIN [metadata].[database_table] dt on md.[destination_id] = dt.[id]
-      WHERE md.[id] = m.[id]
-      FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER, INCLUDE_NULL_VALUES
-    ) as destination
+    ) as destination_service
   FROM [metadata].[map] m
-  JOIN [metadata].[dataset_type] dt on m.[destination_type_id] = dt.[id]
-  WHERE dt.name = 'rdbms' 
-
+  JOIN [metadata].[database_destination] od ON od.[id] = m.[id]

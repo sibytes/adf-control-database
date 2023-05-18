@@ -9,6 +9,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="metadata\Views" />
+    <Folder Include="ops" />
+    <Folder Include="ops\StoredProcedures" />
+    <Folder Include="ops\Tables" />
+    <Folder Include="ops\Views" />
     <Folder Include="Scripts" />
   </ItemGroup>
   <ItemGroup>

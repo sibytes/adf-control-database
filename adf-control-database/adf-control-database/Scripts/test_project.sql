@@ -25,8 +25,8 @@ INSERT INTO [stage].[file_service](
   [filename_date_format]
 )
 VALUES
-  (@ibi, @project, 'source' , 'Test Source Customer Details', '/mnt', 'source' , '/dbx_patterns/{{table}}/{{path_date_format}}', '{{table}}-{{filename_date_format}}*', 'sa_test', 'yyyyMMDD', 'yyyyMMDD'),
-  (@ibi, @project, 'landing', 'Test Source Customer Details', '/mnt', 'landing', '/dbx_patterns/{{table}}/{{path_date_format}}', '{{table}}-{{filename_date_format}}*', 'sa_test', 'yyyyMMDD', 'yyyyMMDD');
+  (@ibi, @project, 'source' , 'Test Source Customer Details', '/mnt', 'source' , '/' + @project + '/{{table}}/{{path_date_format}}', '{{table}}-{{filename_date_format}}*', 'sa_test', 'yyyyMMDD', 'yyyyMMDD'),
+  (@ibi, @project, 'landing', 'Test Source Customer Details', '/mnt', 'landing', '/' + @project + '/{{table}}/{{path_date_format}}', '{{table}}-{{filename_date_format}}*', 'sa_test', 'yyyyMMDD', 'yyyyMMDD');
 
 INSERT INTO [stage].[file](
   [import_batch_id],
