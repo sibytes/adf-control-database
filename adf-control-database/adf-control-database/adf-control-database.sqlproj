@@ -23,8 +23,9 @@
   </ItemGroup>
   <ItemGroup>
     <Build Remove="Scripts\test_project.sql" />
-    <Build Remove="Scripts\reference_data.sql" />
     <Build Remove="Scripts\test.sql" />
+    <Build Remove="Scripts\header_footer.sql" />
+    <Build Remove="Scripts\reference_data.sql" />
   </ItemGroup>
   <Target Name="BeforeBuild">
     <Delete Files="$(BaseIntermediateOutputPath)\project.assets.json" />

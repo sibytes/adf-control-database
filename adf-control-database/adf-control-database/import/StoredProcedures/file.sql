@@ -1,19 +1,19 @@
 CREATE PROCEDURE [import].[file]
 (
-  @@import_batch_id UNIQUEIDENTIFIER
+  @@import_batch_id uniqueidentifier
 )
 AS
 BEGIN
   SET XACT_ABORT ON;
   
-    -- DECLARE @@import_batch_id UNIQUEIDENTIFIER = '7c91e8b6-366e-4ded-b64a-a5472762bed1'
+    -- DECLARE @@import_batch_id uniqueidentifier = '7c91e8b6-366e-4ded-b64a-a5472762bed1'
 
     DECLARE @imported TABLE (
-      [action] VARCHAR(50) NOT NULL,
-      [name] VARCHAR(250) NOT NULL,
-      [id] INT NOT NULL, 
-      [modified] DATETIME NOT NULL,
-      [modified_by] VARCHAR(200) NOT NULL
+      [action] varchar(50) not null,
+      [name] varchar(250) not null,
+      [id] int not null, 
+      [modified] datetime not null,
+      [modified_by] varchar(200) not null
     )
 
 
@@ -38,7 +38,7 @@ BEGIN
       FROM [stage].[file] s
       JOIN [metadata].[project] p on s.[project] = p.[name]
       WHERE s.[import_batch_id] = @@import_batch_id
-        AND s.[imported] IS NULL
+        AND s.[imported] IS null
     ) as src ON tgt.[file] = src.[file] and tgt.[deleted] is null
     WHEN MATCHED THEN
         UPDATE SET 
@@ -95,7 +95,7 @@ BEGIN
           ,src.[first_row_as_header]
           ,src.[null_value]
         )
-    OUTPUT $action, inserted.[file], inserted.id, inserted.modified, inserted.modified_by INTO @imported;
+    OUTPUT $action, inserted.[file], inserted.id, inserted.modified, inserted.modified_by intO @imported;
 
     UPDATE sp
     SET [import_id] = i.[id],
@@ -104,6 +104,6 @@ BEGIN
     FROM [stage].[file] sp
     JOIN @imported i ON i.[name] = sp.[file]
     WHERE sp.[import_batch_id] = @@import_batch_id
-    AND sp.[imported] IS NULL
+    AND sp.[imported] IS null
 
 END

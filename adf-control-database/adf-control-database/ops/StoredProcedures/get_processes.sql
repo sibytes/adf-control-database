@@ -21,3 +21,4 @@ AS
   where r.[name]          = @@project
     and m.[process_group] = @@process_group
     and s.[status]        = @@status
+    and m.[enabled] = 1

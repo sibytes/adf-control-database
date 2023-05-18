@@ -1,12 +1,12 @@
 CREATE PROCEDURE [import].[import]
 (
-  @@import_batch_id UNIQUEIDENTIFIER
+  @@import_batch_id uniqueidentifier
 )
 AS
 BEGIN
   SET XACT_ABORT ON;
 
-  -- DECLARE @@import_batch_id UNIQUEIDENTIFIER = '7c91e8b6-366e-4ded-b64a-a5472762bed1'
+  -- DECLARE @@import_batch_id uniqueidentifier = '7c91e8b6-366e-4ded-b64a-a5472762bed1'
   
   EXEC [import].[project]           @@import_batch_id=@@import_batch_id
   EXEC [import].[file_service]      @@import_batch_id=@@import_batch_id

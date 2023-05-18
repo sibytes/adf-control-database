@@ -1,26 +1,26 @@
 CREATE PROCEDURE [import].[map]
 (
-  @@import_batch_id UNIQUEIDENTIFIER
+  @@import_batch_id uniqueidentifier
 )
 AS
 BEGIN
   SET XACT_ABORT ON;
   
-    -- DECLARE @@import_batch_id UNIQUEIDENTIFIER = '7c91e8b6-366e-4ded-b64a-a5472762bed1'
+    -- DECLARE @@import_batch_id uniqueidentifier = '7c91e8b6-366e-4ded-b64a-a5472762bed1'
 
     DECLARE @imported TABLE (
-      [action] VARCHAR(50) NOT NULL,
-      [project_id] INT NOT NULL,
+      [action] varchar(50) not null,
+      [project_id] int not null,
       [process_group] varchar(250),
-      [source_type_id] INT NOT NULL,
-      [source_service_id] INT NOT NULL,
-      [source_id] INT NOT NULL,
-      [destination_type_id] INT NOT NULL,
-      [destination_service_id] INT NOT NULL,
-      [destination_id] INT NOT NULL,
-      [id] INT NOT NULL, 
-      [modified] DATETIME NOT NULL,
-      [modified_by] VARCHAR(200) NOT NULL
+      [source_type_id] int not null,
+      [source_service_id] int not null,
+      [source_id] int not null,
+      [destination_type_id] int not null,
+      [destination_service_id] int not null,
+      [destination_id] int not null,
+      [id] int not null, 
+      [modified] datetime not null,
+      [modified_by] varchar(200) not null
     );
 
 
@@ -34,7 +34,8 @@ BEGIN
         coalesce(sf.id, sdt.id) as [source_id],
         dt.[id] as [destination_type_id],
         coalesce(dfs.id, dds.id) as [destination_service_id],
-        coalesce(df.id, ddt.id) as [destination_id]
+        coalesce(df.id, ddt.id) as [destination_id],
+        s.[enabled]
       FROM [stage].[map] s
       --
       JOIN [metadata].[project] p on s.[project] = p.[name]
@@ -52,7 +53,7 @@ BEGIN
       LEFT JOIN [metadata].[file] df on s.[destination] = df.[file]
       ---
       WHERE s.[import_batch_id] = @@import_batch_id
-        AND s.[imported] IS NULL
+        AND s.[imported] IS null
     ) as [SOURCE] ON [TARGET].[project_id] = [SOURCE].[project_id]
             AND [TARGET].[source_type_id] = [SOURCE].[source_type_id]
             AND [TARGET].[source_service_id] = [SOURCE].[source_service_id]
@@ -64,6 +65,7 @@ BEGIN
     WHEN MATCHED THEN
         UPDATE SET 
           [process_group]           = [SOURCE].[process_group],
+          [enabled]                 = [SOURCE].[enabled],
           [modified]                = getdate(),
           [modified_by]             = suser_sname()
     WHEN NOT MATCHED BY TARGET THEN  
@@ -75,7 +77,8 @@ BEGIN
           [source_id],               
           [destination_type_id],     
           [destination_service_id],  
-          [destination_id]           
+          [destination_id],
+          [enabled] 
         )  
         VALUES
         (
@@ -86,7 +89,8 @@ BEGIN
           [SOURCE].[source_id],
           [SOURCE].[destination_type_id],
           [SOURCE].[destination_service_id],
-          [SOURCE].[destination_id]
+          [SOURCE].[destination_id],
+          [SOURCE].[enabled]
         )
     WHEN NOT MATCHED BY SOURCE THEN DELETE 
     OUTPUT 
@@ -102,7 +106,7 @@ BEGIN
       inserted.id,
       inserted.modified,
       inserted.modified_by 
-      INTO @imported;
+      intO @imported;
 
     UPDATE s
     SET [import_id] = i.[id],
@@ -132,6 +136,6 @@ BEGIN
      AND i.[destination_service_id] = coalesce(dfs.id, dds.id)
      AND i.[destination_id] = coalesce(df.id, ddt.id)
     WHERE s.[import_batch_id] = @@import_batch_id
-    AND s.[imported] IS NULL
+    AND s.[imported] IS null
 
 END

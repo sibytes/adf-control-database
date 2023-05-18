@@ -56,6 +56,7 @@ begin
       @timeslice      as [timeslice],
       @@parameters    as [parameters]
     from [metadata].[source_destination] sd
+    where sd.[enabled] = 1
   end
 
 end

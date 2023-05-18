@@ -1,8 +1,8 @@
 
-DECLARE @ibi UNIQUEIDENTIFIER = newid() -- '7c91e8b6-366e-4ded-b64a-a5472762bed1'--
-DECLARE @project VARCHAR(250) = 'test_project'
+DECLARE @ibi uniqueidentifier = newid() -- '7c91e8b6-366e-4ded-b64a-a5472762bed1'--
+DECLARE @project varchar(250) = 'test_project'
 
-INSERT INTO [stage].[project](
+INSERT intO [stage].[project](
   [import_batch_id],
   [name],
   [description],
@@ -11,7 +11,7 @@ INSERT INTO [stage].[project](
 VALUES
   (@ibi, @project, 'Test Project', 1);
 
-INSERT INTO [stage].[file_service](
+INSERT intO [stage].[file_service](
   [import_batch_id],
   [project],
   [name],
@@ -28,7 +28,7 @@ VALUES
   (@ibi, @project, 'source' , 'Test Source Customer Details', '/mnt', 'source' , '/' + @project + '/{{table}}/{{path_date_format}}', '{{table}}-{{filename_date_format}}*', 'sa_test', 'yyyyMMDD', 'yyyyMMDD'),
   (@ibi, @project, 'landing', 'Test Source Customer Details', '/mnt', 'landing', '/' + @project + '/{{table}}/{{path_date_format}}', '{{table}}-{{filename_date_format}}*', 'sa_test', 'yyyyMMDD', 'yyyyMMDD');
 
-INSERT INTO [stage].[file](
+INSERT intO [stage].[file](
   [import_batch_id],
   [project],
   [file],
@@ -52,8 +52,9 @@ VALUES
   (@ibi, @project, 'customerdetailscomplete', 'flg', 'daily', cast('09:00:00' as time), 0);
 
 
-INSERT INTO [stage].[map](
+INSERT intO [stage].[map](
   [import_batch_id],
+  [enabled],
   [project],
   [source_type],
   [source_service],
@@ -63,9 +64,9 @@ INSERT INTO [stage].[map](
   [destination]
 )
 VALUES
-  (@ibi, @project, 'file', 'source', 'customer_details_1'     , 'file', 'landing', 'customer_details_1'),
-  (@ibi, @project, 'file', 'source', 'customer_details_2'     , 'file', 'landing', 'customer_details_2'),
-  (@ibi, @project, 'file', 'source', 'customerdetailscomplete', 'file', 'landing', 'customerdetailscomplete');
+  (@ibi, 1, @project, 'file', 'source', 'customer_details_1'     , 'file', 'landing', 'customer_details_1'),
+  (@ibi, 1, @project, 'file', 'source', 'customer_details_2'     , 'file', 'landing', 'customer_details_2'),
+  (@ibi, 1, @project, 'file', 'source', 'customerdetailscomplete', 'file', 'landing', 'customerdetailscomplete');
 
 -- EXEC [import].[import] @@import_batch_id=@ibi
 

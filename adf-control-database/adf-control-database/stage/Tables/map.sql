@@ -1,18 +1,19 @@
-CREATE TABLE [stage].[map]
+create table [stage].[map]
 (
-  [id] INT IDENTITY(1, 1),
-  [project] VARCHAR(100) NOT NULL,
-  [process_group] varchar(250) DEFAULT('default'),
-  [source_type] VARCHAR(100) NOT NULL,
-  [source_service] VARCHAR(100) NOT NULL,
-  [source] VARCHAR(100) NOT NULL,
-  [destination_type] VARCHAR(100) NOT NULL,
-  [destination_service] VARCHAR(100) NOT NULL,
-  [destination] VARCHAR(100) NOT NULL,
-  [import_id] INT NULL,
-  [import_batch_id] UNIQUEIDENTIFIER NOT NULL,
-  [import_created] DATETIME NOT NULL DEFAULT(getdate()),
-  [imported] DATETIME NULL,
-  [imported_by] VARCHAR(200),
-  CONSTRAINT pk_stage_map_id PRIMARY KEY CLUSTERED ([id])
+  [id] int identity(1, 1),
+  [project] varchar(100) not null,
+  [process_group] varchar(250) default('default'),
+  [source_type] varchar(100) not null,
+  [source_service] varchar(100) not null,
+  [source] varchar(100) not null,
+  [destination_type] varchar(100) not null,
+  [destination_service] varchar(100) not null,
+  [destination] varchar(100) not null,
+  [enabled] bit default(1) not null,
+  [import_id] int null,
+  [import_batch_id] uniqueidentifier not null,
+  [import_created] datetime not null default(getdate()),
+  [imported] datetime null,
+  [imported_by] varchar(200),
+  constraint pk_stage_map_id primary key clustered ([id])
 )

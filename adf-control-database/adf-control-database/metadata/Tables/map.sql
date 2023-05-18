@@ -1,18 +1,19 @@
-CREATE TABLE [metadata].[map]
+create table [metadata].[map]
 (
-  [id] int IDENTITY(1,1) not null,
-  [project_id] INT NOT NULL,
-  [process_group] varchar(250) NOT NULL DEFAULT('default'),
-  [source_type_id] INT NOT NULL,
-  [source_service_id] INT NOT NULL,
-  [source_id] INT NOT NULL,
-  [destination_type_id] INT NOT NULL,
-  [destination_service_id] INT NOT NULL,
-  [destination_id] INT NOT NULL,
-  [created]         DATETIME       DEFAULT (getdate()) NOT NULL,
-  [modified]        DATETIME       DEFAULT (getdate()) NOT NULL,
-  [deleted]         DATETIME       NULL,
-  [created_by]      varchar(200)   DEFAULT (SUSER_SNAME()) NOT NULL,
-  [modified_by]     varchar(200)   DEFAULT (SUSER_SNAME()) NOT NULL,
-  CONSTRAINT [pk_metadata_map_id] PRIMARY KEY CLUSTERED ([id] ASC)
+  [id]                      int identity(1,1) not null,
+  [project_id]              int not null,
+  [process_group]           varchar(250) default('default') not null,
+  [source_type_id]          int not null,
+  [source_service_id]       int not null,
+  [source_id]               int not null,
+  [destination_type_id]     int not null,
+  [destination_service_id]  int not null,
+  [destination_id]          int not null,
+  [enabled]                 bit default(1) not null,
+  [created]                 datetime default (getdate()) not null,
+  [modified]                datetime default (getdate()) not null,
+  [deleted]                 datetime null,
+  [created_by]              varchar(200) default (suser_sname()) not null,
+  [modified_by]             varchar(200) default (suser_sname()) not null,
+  constraint [pk_metadata_map_id] primary key clustered ([id] ASC)
 )

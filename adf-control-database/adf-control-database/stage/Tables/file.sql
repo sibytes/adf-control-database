@@ -1,11 +1,11 @@
-CREATE TABLE [stage].[file]
+create table [stage].[file]
 (
-  [id] INT IDENTITY(1, 1),
-  [import_id] INT NULL,
-  [import_batch_id] UNIQUEIDENTIFIER NOT NULL,
-  [import_created] DATETIME NOT NULL default(getdate()),
-  [imported] DATETIME NULL,
-  [imported_by] VARCHAR(200),
+  [id] int identity(1, 1),
+  [import_id] int null,
+  [import_batch_id] uniqueidentifier not null,
+  [import_created] datetime not null default(getdate()),
+  [imported] datetime null,
+  [imported_by] varchar(200),
   [project] varchar(250) not null,  
   [file]	varchar(100) not null,
   [ext]	varchar(5) not null,
@@ -21,5 +21,5 @@ CREATE TABLE [stage].[file]
   [quote_character]	varchar(100) null,
   [first_row_as_header]	bit not null,
   [null_value]	varchar(100) null,
-  CONSTRAINT pk_stage_file_id PRIMARY KEY CLUSTERED ([id])
+  constraint pk_stage_file_id primary key clustered ([id])
 )

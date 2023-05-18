@@ -1,13 +1,13 @@
-CREATE TABLE [stage].[project]
+create table [stage].[project]
 (
-  [id] INT IDENTITY(1, 1),
-  [import_id] INT NULL,
-  [import_batch_id] UNIQUEIDENTIFIER NOT NULL,
-  [import_created] DATETIME NOT NULL default(getdate()),
-  [imported] DATETIME NULL,
-  [imported_by] VARCHAR(200),
-  [name] VARCHAR(250) NOT NULL,
-  [description] VARCHAR(2000) NOT NULL,
-  [enabled] BIT NOT NULL DEFAULT(1)
-  ,CONSTRAINT pk_stage_project_id PRIMARY KEY CLUSTERED ([id])
+  [id] int identity(1, 1),
+  [import_id] int null,
+  [import_batch_id] uniqueidentifier not null,
+  [import_created] datetime not null default(getdate()),
+  [imported] datetime null,
+  [imported_by] varchar(200),
+  [name] varchar(250) not null,
+  [description] varchar(2000) not null,
+  [enabled] BIT not null default(1)
+  ,constraint pk_stage_project_id primary key clustered ([id])
 )

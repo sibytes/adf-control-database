@@ -30,7 +30,7 @@ CREATE VIEW [metadata].[destination]
       f.[null_value]
       FROM [metadata].[file_destination] f
       WHERE f.[id] = m.[id]
-      FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER, INCLUDE_NULL_VALUES
+      FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER, INCLUDE_null_VALUES
     ) as destination_service
   FROM [metadata].[map] m
   JOIN [metadata].[file_destination] [of] ON [of].[id] = m.[id]
@@ -53,7 +53,7 @@ CREATE VIEW [metadata].[destination]
         d.[partition]
       FROM [metadata].[database_destination] d
       WHERE d.[id] = m.[id]
-      FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER, INCLUDE_NULL_VALUES
+      FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER, INCLUDE_null_VALUES
     ) as destination_service
   FROM [metadata].[map] m
   JOIN [metadata].[database_destination] od ON od.[id] = m.[id]

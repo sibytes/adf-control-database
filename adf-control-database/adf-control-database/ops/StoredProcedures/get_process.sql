@@ -37,4 +37,5 @@ AS
   join [ops].[status]                  s on s.[id]         = p.[status_id]
   where p.[id]     = @@process_id
     and s.[status] = 'EXECUTING'
+    and m.[enabled] = 1
 

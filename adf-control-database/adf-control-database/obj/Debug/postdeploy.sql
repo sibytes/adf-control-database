@@ -11,15 +11,15 @@ Post-Deployment Script Template
 */
 
 -- This file contains SQL statements that will be executed after the build script.
-SET IDENTITY_INSERT [metadata].[dataset_type] ON;
-INSERT INTO [metadata].[dataset_type]([id], [name])
+SET identity_INSERT [metadata].[dataset_type] ON;
+INSERT intO [metadata].[dataset_type]([id], [name])
 VALUES
 (1, 'file'),
 (2, 'rdbms')
-SET IDENTITY_INSERT [metadata].[dataset_type] OFF;
+SET identity_INSERT [metadata].[dataset_type] OFF;
 
-SET IDENTITY_INSERT [ops].[status] ON;
-INSERT INTO [ops].[status](
+SET identity_INSERT [ops].[status] ON;
+INSERT intO [ops].[status](
     [id], 
     [status]
 )
@@ -28,7 +28,7 @@ VALUES
 (2, 'EXECUTING'),
 (3, 'SUCCEEDED'),
 (4, 'FAILED'   )
-SET IDENTITY_INSERT [ops].[status] OFF;
+SET identity_INSERT [ops].[status] OFF;
 
 GO
 -- :r ./test_project.sql

@@ -3,6 +3,7 @@ create VIEW [metadata].[source_destination]
 
   select
     m.[id],
+    m.[enabled],
     m.[project_id],
     m.[process_group],
     s.[source_type],
