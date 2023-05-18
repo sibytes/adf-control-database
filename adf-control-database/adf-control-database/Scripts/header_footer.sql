@@ -25,8 +25,8 @@ INSERT intO [stage].[file_service](
   [filename_date_format]
 )
 VALUES
-  (@ibi, @project, 'source' , 'Source Customer Details', '/mnt', 'source' , '/data/' + @project , '{{table}}-{{filename_date_format}}*', 'sa_test', 'yyyyMMDD', 'yyyyMMDD'),
-  (@ibi, @project, 'landing', 'Landing Customer Details', '/mnt', 'landing', '/data/' + @project + '/{{table}}/{{path_date_format}}', '{{table}}-{{filename_date_format}}*', 'sa_test', 'yyyyMMDD', 'yyyyMMDD');
+  (@ibi, @project, 'source' , 'Source Customer Details', '/mnt', 'source' , '/data/' + @project , '{{table}}-{{filename_date_format}}*', 'sa_test', 'yyyyMMdd', 'yyyyMMdd'),
+  (@ibi, @project, 'landing', 'Landing Customer Details', '/mnt', 'landing', '/data/' + @project + '/{{table}}/{{path_date_format}}', '{{table}}-{{filename_date_format}}*', 'sa_test', 'yyyyMMdd', 'yyyyMMdd');
 
 INSERT intO [stage].[file](
   [import_batch_id],

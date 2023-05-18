@@ -1,6 +1,6 @@
 create procedure [metadata].[finish_process]
-  @@process_id int,
-  @@succeeded bit = 1
+  @process_id int,
+  @succeeded bit = 1
 as
 begin
   set xact_abort ON
@@ -11,7 +11,7 @@ begin
     where [status] = 'SUCCEEDED'
   ) 
 
-  if (@@succeeded != 1)
+  if (@succeeded != 1)
   begin
     set @status = (
       select [id] 
@@ -28,6 +28,12 @@ begin
     p.[modified_by] = suser_sname()
   from [ops].[process] p
   join [ops].[status]  s on s.[id] = p.[status_id]
-  where p.[id]     = @@process_id
+  where p.[id]     = @process_id
     and s.[status] = 'EXECUTING'
+
+  if (@succeeded != 1)
+  begin
+    ;throw 51000, 'pipine has failures', 1;
+  end
+
 end

@@ -3,7 +3,7 @@ create table [ops].[process_history]
   [id] int identity(1,1) not null primary key,
   [process_id] int not null,
   [map_id] int not null,
-  [adf_process_id] uniqueidentifier null,
+  [adf_process_id] varchar(50) null,
   [status_id] int not null,
   [timeslice] datetime not null default(GETUTCDATE()),
   [parameters] nvarchar(max) default('{}'),

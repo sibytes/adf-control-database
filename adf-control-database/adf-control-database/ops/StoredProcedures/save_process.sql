@@ -1,6 +1,6 @@
 CREATE PROCEDURE [ops].[save_process]
-  @@project varchar(250),
-  @@process_group varchar(250) = 'default'
+  @project varchar(250),
+  @process_group varchar(250) = 'default'
 AS
 begin
 
@@ -36,7 +36,7 @@ begin
   from [ops].[process] p
   join [metadata].[map]     m on p.[map_id]     = m.[id]
   join [metadata].[project] r on m.[project_id] = r.[id]
-  where r.[name] = @@project
-    and m.[process_group] = @@process_group 
+  where r.[name] = @project
+    and m.[process_group] = @process_group 
 
 end

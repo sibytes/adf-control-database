@@ -19,11 +19,11 @@ SELECT * FROM ops.process
 
 SELECT * FROM ops.process_history
 
-DECLARE  @@project varchar(250) = 'test_project'
-DECLARE  @@process_group varchar(250) = 'default'
+DECLARE  @project varchar(250) = 'header_footer'
+DECLARE  @process_group varchar(250) = 'default'
 exec [ops].[get_processes]
-  @@project = @@project,
-  @@process_group = @@process_group
+  @project = @project,
+  @process_group = @process_group
 
 SELECT * FROM ops.process
 

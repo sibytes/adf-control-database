@@ -4603,8 +4603,8 @@ END]]></Value>
     dfs.[name],
     dfs.[root],
     dfs.[container],
-    dfs.[directory],
-    dfs.[filename],
+    replace(dfs.[directory], '{{table}}', df.[file]) as [directory],
+    replace(dfs.[filename], '{{table}}', df.[file]) as [filename],
     dfs.[service_account],
     dfs.[path_date_format],
     dfs.[filename_date_format],
@@ -4685,22 +4685,10 @@ END]]></Value>
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlComputedColumn" Name="[metadata].[file_destination].[directory]">
-						<Relationship Name="ExpressionDependencies">
-							<Entry>
-								<References Name="[metadata].[file_service].[directory]" />
-							</Entry>
-						</Relationship>
-					</Element>
+					<Element Type="SqlComputedColumn" Name="[metadata].[file_destination].[directory]" />
 				</Entry>
 				<Entry>
-					<Element Type="SqlComputedColumn" Name="[metadata].[file_destination].[filename]">
-						<Relationship Name="ExpressionDependencies">
-							<Entry>
-								<References Name="[metadata].[file_service].[filename]" />
-							</Entry>
-						</Relationship>
-					</Element>
+					<Element Type="SqlComputedColumn" Name="[metadata].[file_destination].[filename]" />
 				</Entry>
 				<Entry>
 					<Element Type="SqlComputedColumn" Name="[metadata].[file_destination].[service_account]">
@@ -4909,6 +4897,9 @@ END]]></Value>
 					<References Name="[metadata].[file_service].[directory]" />
 				</Entry>
 				<Entry>
+					<References Name="[metadata].[file].[file]" />
+				</Entry>
+				<Entry>
 					<References Name="[metadata].[file_service].[filename]" />
 				</Entry>
 				<Entry>
@@ -4919,9 +4910,6 @@ END]]></Value>
 				</Entry>
 				<Entry>
 					<References Name="[metadata].[file_service].[filename_date_format]" />
-				</Entry>
-				<Entry>
-					<References Name="[metadata].[file].[file]" />
 				</Entry>
 				<Entry>
 					<References Name="[metadata].[file].[ext]" />
@@ -4972,7 +4960,7 @@ END]]></Value>
 				</Entry>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
-				<Property Name="Length" Value="880" />
+				<Property Name="Length" Value="975" />
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
 				<Property Name="HeaderContents" Value="CREATE VIEW [metadata].[file_destination]&#xA;  AS" />
@@ -5643,7 +5631,7 @@ begin
     where [status] = 'SUCCEEDED'
   ) 
 
-  if (@@succeeded != 1)
+  if (@succeeded != 1)
   begin
     set @status = (
       select [id] 
@@ -5660,8 +5648,14 @@ begin
     p.[modified_by] = suser_sname()
   from [ops].[process] p
   join [ops].[status]  s on s.[id] = p.[status_id]
-  where p.[id]     = @@process_id
+  where p.[id]     = @process_id
     and s.[status] = 'EXECUTING'
+
+  if (@succeeded != 1)
+  begin
+    ;throw 51000, 'pipine has failures', 1;
+  end
+
 end]]></Value>
 			</Property>
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -5677,6 +5671,9 @@ end]]></Value>
 				</Entry>
 				<Entry>
 					<References Name="[ops].[status].[status]" />
+				</Entry>
+				<Entry>
+					<References Name="[metadata].[finish_process].[@succeeded]" />
 				</Entry>
 				<Entry>
 					<References Name="[ops].[process]" />
@@ -5703,12 +5700,15 @@ end]]></Value>
 					<References Name="[ops].[process].[id]" />
 				</Entry>
 				<Entry>
+					<References Name="[metadata].[finish_process].[@process_id]" />
+				</Entry>
+				<Entry>
 					<References Name="[ops].[status].[status]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="Parameters">
 				<Entry>
-					<Element Type="SqlSubroutineParameter" Name="[metadata].[finish_process].[@@process_id]">
+					<Element Type="SqlSubroutineParameter" Name="[metadata].[finish_process].[@process_id]">
 						<Relationship Name="Type">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
@@ -5723,7 +5723,7 @@ end]]></Value>
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSubroutineParameter" Name="[metadata].[finish_process].[@@succeeded]">
+					<Element Type="SqlSubroutineParameter" Name="[metadata].[finish_process].[@succeeded]">
 						<Property Name="DefaultExpressionScript">
 							<Value><![CDATA[1]]></Value>
 						</Property>
@@ -5747,10 +5747,10 @@ end]]></Value>
 				</Entry>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
-				<Property Name="Length" Value="668" />
+				<Property Name="Length" Value="747" />
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
-				<Property Name="HeaderContents" Value="create procedure [metadata].[finish_process]&#xA;  @@process_id int,&#xA;  @@succeeded bit = 1&#xA;as" />
+				<Property Name="HeaderContents" Value="create procedure [metadata].[finish_process]&#xA;  @process_id int,&#xA;  @succeeded bit = 1&#xA;as" />
 			</Annotation>
 		</Element>
 		<Element Type="SqlTable" Name="[metadata].[map]">
@@ -6722,7 +6722,7 @@ end]]></Value>
     p.[modified_by] = suser_sname()
   from [ops].[process] p
   join [ops].[status]  s on s.[id] = p.[status_id]
-  where p.[id]     = @@process_id
+  where p.[id]     = @process_id
     and s.[status] = 'WAITING'
 
   select
@@ -6739,7 +6739,7 @@ end]]></Value>
   join [metadata].[source_destination] m on p.[map_id]     = m.[id]
   join [metadata].[project]            r on m.[project_id] = r.[id]
   join [ops].[status]                  s on s.[id]         = p.[status_id]
-  where p.[id]     = @@process_id
+  where p.[id]     = @process_id
     and s.[status] = 'EXECUTING'
     and m.[enabled] = 1]]></Value>
 			</Property>
@@ -6782,6 +6782,9 @@ end]]></Value>
 					<References Name="[ops].[process].[id]" />
 				</Entry>
 				<Entry>
+					<References Name="[ops].[get_process].[@process_id]" />
+				</Entry>
+				<Entry>
 					<References Name="[ops].[status].[status]" />
 				</Entry>
 				<Entry>
@@ -6847,7 +6850,7 @@ end]]></Value>
 			</Relationship>
 			<Relationship Name="Parameters">
 				<Entry>
-					<Element Type="SqlSubroutineParameter" Name="[ops].[get_process].[@@process_id]">
+					<Element Type="SqlSubroutineParameter" Name="[ops].[get_process].[@process_id]">
 						<Relationship Name="Type">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
@@ -6868,15 +6871,18 @@ end]]></Value>
 				</Entry>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
-				<Property Name="Length" Value="1068" />
+				<Property Name="Length" Value="1065" />
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
-				<Property Name="HeaderContents" Value="create procedure [ops].[get_process]&#xA;  @@process_id int&#xA;AS" />
+				<Property Name="HeaderContents" Value="create procedure [ops].[get_process]&#xA;  @process_id int&#xA;AS" />
 			</Annotation>
 		</Element>
 		<Element Type="SqlProcedure" Name="[ops].[get_processes]">
 			<Property Name="BodyScript">
 				<Value><![CDATA[
+
+  declare @_status varchar(100) = coalesce(@status, 'WAITING')
+  declare @_process_group varchar(100) = coalesce(@process_group, 'default')
 
   select
     p.[id] as [process_id],
@@ -6892,13 +6898,25 @@ end]]></Value>
   join [metadata].[source_destination] m on p.[map_id]     = m.[id]
   join [metadata].[project]            r on m.[project_id] = r.[id]
   join [ops].[status]                  s on s.[id]         = p.[status_id]
-  where r.[name]          = @@project
-    and m.[process_group] = @@process_group
-    and s.[status]        = @@status
+  where r.[name]          = @project
+    and m.[process_group] = @_process_group
+    and s.[status]        = @_status
     and m.[enabled] = 1]]></Value>
 			</Property>
 			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[varchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[ops].[get_processes].[@status]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[varchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[ops].[get_processes].[@process_group]" />
+				</Entry>
 				<Entry>
 					<References Name="[ops].[process]" />
 				</Entry>
@@ -6960,6 +6978,9 @@ end]]></Value>
 					<References Name="[metadata].[project].[name]" />
 				</Entry>
 				<Entry>
+					<References Name="[ops].[get_processes].[@project]" />
+				</Entry>
+				<Entry>
 					<References Name="[ops].[status].[status]" />
 				</Entry>
 				<Entry>
@@ -6968,7 +6989,7 @@ end]]></Value>
 			</Relationship>
 			<Relationship Name="Parameters">
 				<Entry>
-					<Element Type="SqlSubroutineParameter" Name="[ops].[get_processes].[@@project]">
+					<Element Type="SqlSubroutineParameter" Name="[ops].[get_processes].[@project]">
 						<Relationship Name="Type">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
@@ -6984,9 +7005,9 @@ end]]></Value>
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSubroutineParameter" Name="[ops].[get_processes].[@@process_group]">
+					<Element Type="SqlSubroutineParameter" Name="[ops].[get_processes].[@process_group]">
 						<Property Name="DefaultExpressionScript">
-							<Value><![CDATA['default']]></Value>
+							<Value><![CDATA[null]]></Value>
 						</Property>
 						<Relationship Name="Type">
 							<Entry>
@@ -7003,9 +7024,9 @@ end]]></Value>
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSubroutineParameter" Name="[ops].[get_processes].[@@status]">
+					<Element Type="SqlSubroutineParameter" Name="[ops].[get_processes].[@status]">
 						<Property Name="DefaultExpressionScript">
-							<Value><![CDATA['WAITING']]></Value>
+							<Value><![CDATA[null]]></Value>
 						</Property>
 						<Relationship Name="Type">
 							<Entry>
@@ -7028,10 +7049,10 @@ end]]></Value>
 				</Entry>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
-				<Property Name="Length" Value="778" />
+				<Property Name="Length" Value="905" />
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
-				<Property Name="HeaderContents" Value="create procedure [ops].[get_processes]&#xA;  @@project varchar(150),&#xA;  @@process_group varchar(150) = 'default',&#xA;  @@status varchar(100) = 'WAITING'&#xA;AS" />
+				<Property Name="HeaderContents" Value="create procedure [ops].[get_processes]&#xA;  @project varchar(150),&#xA;  @process_group varchar(150) = null,&#xA;  @status varchar(100) = null&#xA;AS" />
 			</Annotation>
 		</Element>
 		<Element Type="SqlProcedure" Name="[ops].[intialise_process]">
@@ -7041,26 +7062,26 @@ begin
 
   set xact_abort on
 
-  declare @adf_process_id uniqueidentifier = coalesce(@@adf_process_id, newid())
+  declare @_adf_process_id varchar(50) = coalesce(@adf_process_id, cast(newid() as varchar(50)))
   declare @waiting int = (
     select [id] 
     from [ops].[status] 
     where [status] = 'WAITING'
   )
-  declare @timeslice datetime = coalesce(@@timeslice, getutcdate())
+  declare @_timeslice datetime = coalesce(@timeslice, getutcdate())
 
-  exec [ops].[save_process] @@project=@@project, @@process_group=@@process_group
+  exec [ops].[save_process] @project=@project, @process_group=@process_group
 
-  if (@@restart = 1)
+  if (@restart = 1)
   begin
     update p
-    set p.[adf_process_id] = @@adf_process_id,
+    set p.[adf_process_id] = @_adf_process_id,
         p.[modified]       = getutcdate(),
         p.[modified_by]    = suser_sname()
     from [ops].[process] p
   end
 
-  if (@@restart = 0)
+  if (@restart = 0)
   begin
 
       -- if not restarting clear out the current process group run
@@ -7068,8 +7089,8 @@ begin
     from [ops].[process] p
     join [metadata].[map]     m on p.[map_id]     = m.[id]
     join [metadata].[project] r on m.[project_id] = r.[id]
-    where r.[name]          = @@project
-      and m.[process_group] = @@process_group 
+    where r.[name]          = @project
+      and m.[process_group] = @process_group 
 
     -- add the new run.
     insert into [ops].[process](
@@ -7081,10 +7102,10 @@ begin
     )
     select
       sd.[id],
-      @adf_process_id as [adf_process_id],
+      @_adf_process_id as [adf_process_id],
       @waiting        as [status_id],
-      @timeslice      as [timeslice],
-      @@parameters    as [parameters]
+      @_timeslice      as [timeslice],
+      @parameters    as [parameters]
     from [metadata].[source_destination] sd
     where sd.[enabled] = 1
   end
@@ -7094,7 +7115,13 @@ end]]></Value>
 			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Relationship Name="BodyDependencies">
 				<Entry>
-					<References ExternalSource="BuiltIns" Name="[uniqueidentifier]" />
+					<References ExternalSource="BuiltIns" Name="[varchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[ops].[intialise_process].[@adf_process_id]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[varchar]" />
 				</Entry>
 				<Entry>
 					<References ExternalSource="BuiltIns" Name="[int]" />
@@ -7112,13 +7139,25 @@ end]]></Value>
 					<References ExternalSource="BuiltIns" Name="[datetime]" />
 				</Entry>
 				<Entry>
+					<References Name="[ops].[intialise_process].[@timeslice]" />
+				</Entry>
+				<Entry>
 					<References Name="[ops].[save_process]" />
 				</Entry>
 				<Entry>
-					<References Name="[ops].[save_process].[@@project]" />
+					<References Name="[ops].[save_process].[@project]" />
 				</Entry>
 				<Entry>
-					<References Name="[ops].[save_process].[@@process_group]" />
+					<References Name="[ops].[intialise_process].[@project]" />
+				</Entry>
+				<Entry>
+					<References Name="[ops].[save_process].[@process_group]" />
+				</Entry>
+				<Entry>
+					<References Name="[ops].[intialise_process].[@process_group]" />
+				</Entry>
+				<Entry>
+					<References Name="[ops].[intialise_process].[@restart]" />
 				</Entry>
 				<Entry>
 					<References Name="[ops].[process]" />
@@ -7178,21 +7217,25 @@ end]]></Value>
 					<References Name="[metadata].[source_destination].[id]" />
 				</Entry>
 				<Entry>
+					<References Name="[ops].[intialise_process].[@parameters]" />
+				</Entry>
+				<Entry>
 					<References Name="[metadata].[source_destination].[enabled]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="Parameters">
 				<Entry>
-					<Element Type="SqlSubroutineParameter" Name="[ops].[intialise_process].[@@adf_process_id]">
+					<Element Type="SqlSubroutineParameter" Name="[ops].[intialise_process].[@adf_process_id]">
 						<Property Name="DefaultExpressionScript">
 							<Value><![CDATA[null]]></Value>
 						</Property>
 						<Relationship Name="Type">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
 									<Relationship Name="Type">
 										<Entry>
-											<References ExternalSource="BuiltIns" Name="[uniqueidentifier]" />
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
 										</Entry>
 									</Relationship>
 								</Element>
@@ -7201,7 +7244,7 @@ end]]></Value>
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSubroutineParameter" Name="[ops].[intialise_process].[@@project]">
+					<Element Type="SqlSubroutineParameter" Name="[ops].[intialise_process].[@project]">
 						<Relationship Name="Type">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
@@ -7217,7 +7260,7 @@ end]]></Value>
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSubroutineParameter" Name="[ops].[intialise_process].[@@process_group]">
+					<Element Type="SqlSubroutineParameter" Name="[ops].[intialise_process].[@process_group]">
 						<Property Name="DefaultExpressionScript">
 							<Value><![CDATA['default']]></Value>
 						</Property>
@@ -7236,7 +7279,7 @@ end]]></Value>
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSubroutineParameter" Name="[ops].[intialise_process].[@@timeslice]">
+					<Element Type="SqlSubroutineParameter" Name="[ops].[intialise_process].[@timeslice]">
 						<Property Name="DefaultExpressionScript">
 							<Value><![CDATA[null]]></Value>
 						</Property>
@@ -7254,7 +7297,10 @@ end]]></Value>
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSubroutineParameter" Name="[ops].[intialise_process].[@@parameters]">
+					<Element Type="SqlSubroutineParameter" Name="[ops].[intialise_process].[@parameters]">
+						<Property Name="DefaultExpressionScript">
+							<Value><![CDATA['{}']]></Value>
+						</Property>
 						<Relationship Name="Type">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
@@ -7270,7 +7316,7 @@ end]]></Value>
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSubroutineParameter" Name="[ops].[intialise_process].[@@restart]">
+					<Element Type="SqlSubroutineParameter" Name="[ops].[intialise_process].[@restart]">
 						<Property Name="DefaultExpressionScript">
 							<Value><![CDATA[1]]></Value>
 						</Property>
@@ -7294,10 +7340,10 @@ end]]></Value>
 				</Entry>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
-				<Property Name="Length" Value="1584" />
+				<Property Name="Length" Value="1587" />
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
-				<Property Name="HeaderContents" Value="CREATE PROCEDURE [ops].[intialise_process](&#xA;  @@adf_process_id uniqueidentifier = null,&#xA;  @@project varchar(250),&#xA;  @@process_group varchar(250) = 'default',&#xA;  @@timeslice datetime = null,&#xA;  @@parameters nvarchar(max),&#xA;  @@restart bit = 1&#xA;)&#xA;AS" />
+				<Property Name="HeaderContents" Value="create PROCEDURE [ops].[intialise_process](&#xA;  @adf_process_id varchar(50) = null,&#xA;  @project varchar(250),&#xA;  @process_group varchar(250) = 'default',&#xA;  @timeslice datetime = null,&#xA;  @parameters nvarchar(max)='{}',&#xA;  @restart bit = 1&#xA;)&#xA;AS" />
 			</Annotation>
 		</Element>
 		<Element Type="SqlTable" Name="[ops].[process]">
@@ -7342,9 +7388,10 @@ end]]></Value>
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
 									<Relationship Name="Type">
 										<Entry>
-											<References ExternalSource="BuiltIns" Name="[uniqueidentifier]" />
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
 										</Entry>
 									</Relationship>
 								</Element>
@@ -7582,9 +7629,10 @@ end]]></Value>
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
 									<Relationship Name="Type">
 										<Entry>
-											<References ExternalSource="BuiltIns" Name="[uniqueidentifier]" />
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
 										</Entry>
 									</Relationship>
 								</Element>
@@ -7832,8 +7880,8 @@ begin
   from [ops].[process] p
   join [metadata].[map]     m on p.[map_id]     = m.[id]
   join [metadata].[project] r on m.[project_id] = r.[id]
-  where r.[name] = @@project
-    and m.[process_group] = @@process_group 
+  where r.[name] = @project
+    and m.[process_group] = @process_group 
 
 end]]></Value>
 			</Property>
@@ -7945,12 +7993,18 @@ end]]></Value>
 					<References Name="[metadata].[project].[name]" />
 				</Entry>
 				<Entry>
+					<References Name="[ops].[save_process].[@project]" />
+				</Entry>
+				<Entry>
 					<References Name="[metadata].[map].[process_group]" />
+				</Entry>
+				<Entry>
+					<References Name="[ops].[save_process].[@process_group]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="Parameters">
 				<Entry>
-					<Element Type="SqlSubroutineParameter" Name="[ops].[save_process].[@@project]">
+					<Element Type="SqlSubroutineParameter" Name="[ops].[save_process].[@project]">
 						<Relationship Name="Type">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
@@ -7966,7 +8020,7 @@ end]]></Value>
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSubroutineParameter" Name="[ops].[save_process].[@@process_group]">
+					<Element Type="SqlSubroutineParameter" Name="[ops].[save_process].[@process_group]">
 						<Property Name="DefaultExpressionScript">
 							<Value><![CDATA['default']]></Value>
 						</Property>
@@ -7991,10 +8045,10 @@ end]]></Value>
 				</Entry>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
-				<Property Name="Length" Value="861" />
+				<Property Name="Length" Value="857" />
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
-				<Property Name="HeaderContents" Value="CREATE PROCEDURE [ops].[save_process]&#xA;  @@project varchar(250),&#xA;  @@process_group varchar(250) = 'default'&#xA;AS" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [ops].[save_process]&#xA;  @project varchar(250),&#xA;  @process_group varchar(250) = 'default'&#xA;AS" />
 			</Annotation>
 		</Element>
 		<Element Type="SqlTable" Name="[ops].[status]">

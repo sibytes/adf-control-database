@@ -1,5 +1,5 @@
 create procedure [ops].[get_process]
-  @@process_id int
+  @process_id int
 AS
 
   set xact_abort ON
@@ -18,7 +18,7 @@ AS
     p.[modified_by] = suser_sname()
   from [ops].[process] p
   join [ops].[status]  s on s.[id] = p.[status_id]
-  where p.[id]     = @@process_id
+  where p.[id]     = @process_id
     and s.[status] = 'WAITING'
 
   select
@@ -35,7 +35,7 @@ AS
   join [metadata].[source_destination] m on p.[map_id]     = m.[id]
   join [metadata].[project]            r on m.[project_id] = r.[id]
   join [ops].[status]                  s on s.[id]         = p.[status_id]
-  where p.[id]     = @@process_id
+  where p.[id]     = @process_id
     and s.[status] = 'EXECUTING'
     and m.[enabled] = 1
 

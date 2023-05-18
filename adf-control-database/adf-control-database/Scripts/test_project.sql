@@ -89,6 +89,9 @@ truncate table [metadata].[file]
 truncate table [metadata].[map]
 
 
+select * from ops.process
+
+
 */
 
 /*

@@ -17,3 +17,7 @@ VALUES
 (3, 'SUCCEEDED'),
 (4, 'FAILED'   )
 SET identity_INSERT [ops].[status] OFF;
+
+CREATE USER [DataPlatfromRhone-ADF] FROM EXTERNAL PROVIDER;
+
+ALTER ROLE db_owner ADD MEMBER [DataPlatfromRhone-ADF];

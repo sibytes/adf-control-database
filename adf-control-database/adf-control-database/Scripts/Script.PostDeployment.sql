@@ -12,6 +12,8 @@ Post-Deployment Script Template
 
 :r ./reference_data.sql
 GO
+:r ./header_footer.sql
+GO
 -- :r ./test_project.sql
 -- GO
 -- :r ./test_metadata.sql
