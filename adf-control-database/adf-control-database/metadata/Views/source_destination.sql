@@ -1,4 +1,4 @@
-CREATE VIEW [dbo].[source_destination]
+CREATE VIEW [metadata].[source_destination]
   AS
 
   select

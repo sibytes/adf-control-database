@@ -1,5 +1,5 @@
 
-DECLARE @ibi UNIQUEIDENTIFIER = '7c91e8b6-366e-4ded-b64a-a5472762bed1'--newid()
+DECLARE @ibi UNIQUEIDENTIFIER = newid() -- '7c91e8b6-366e-4ded-b64a-a5472762bed1'--
 DECLARE @project VARCHAR(250) = 'test_project'
 
 INSERT INTO [stage].[project](
@@ -67,19 +67,26 @@ VALUES
   (@ibi, @project, 'file', 'source', 'customer_details_2'     , 'file', 'landing', 'customer_details_2'),
   (@ibi, @project, 'file', 'source', 'customerdetailscomplete', 'file', 'landing', 'customerdetailscomplete');
 
-EXEC [import].[import] @@import_batch_id=@ibi
-EXEC [import].[file_service]  @@import_batch_id=@ibi
-EXEC [import].[file]  @@import_batch_id=@ibi
-EXEC [import].[map]  @@import_batch_id=@ibi
+-- EXEC [import].[import] @@import_batch_id=@ibi
+
+  EXEC [import].[project]           @@import_batch_id=@ibi
+  EXEC [import].[file_service]      @@import_batch_id=@ibi
+  EXEC [import].[file]              @@import_batch_id=@ibi
+  EXEC [import].[map]               @@import_batch_id=@ibi
+
+
 /*
 
 truncate table [stage].[project]
 truncate table [stage].[file_service]
 truncate table [stage].[file]
+truncate table [stage].[map]
 
 truncate table [metadata].[project]
 truncate table [metadata].[file_service]
 truncate table [metadata].[file]
+truncate table [metadata].[map]
+
 
 */
 
@@ -93,4 +100,6 @@ select * from [metadata].[file]
 
 -- select * from metadata.[project]
 -- select * from metadata.[file]
-select * from metadata.[map]
+-- select * from metadata.[map]
+
+SELECT * FROM metadata.source_destination
