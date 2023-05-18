@@ -2,22 +2,24 @@
 DECLARE  @@adf_process_id uniqueidentifier = newid()
 DECLARE  @@project varchar(250) = 'test_project'
 DECLARE  @@process_group varchar(250) = 'default'
-DECLARE  @@timeslice datetime = convert(datetime, '2023-01-01', 120)
-DECLARE  @@parameters nvarchar = '{}'
-DECLARE  @@restart bit = 1
+DECLARE  @@from_period datetime = convert(datetime, '2023-01-01', 120)
+DECLARE  @@to_period datetime = convert(datetime, '2023-01-01', 120)
+DECLARE  @@parameters nvarchar(max) = '{}'
+DECLARE  @@restart bit = 0
 
 exec [ops].[intialise_process]
-  @@adf_process_id = @@adf_process_id,
-  @@project = @@project,
-  @@process_group = @@process_group,
-  @@timeslice = @@timeslice,
-  @@parameters = @@parameters,
-  @@restart = @@restart
+  @adf_process_id = @@adf_process_id,
+  @project = @@project,
+  @process_group = @@process_group,
+  @from_period = @@from_period,
+  @to_period = @@to_period,
+  @parameters = @@parameters,
+  @restart = @@restart
 
 
 SELECT * FROM ops.process
 
-SELECT * FROM ops.process_history
+SELECT parameters FROM ops.process_history
 
 DECLARE  @project varchar(250) = 'header_footer'
 DECLARE  @process_group varchar(250) = 'default'

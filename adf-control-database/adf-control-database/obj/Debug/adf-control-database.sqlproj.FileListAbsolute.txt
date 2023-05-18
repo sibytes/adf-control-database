@@ -7,3 +7,5 @@
 /Users/shaunryan/adf-control-db/adf-control-database/adf-control-database/obj/Debug/predeploy.sql
 /Users/shaunryan/adf-control-db/adf-control-database/adf-control-database/obj/Debug/adf-control-database.dll
 /Users/shaunryan/adf-control-db/adf-control-database/adf-control-database/obj/Debug/adf-control-database.pdb
+/Users/shaunryan/adf-control-db/adf-control-database/adf-control-database/bin/Debug/master.dacpac
+/Users/shaunryan/adf-control-db/adf-control-database/adf-control-database/obj/Debug/adf-control-database.sqlproj.CopyComplete
