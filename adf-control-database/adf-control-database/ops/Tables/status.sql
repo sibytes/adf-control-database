@@ -1,6 +1,6 @@
 create table [ops].[status]
 (
-  [id] int not null primary key,
+  [id] int identity(1,1) not null primary key,
   [status] varchar(20),
   [created] datetime not null default(GETUTCDATE()),
   [modified]	datetime not null default(GETUTCDATE()),

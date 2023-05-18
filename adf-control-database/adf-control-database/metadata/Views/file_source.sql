@@ -1,4 +1,4 @@
-CREATE VIEW [metadata].[file_source]
+create VIEW [metadata].[file_source]
   AS 
   
   SELECT
@@ -8,8 +8,8 @@ CREATE VIEW [metadata].[file_source]
     sfs.[name],
     sfs.[root],
     sfs.[container],
-    sfs.[directory],
-    sfs.[filename],
+    replace(sfs.[directory], '{{table}}', sf.[file]) as [directory],
+    replace(sfs.[filename], '{{table}}', sf.[file]) as [filename],
     sfs.[service_account],
     sfs.[path_date_format],
     sfs.[filename_date_format],

@@ -1,6 +1,6 @@
 create table [ops].[process]
 (
-  [id] int not null primary key,
+  [id] int identity(1,1) not null primary key,
   [map_id] int not null,
   [adf_process_id] uniqueidentifier null,
   [status_id] int not null,
