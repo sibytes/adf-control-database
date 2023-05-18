@@ -1,6 +1,6 @@
 
 DECLARE  @@adf_process_id uniqueidentifier = newid()
-DECLARE  @@project varchar(250) = 'test_project'
+DECLARE  @@project varchar(250) = 'header_footer'
 DECLARE  @@process_group varchar(250) = 'default'
 DECLARE  @@from_period datetime = convert(datetime, '2023-01-01', 120)
 DECLARE  @@to_period datetime = convert(datetime, '2023-01-01', 120)
@@ -31,7 +31,7 @@ SELECT * FROM ops.process
 
 
 DECLARE  @@process_id int = 4
-exec [ops].[get_process] @@process_id = @@process_id
+exec [ops].[get_process] @process_id = @@process_id
 SELECT * FROM ops.process
 
 DECLARE  @@process_id int = 4

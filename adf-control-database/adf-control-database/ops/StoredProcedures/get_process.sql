@@ -27,15 +27,17 @@ AS
     m.[project_id],
     r.[name] as [project_name],
     m.[process_group],
-    m.[source_type],
-    m.[source_service],
-    m.[destination_type],
-    m.[destination_service]
-  from [ops].[process]                 p
-  join [metadata].[source_destination] m on p.[map_id]     = m.[id]
-  join [metadata].[project]            r on m.[project_id] = r.[id]
-  join [ops].[status]                  s on s.[id]         = p.[status_id]
-  where p.[id]     = @process_id
-    and s.[status] = 'EXECUTING'
+    src.[source_type],
+    src.[source_service],
+    dst.[destination_type],
+    dst.[destination_service]
+  from [ops].[process]                       p
+  join [metadata].[map]                      m   on p.[map_id]     = m.[id]
+  join [metadata].[project]                  r   on m.[project_id] = r.[id]
+  join [ops].[status]                        s   on s.[id]         = p.[status_id]
+  cross apply [metadata].[source](m.[id], p.timeslice) src
+  cross apply [metadata].[destination](m.[id], p.timeslice) dst
+  where p.[id]      = @process_id
+    and s.[status]  = 'EXECUTING'
     and m.[enabled] = 1
 

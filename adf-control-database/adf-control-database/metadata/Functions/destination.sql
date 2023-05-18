@@ -1,6 +1,11 @@
-CREATE VIEW [metadata].[destination]
-  AS 
-  
+create FUNCTION [metadata].[destination] (
+    @map_id int,
+    @timeslice datetime
+)
+RETURNS TABLE
+AS
+RETURN
+
   SELECT
     m.id,
     [of].[destination_type],
@@ -9,8 +14,16 @@ CREATE VIEW [metadata].[destination]
       f.[name],
       f.[root],
       f.[container],
-      f.[directory],
-      f.[filename],
+      replace(
+        f.[directory], 
+        '{{path_date_format}}', 
+        format(@timeslice, f.[path_date_format])
+      ) as [directory],
+      replace(
+        f.[filename],
+         '{{filename_date_format}}', 
+        format(@timeslice, f.[filename_date_format])
+      ) as [filename],
       f.[service_account],
       f.[path_date_format],
       f.[filename_date_format],
@@ -34,6 +47,7 @@ CREATE VIEW [metadata].[destination]
     ) as destination_service
   FROM [metadata].[map] m
   JOIN [metadata].[file_destination] [of] ON [of].[id] = m.[id]
+  where m.id = @map_id
   
   UNION ALL
 
@@ -57,3 +71,4 @@ CREATE VIEW [metadata].[destination]
     ) as destination_service
   FROM [metadata].[map] m
   JOIN [metadata].[database_destination] od ON od.[id] = m.[id]
+  where m.id = @map_id

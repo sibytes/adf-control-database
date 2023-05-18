@@ -12,15 +12,11 @@ AS
     m.[id] as [map_id],
     m.[project_id],
     r.[name] as [project_name],
-    m.[process_group],
-    m.[source_type],
-    m.[source_service],
-    m.[destination_type],
-    m.[destination_service]
-  from [ops].[process]                 p
-  join [metadata].[source_destination] m on p.[map_id]     = m.[id]
-  join [metadata].[project]            r on m.[project_id] = r.[id]
-  join [ops].[status]                  s on s.[id]         = p.[status_id]
+    m.[process_group]
+  from [ops].[process]        p
+  join [metadata].[map]       m on p.[map_id]     = m.[id]
+  join [metadata].[project]   r on m.[project_id] = r.[id]
+  join [ops].[status]         s on s.[id]         = p.[status_id]
   where r.[name]          = @project
     and m.[process_group] = @_process_group
     and s.[status]        = @_status

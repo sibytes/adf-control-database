@@ -70,16 +70,16 @@ begin
       [parameters]
     )
     select
-      sd.[id],
+      m.[id],
       @_adf_process_id as [adf_process_id],
       @waiting         as [status_id],
       t.timeslice      as [timeslice],
       @parameters      as [parameters]
-    from [metadata].[source_destination] sd
-    join [metadata].[project] r on sd.[project_id] = r.[id]
+    from [metadata].[map] m
+    join [metadata].[project] r on m.[project_id] = r.[id]
     cross join @timeslice t
-    where sd.[enabled] = 1
-      and sd.[process_group] = @process_group
+    where m.[enabled] = 1
+      and m.[process_group] = @process_group
       and r.[name] = @project
   end
 
