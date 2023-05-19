@@ -28,6 +28,7 @@ exec [ops].[get_processes]
   @process_group = @process_group
 
 SELECT * FROM ops.process
+update ops.process set status_id = 4
 
 
 DECLARE  @@process_id int = 4
