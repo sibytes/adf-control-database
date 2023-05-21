@@ -48,6 +48,8 @@ RETURN
   FROM [metadata].[map] m
   JOIN [metadata].[file_destination] [of] ON [of].[id] = m.[id]
   where m.id = @map_id
+    and m.[deleted] is null
+
   
   UNION ALL
 
@@ -72,3 +74,4 @@ RETURN
   FROM [metadata].[map] m
   JOIN [metadata].[database_destination] od ON od.[id] = m.[id]
   where m.id = @map_id
+    and m.[deleted] is null

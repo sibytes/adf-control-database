@@ -21,3 +21,5 @@ AS
     and m.[process_group] = @_process_group
     and s.[status]        = @_status
     and m.[enabled] = 1
+    and m.[deleted] is null
+    and r.[deleted] is null

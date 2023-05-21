@@ -48,6 +48,7 @@ RETURN
   FROM [metadata].[map] m
   JOIN [metadata].[file_source] ofs ON ofs.[id] = m.[id]
   where m.id = @map_id
+    and m.[deleted]   is null
   
   UNION ALL
 
@@ -71,4 +72,5 @@ RETURN
     ) as source_service
   FROM [metadata].[map] m
   JOIN [metadata].[database_source] ods ON ods.[id] = m.[id]
-  where m.id = @map_id
+  where m.[id] = @map_id
+    and m.[deleted]   is null

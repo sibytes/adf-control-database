@@ -1,0 +1,12 @@
+﻿dbo,BuildVersion
+dbo,ErrorLog
+SalesLT,Address
+SalesLT,Customer
+SalesLT,CustomerAddress
+SalesLT,Product
+SalesLT,ProductCategory
+SalesLT,ProductDescription
+SalesLT,ProductModel
+SalesLT,ProductModelProductDescription
+SalesLT,SalesOrderDetail
+SalesLT,SalesOrderHeader

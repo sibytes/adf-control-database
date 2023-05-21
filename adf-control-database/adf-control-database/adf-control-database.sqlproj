@@ -27,6 +27,9 @@
     <Build Remove="Scripts\test.sql" />
     <Build Remove="Scripts\header_footer.sql" />
     <Build Remove="Scripts\reference_data.sql" />
+    <Build Remove="Scripts\ad_works.sql" />
+    <Build Remove="Scripts\ad_works_lt.sql" />
+    <Build Remove="Scripts\test_adworks_lt.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\AzureV12\SqlSchemas\master.dacpac" Condition="'$(NetCoreBuild)' != 'true'">

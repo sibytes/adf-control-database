@@ -32,4 +32,6 @@ create VIEW [metadata].[file_source]
   JOIN [metadata].[file] sf on m.[source_id] = sf.[id]
   JOIN [metadata].[dataset_type] st on m.[source_type_id] = st.[id]
   WHERE st.name = 'file' 
-  
+    and m.[deleted] is null
+    and sf.[deleted] is null
+    and sfs.[deleted] is null 

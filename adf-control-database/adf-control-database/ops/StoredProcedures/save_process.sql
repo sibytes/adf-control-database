@@ -38,5 +38,6 @@ begin
   join [metadata].[project] r on m.[project_id] = r.[id]
   where r.[name] = @project
     and m.[process_group] = @process_group 
+    and m.[deleted] is null
 
 end

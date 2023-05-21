@@ -70,6 +70,4 @@ VALUES
   (@ibi, 1, @project, 'file', 'source', 'customer_preferences'   , 'file', 'landing', 'customer_preferences'),
   (@ibi, 1, @project, 'file', 'source', 'customerdetailscomplete', 'file', 'landing', 'customerdetailscomplete');
 
-EXEC [import].[import] @@import_batch_id=@ibi
-
-
+EXEC [import].[import] @@import_batch_id=@ibi, @@project=@project

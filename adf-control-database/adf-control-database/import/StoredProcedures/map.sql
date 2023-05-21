@@ -1,6 +1,7 @@
 CREATE PROCEDURE [import].[map]
 (
-  @@import_batch_id uniqueidentifier
+  @@import_batch_id uniqueidentifier,
+  @@project varchar(150)
 )
 AS
 BEGIN
@@ -23,6 +24,11 @@ BEGIN
       [modified_by] varchar(200) not null
     );
 
+    declare @project_id int = (
+      SELECT [id] 
+      FROM [metadata].[project]
+      WHERE [name] = @@project
+    )
 
     MERGE [metadata].[map] AS [TARGET]  
     USING (
@@ -61,13 +67,13 @@ BEGIN
             AND [TARGET].[destination_type_id] = [SOURCE].[destination_type_id]
             AND [TARGET].[destination_service_id] = [SOURCE].[destination_service_id]
             AND [TARGET].[destination_id] = [SOURCE].[destination_id]
-            and [TARGET].[deleted] is null
     WHEN MATCHED THEN
         UPDATE SET 
-          [process_group]           = [SOURCE].[process_group],
-          [enabled]                 = [SOURCE].[enabled],
-          [modified]                = getdate(),
-          [modified_by]             = suser_sname()
+          [process_group] = [SOURCE].[process_group],
+          [enabled]       = [SOURCE].[enabled],
+          [modified]      = getutcdate(),
+          [modified_by]   = suser_sname(),
+          [deleted]       = null
     WHEN NOT MATCHED BY TARGET THEN  
         INSERT (
           [project_id],              
@@ -92,7 +98,12 @@ BEGIN
           [SOURCE].[destination_id],
           [SOURCE].[enabled]
         )
-    WHEN NOT MATCHED BY SOURCE THEN DELETE 
+    -- WHEN NOT MATCHED BY SOURCE THEN DELETE
+    WHEN NOT MATCHED BY SOURCE AND [TARGET].project_id = @project_id THEN  
+        UPDATE SET
+          [deleted]       = getutcdate(),
+          [modified]      = getutcdate(),
+          [modified_by]   = suser_sname()
     OUTPUT 
       $action, 
       inserted.project_id,

@@ -42,6 +42,7 @@ begin
     select [id]
     from [metadata].[project]
     where [name] = @project
+      and [deleted] is null
   )
   if (@project_id is null)
   begin

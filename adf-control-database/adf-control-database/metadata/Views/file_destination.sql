@@ -31,4 +31,7 @@ CREATE VIEW [metadata].[file_destination]
   JOIN [metadata].[file_service] dfs on m.[destination_service_id] = dfs.[id]
   JOIN [metadata].[file] df on m.[destination_id] = df.[id]
   JOIN [metadata].[dataset_type] dt on m.[destination_type_id] = dt.[id]
-  WHERE dt.name = 'file' 
+  WHERE dt.name = 'file'
+    and m.[deleted] is null
+    and dfs.[deleted] is null
+    and df.[deleted] is null 

@@ -7,8 +7,8 @@ CREATE VIEW [metadata].[database_destination]
     dds.[stage],
     dds.[name],
     dds.[database],
-    dds.[schema],
     dds.[service_account],
+    dt.[schema],
     dt.[table],
     dt.[select],
     dt.[where],
@@ -19,4 +19,7 @@ CREATE VIEW [metadata].[database_destination]
   JOIN [metadata].[database_table] dt on m.[destination_id] = dt.[id]
   JOIN [metadata].[dataset_type] t on m.[destination_type_id] = t.[id]
   WHERE t.name = 'rdbms' 
+    and m.[deleted] is null
+    and dt.[deleted] is null
+    and dds.[deleted] is null
 

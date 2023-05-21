@@ -8,7 +8,7 @@ create table [stage].[file]
   [imported_by] varchar(200),
   [project] varchar(250) not null,  
   [file]	varchar(100) not null,
-  [ext]	varchar(5) not null,
+  [ext]	varchar(15) not null,
   [frequency]	varchar(15) not null,
   [utc_time]	time not null,
   [linked_service]	varchar(100) null,

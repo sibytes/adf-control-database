@@ -40,4 +40,6 @@ AS
   where p.[id]      = @process_id
     and s.[status]  = 'EXECUTING'
     and m.[enabled] = 1
+    and m.[deleted] is null
+    and r.[deleted] is null
 

@@ -48,6 +48,10 @@ begin
         p.[modified]       = getutcdate(),
         p.[modified_by]    = suser_sname()
     from [ops].[process] p
+    join [metadata].[map] m on p.[map_id] = m.[id]
+    join [metadata].[project] r on m.[project_id] = m.[project_id]
+    where r.[name] = @project
+      and m.[process_group] = @process_group
   end
 
   if (@restart = 0)
@@ -60,6 +64,8 @@ begin
     join [metadata].[project] r on m.[project_id] = r.[id]
     where r.[name]          = @project
       and m.[process_group] = @process_group 
+      and m.[deleted] is null
+      and r.[deleted] is null
 
     -- add the new run.
     insert into [ops].[process](
@@ -81,6 +87,8 @@ begin
     where m.[enabled] = 1
       and m.[process_group] = @process_group
       and r.[name] = @project
+      and m.[deleted] is null
+      and r.[deleted] is null
   end
 
 end

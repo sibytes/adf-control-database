@@ -14,6 +14,6 @@ create table [ops].[process_history]
   [modified]	datetime not null,
   [created_by] varchar(150) not null,
   [modified_by] varchar(150) not null,
-  [saved] datetime not null default(getdate()),
+  [saved] datetime not null default(getutcdate()),
   [saved_by] varchar(150) not null default(suser_sname())
 )

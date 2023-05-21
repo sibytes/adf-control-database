@@ -25,14 +25,15 @@ BEGIN
       FROM [stage].[project] sp
       WHERE sp.[import_batch_id] = @@import_batch_id
         AND sp.[imported] IS null
-    ) as src ON tgt.[name] = src.[name] and tgt.[deleted] is null
+    ) as src ON tgt.[name] = src.[name]
     WHEN MATCHED THEN
         UPDATE SET 
-          [name]            = src.[name],
-          [description]     = src.[description],
-          [enabled]         = src.[enabled],
-          [modified]     = getdate(),
-          [modified_by]     = suser_sname()
+          [name]         = src.[name],
+          [description]  = src.[description],
+          [enabled]      = src.[enabled],
+          [modified]     = getutcdate(),
+          [modified_by]  = suser_sname(),
+          [deleted]      = null
     WHEN NOT MATCHED THEN  
         INSERT (
           [name],
@@ -45,6 +46,11 @@ BEGIN
           src.[description],
           src.[enabled]
         )
+    -- WHEN NOT MATCHED BY SOURCE THEN
+    --     UPDATE SET
+    --       [deleted]       = getutcdate(),
+    --       [modified]      = getutcdate(),
+    --       [modified_by]   = suser_sname()
     OUTPUT $action, inserted.name, inserted.id, inserted.modified, inserted.modified_by intO @imported;
 
     UPDATE sp

@@ -10,7 +10,6 @@ create table [stage].[database_service]
   [stage] varchar(100) not null,
   [name]	varchar(100) not null,
   [database] varchar(132) not null,
-  [schema]	varchar(132) not null,
   [service_account] varchar(150) not null,
   constraint pk_stage_database_service_id primary key clustered ([id])
 )

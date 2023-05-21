@@ -14,6 +14,8 @@ Post-Deployment Script Template
 GO
 :r ./header_footer.sql
 GO
+:r ./ad_works_lt.sql
+GO
 -- :r ./test_project.sql
 -- GO
 -- :r ./test_metadata.sql

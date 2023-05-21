@@ -1,6 +1,7 @@
 CREATE PROCEDURE [import].[file]
 (
-  @@import_batch_id uniqueidentifier
+  @@import_batch_id uniqueidentifier,
+  @@project varchar(150)
 )
 AS
 BEGIN
@@ -16,6 +17,11 @@ BEGIN
       [modified_by] varchar(200) not null
     )
 
+    declare @project_id int = (
+      SELECT [id] 
+      FROM [metadata].[project]
+      WHERE [name] = @@project
+    )
 
     MERGE [metadata].[file] AS tgt  
     USING (
@@ -39,7 +45,8 @@ BEGIN
       JOIN [metadata].[project] p on s.[project] = p.[name]
       WHERE s.[import_batch_id] = @@import_batch_id
         AND s.[imported] IS null
-    ) as src ON tgt.[file] = src.[file] and tgt.[deleted] is null
+    ) as src ON tgt.[file]       = src.[file]
+            and tgt.[project_id] = src.[project_id]
     WHEN MATCHED THEN
         UPDATE SET 
           [project_id]            = src.[project_id],
@@ -57,8 +64,9 @@ BEGIN
           [quote_character]       = src.[quote_character],
           [first_row_as_header]   = src.[first_row_as_header],
           [null_value]            = src.[null_value],
-          [modified]              = getdate(),
-          [modified_by]           = suser_sname()
+          [modified]              = getutcdate(),
+          [modified_by]           = suser_sname(),
+          [deleted]               = null
     WHEN NOT MATCHED THEN  
         INSERT (
         [project_id]
@@ -95,6 +103,12 @@ BEGIN
           ,src.[first_row_as_header]
           ,src.[null_value]
         )
+    WHEN NOT MATCHED BY SOURCE AND tgt.project_id = @project_id THEN
+        UPDATE SET
+          [deleted]       = getutcdate(),
+          [modified]      = getutcdate(),
+          [modified_by]   = suser_sname()
+    
     OUTPUT $action, inserted.[file], inserted.id, inserted.modified, inserted.modified_by intO @imported;
 
     UPDATE sp

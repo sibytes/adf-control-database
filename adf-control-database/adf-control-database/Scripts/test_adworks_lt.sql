@@ -1,6 +1,6 @@
 
 DECLARE  @@adf_process_id uniqueidentifier = newid()
-DECLARE  @@project varchar(250) = 'header_footer'
+DECLARE  @@project varchar(250) = 'ad_works_lt'
 DECLARE  @@process_group varchar(250) = 'default'
 DECLARE  @@from_period datetime = convert(datetime, '2023-01-01', 120)
 DECLARE  @@to_period datetime = convert(datetime, '2023-01-01', 120)
@@ -21,7 +21,7 @@ SELECT * FROM ops.process
 
 SELECT parameters FROM ops.process_history
 
-DECLARE  @project varchar(250) = 'header_footer'
+DECLARE  @project varchar(250) = 'ad_works_lt'
 DECLARE  @process_group varchar(250) = 'default'
 exec [ops].[get_processes]
   @project = @project,
@@ -31,7 +31,7 @@ SELECT * FROM ops.process
 update ops.process set status_id = 1
 
 
-DECLARE  @@process_id int = 1
+DECLARE  @@process_id int = 9
 exec [ops].[get_process] @process_id = @@process_id
 SELECT * FROM ops.process
 
