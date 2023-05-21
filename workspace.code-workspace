@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"name": "adf-control-database",
+			"path": "."
+		}
+	],
+	"settings": {
+		"dataworkspace.excludedProjects": []
+	}
+}
