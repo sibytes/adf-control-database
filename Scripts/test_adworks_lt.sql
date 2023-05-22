@@ -31,7 +31,7 @@ SELECT * FROM ops.process
 update ops.process set status_id = 1
 
 
-DECLARE  @@process_id int = 9
+DECLARE  @@process_id int = 1
 exec [ops].[get_process] @process_id = @@process_id
 SELECT * FROM ops.process
 

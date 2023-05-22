@@ -1,13 +1,13 @@
 
 DECLARE @ibi uniqueidentifier = newid()
-DECLARE @project varchar(250) = 'ad_works_lt'
+DECLARE @project varchar(250) = 'ad_works_lt_json'
 
 DECLARE @tables table (table_name varchar(132), file_name varchar(132))
 INSERT INTO @tables (table_name, file_name)
 VALUES
 ('Address'                        ,'address'),
 ('Customer'                       ,'customer'),
-('CustomerAddress'                ,'customer-ddress'),
+('CustomerAddress'                ,'customer-address'),
 ('Product'                        ,'product'),
 ('ProductCategory'                ,'product-category'),
 ('ProductDescription'             ,'product-description'),
@@ -16,7 +16,6 @@ VALUES
 ('SalesOrderDetail'               ,'sales-order-detail'),
 ('SalesOrderHeader'               ,'sales-order-header');
 
-
 INSERT intO [stage].[project](
   [import_batch_id],
   [name],
@@ -24,7 +23,7 @@ INSERT intO [stage].[project](
   [enabled]
 )
 VALUES
-  (@ibi, @project, 'adventure works lightweight  - adventure works LT ingest', 1);
+  (@ibi, @project, 'adventure works lightweight  - adventure works LT json ingest', 1);
 
 
 INSERT INTO [stage].[database_service](
@@ -71,7 +70,7 @@ INSERT INTO [stage].[file_service](
   [filename_date_format]
 )
 VALUES
-(@ibi, @project, 'Landing AD Works LT', 'landing', '/mnt', 'landing', '/data/' + @project + '/{{table}}/{{path_date_format}}', '{{table}}-{{filename_date_format}}*', 'sa_test', 'yyyyMMdd', 'yyyyMMdd');
+(@ibi, @project, 'Landing AD Works LT', 'landing', '/mnt', 'landing', '/data/' + @project + '/json/{{table}}/{{path_date_format}}', '{{table}}-{{filename_date_format}}', 'sa_test', 'yyyyMMdd', 'yyyyMMdd');
 
 INSERT intO [stage].[file](
   [import_batch_id],
@@ -94,12 +93,12 @@ INSERT intO [stage].[file](
 SELECT
   [import_batch_id]     = @ibi,
   [project]             = @project,
-  [file]                = file_name,
-  [ext]                 = 'parquet', 
+  [file]                = t.file_name,
+  [ext]                 = 'json', 
   [frequency]           = 'daily', 
   [utc_time]            = cast('09:00:00' as time), 
-  [first_row_as_header] =0
-FROM @tables
+  [first_row_as_header] = 0
+FROM @tables t
 
 INSERT intO [stage].[map](
   [import_batch_id],

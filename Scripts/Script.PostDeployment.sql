@@ -14,7 +14,9 @@ Post-Deployment Script Template
 GO
 :r ./header_footer.sql
 GO
-:r ./ad_works_lt.sql
+:r ./ad_works_lt_json.sql
+GO
+:r ./ad_works_lt_parquet.sql
 GO
 -- :r ./test_project.sql
 -- GO
