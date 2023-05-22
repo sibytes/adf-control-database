@@ -62,6 +62,7 @@ RETURN
         d.[database],
         d.[schema],
         d.[service_account],
+        d.[secret_name],
         d.[table],
         d.[select],
         d.[where],

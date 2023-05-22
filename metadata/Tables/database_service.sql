@@ -6,6 +6,7 @@ create table [metadata].[database_service]
   [name] varchar(100) not null,
   [database] varchar(132) not null,
   [service_account] varchar(150) not null,
+  [secret_name] varchar(150) not null,
   [created]         datetime       default (getutcdate()) not null,
   [modified]        datetime       default (getutcdate()) not null,
   [deleted]         datetime       null,

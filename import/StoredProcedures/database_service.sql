@@ -30,7 +30,8 @@ BEGIN
         s.[stage],
         s.[name],
         s.[database],
-        s.[service_account]
+        s.[service_account],
+        s.[secret_name]
       FROM [stage].[database_service] s
       JOIN [metadata].[project] p on s.[project] = p.[name]
       WHERE s.[import_batch_id] = @@import_batch_id
@@ -44,6 +45,7 @@ BEGIN
           [name]                  = src.[name],
           [database]              = src.[database],
           [service_account]       = src.[service_account],
+          [secret_name]           = src.[secret_name],
           [modified]              = getutcdate(),
           [modified_by]           = suser_sname(),
           [deleted]               = null
@@ -53,7 +55,8 @@ BEGIN
           [stage],
           [name],
           [database],
-          [service_account]
+          [service_account],
+          [secret_name]
         )  
         VALUES
         (
@@ -61,7 +64,8 @@ BEGIN
           src.[stage],
           src.[name],
           src.[database],
-          src.[service_account]
+          src.[service_account],
+          src.[secret_name]
         )
     WHEN NOT MATCHED BY SOURCE AND tgt.project_id = @project_id THEN
         UPDATE SET

@@ -1,6 +1,6 @@
 
 DECLARE  @@adf_process_id uniqueidentifier = newid()
-DECLARE  @@project varchar(250) = 'ad_works_lt'
+DECLARE  @@project varchar(250) = 'ad_works_lt_parquet'
 DECLARE  @@process_group varchar(250) = 'default'
 DECLARE  @@from_period datetime = convert(datetime, '2023-01-01', 120)
 DECLARE  @@to_period datetime = convert(datetime, '2023-01-01', 120)
@@ -47,3 +47,6 @@ SELECT * FROM ops.process
 DECLARE  @@process_id int = 5
 exec [metadata].[finish_process] @@process_id = @@process_id, @@succeeded = 0
 SELECT * FROM ops.process
+
+
+select * from metadata.[map]

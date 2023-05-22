@@ -32,10 +32,11 @@ INSERT INTO [stage].[database_service](
   [stage],
   [name],
   [database],
-  [service_account]
+  [service_account],
+  [secret_name]
 )
 VALUES
-(@ibi, @project, 'source', 'Source AD Works LT', 'AdventureWorksLT2019', 'adf');
+(@ibi, @project, 'source', 'Source AD Works LT', 'AdventureWorksLT2019', 'adf', 'ADVENTURE-WORKS-LT');
 
 
 INSERT INTO [stage].[database_table](
@@ -70,7 +71,7 @@ INSERT INTO [stage].[file_service](
   [filename_date_format]
 )
 VALUES
-(@ibi, @project, 'Landing AD Works LT', 'landing', '/mnt', 'landing', '/data/' + @project + '/parquet/{{table}}/{{path_date_format}}', '{{table}}-{{filename_date_format}}', 'sa_test', 'yyyyMMdd', 'yyyyMMdd');
+(@ibi, @project, 'Landing AD Works LT', 'landing', '/mnt', 'landing', '/data/ad_works_lt/parquet/{{table}}/{{path_date_format}}', '{{table}}-{{filename_date_format}}', 'sa_test', 'yyyyMMdd', 'yyyyMMdd');
 
 INSERT intO [stage].[file](
   [import_batch_id],

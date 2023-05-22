@@ -18,6 +18,10 @@ GO
 GO
 :r ./ad_works_lt_parquet.sql
 GO
+:r ./ad_works_json.sql
+GO
+:r ./ad_works_parquet.sql
+GO
 -- :r ./test_project.sql
 -- GO
 -- :r ./test_metadata.sql

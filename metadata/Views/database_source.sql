@@ -8,6 +8,7 @@ CREATE VIEW [metadata].[database_source]
     sds.[name],
     sds.[database],
     sds.[service_account],
+    sds.[secret_name],
     st.[schema],
     st.[table],
     st.[select],

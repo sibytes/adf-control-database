@@ -48,15 +48,15 @@ BEGIN
       JOIN [metadata].[dataset_type] st on s.[source_type] = st.[name]
       JOIN [metadata].[dataset_type] dt on s.[destination_type] = dt.[name]
       -- source
-      LEFT JOIN [metadata].[database_service] sds on s.[source_service] = sds.[name]
-      LEFT JOIN [metadata].[file_service] sfs on s.[source_service] = sfs.[name]
-      LEFT JOIN [metadata].[database_table] sdt on s.[source] = sdt.[table]
-      LEFT JOIN [metadata].[file] sf on s.[source] = sf.[file]
+      LEFT JOIN [metadata].[database_service] sds on s.[source_service] = sds.[name]  and p.[id] = sds.[project_id]
+      LEFT JOIN [metadata].[file_service]     sfs on s.[source_service] = sfs.[name]  and p.[id] = sfs.[project_id]
+      LEFT JOIN [metadata].[database_table]   sdt on s.[source]         = sdt.[table] and p.[id] = sdt.[project_id]
+      LEFT JOIN [metadata].[file]              sf on s.[source]         = sf.[file]   and p.[id] =  sf.[project_id]
       -- destination
-      LEFT JOIN [metadata].[database_service] dds on s.[destination_service] = dds.[name]
-      LEFT JOIN [metadata].[file_service] dfs on s.[destination_service] = dfs.[name]
-      LEFT JOIN [metadata].[database_table] ddt on s.[destination] = ddt.[table]
-      LEFT JOIN [metadata].[file] df on s.[destination] = df.[file]
+      LEFT JOIN [metadata].[database_service] dds on s.[destination_service] = dds.[name]  and p.[id] = dds.[project_id]
+      LEFT JOIN [metadata].[file_service]     dfs on s.[destination_service] = dfs.[name]  and p.[id] = dfs.[project_id]
+      LEFT JOIN [metadata].[database_table]   ddt on s.[destination]         = ddt.[table] and p.[id] = ddt.[project_id]
+      LEFT JOIN [metadata].[file]              df on s.[destination]         =  df.[file]  and p.[id] =  df.[project_id]
       ---
       WHERE s.[import_batch_id] = @@import_batch_id
         AND s.[imported] IS null
