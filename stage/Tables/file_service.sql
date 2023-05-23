@@ -14,7 +14,7 @@ create table [stage].[file_service]
   [directory]	varchar(500) null,
   [filename]	varchar(200) null,
   [service_account]	varchar(150) not null,
-  [path_date_format]	varchar(23) not null,
-  [filename_date_format]	varchar(23) not null,
+  [directory_timeslice_format]	varchar(23) not null,
+  [filename_timeslice_format]	varchar(23) not null,
   constraint pk_stage_file_service_id primary key clustered ([id])
 )

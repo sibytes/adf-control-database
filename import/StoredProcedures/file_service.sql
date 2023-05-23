@@ -34,8 +34,8 @@ BEGIN
         s.[directory],
         s.[filename],
         s.[service_account],
-        s.[path_date_format],
-        s.[filename_date_format]
+        s.[directory_timeslice_format],
+        s.[filename_timeslice_format]
       FROM [stage].[file_service] s
       JOIN [metadata].[project] p on s.[project] = p.[name]
       WHERE s.[import_batch_id] = @@import_batch_id
@@ -52,8 +52,8 @@ BEGIN
           [directory]             = src.[directory],
           [filename]              = src.[filename],
           [service_account]       = src.[service_account],
-          [path_date_format]      = src.[path_date_format],
-          [filename_date_format]  = src.[filename_date_format],
+          [directory_timeslice_format]      = src.[directory_timeslice_format],
+          [filename_timeslice_format]  = src.[filename_timeslice_format],
           [modified]              = getutcdate(),
           [modified_by]           = suser_sname(),
           [deleted]               = null
@@ -67,8 +67,8 @@ BEGIN
           [directory],
           [filename],
           [service_account],
-          [path_date_format],
-          [filename_date_format]
+          [directory_timeslice_format],
+          [filename_timeslice_format]
         )  
         VALUES
         (
@@ -80,8 +80,8 @@ BEGIN
           src.[directory],
           src.[filename],
           src.[service_account],
-          src.[path_date_format],
-          src.[filename_date_format]
+          src.[directory_timeslice_format],
+          src.[filename_timeslice_format]
         )
     WHEN NOT MATCHED BY SOURCE AND tgt.project_id = @project_id THEN
         UPDATE SET

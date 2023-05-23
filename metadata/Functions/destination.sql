@@ -15,19 +15,19 @@ RETURN
       f.[name],
       f.[root],
       f.[container],
-      replace(
+      replace(replace(
         f.[directory], 
-        '{{path_date_format}}', 
-        format(@from_timeslice, f.[path_date_format])
-      ) as [directory],
-      replace(
+        '{{from_timeslice}}', format(@from_timeslice, f.[directory_timeslice_format])), 
+        '{{to_timeslice}}'  , format(@to_timeslice,   f.[directory_timeslice_format])) 
+      as [directory],
+      replace(replace(
         f.[filename],
-         '{{filename_date_format}}', 
-        format(@from_timeslice, f.[filename_date_format])
-      ) as [filename],
+        '{{from_timeslice}}', format(@from_timeslice, f.[filename_timeslice_format])),
+        '{{to_timeslice}}'  , format(@to_timeslice,   f.[directory_timeslice_format]))
+      as [filename],
       f.[service_account],
-      f.[path_date_format],
-      f.[filename_date_format],
+      f.[directory_timeslice_format],
+      f.[filename_timeslice_format],
       f.[file],
       f.[ext],
       f.[frequency],

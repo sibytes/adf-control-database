@@ -21,12 +21,12 @@ INSERT intO [stage].[file_service](
   [directory],
   [filename],
   [service_account],
-  [path_date_format],
-  [filename_date_format]
+  [directory_timeslice_format],
+  [filename_timeslice_format]
 )
 VALUES
-  (@ibi, @project, 'source' , 'Source Customer Details', '/mnt', 'source' , '/data/' + @project , '{{table}}-{{filename_date_format}}*', 'sa_test', 'yyyyMMdd', 'yyyyMMdd'),
-  (@ibi, @project, 'landing', 'Landing Customer Details', '/mnt', 'landing', '/data/' + @project + '/{{table}}/{{path_date_format}}', '{{table}}-{{filename_date_format}}*', 'sa_test', 'yyyyMMdd', 'yyyyMMdd');
+  (@ibi, @project, 'source' , 'Source Customer Details', '/mnt', 'source' , '/data/' + @project , '{{table}}-{{from_timeslice}}*', 'sa_test', 'yyyyMMdd', 'yyyyMMdd'),
+  (@ibi, @project, 'landing', 'Landing Customer Details', '/mnt', 'landing', '/data/' + @project + '/{{table}}/{{from_timeslice}}', '{{table}}-{{from_timeslice}}*', 'sa_test', 'yyyyMMdd', 'yyyyMMdd');
 
 INSERT intO [stage].[file](
   [import_batch_id],
@@ -71,3 +71,70 @@ VALUES
   (@ibi, 1, @project, 'file', 'source', 'customerdetailscomplete', 'file', 'landing', 'customerdetailscomplete');
 
 EXEC [import].[import] @@import_batch_id=@ibi, @@project=@project
+
+GO
+
+declare  @@adf_process_id uniqueidentifier = newid()
+declare  @@project varchar(250) = 'header_footer'
+declare  @@from_period datetime = convert(datetime, '2023-01-01', 120)
+declare  @@restart bit = 0
+declare  @@expected_mappings int = 4
+declare  @@actual int
+declare  @@msg varchar(500)
+
+-- test mappings
+set @@actual = (
+  select count(*) 
+  from metadata.map m
+  join metadata.project p on m.[project_id] = p.[id]
+  where p.[name] = @@project
+)
+-- print cast(@@actual as varchar)
+if @@actual!=@@expected_mappings
+begin
+  set @@msg = 'expected number of metadata.map items isn''t correct for project ' + @@project
+  ;throw 50001, @@msg, 1
+end
+
+-- test initialise
+exec [ops].[intialise_process]
+  @adf_process_id = @@adf_process_id,
+  @project        = @@project,
+  @from_period    = @@from_period,
+  @restart        = @@restart
+
+set @@actual = (
+  select count(*) 
+  from [ops].[process] op
+  join [metadata].[map] m on op.[map_id] = m.[id]
+  join [metadata].[project] p on m.[project_id] = p.[id]
+  where p.[name] = @@project
+)
+if @@actual!=@@expected_mappings
+begin
+  set @@msg = 'expected number of ops.process items isn''t correct for project ' + @@project
+  ;throw 50001, @@msg, 1
+end
+
+
+-- test get processes
+declare @processes table (process_id int, map_id int, project_id int, project_name varchar(250), process_group varchar(250))
+insert into @processes
+exec [ops].[get_processes]
+  @project = @@project
+
+set @@actual = (
+  select count(*) 
+  from @processes
+)
+if @@actual!=@@expected_mappings
+begin
+  set @@msg = 'expected number of [ops].[get_processes] items isn''t correct for project ' + @@project
+  ;throw 50001, @@msg, 1
+end
+
+-- test get process
+declare @process_id int = (
+  select top 1 process_id 
+  from @processes)
+exec [ops].[get_process] @process_id = @process_id

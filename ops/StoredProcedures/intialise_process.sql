@@ -1,13 +1,13 @@
 create procedure [ops].[intialise_process](
-  @adf_process_id varchar(50) = null,
-  @project varchar(250),
-  @from_period datetime,
-  @to_period datetime = null,
-  @partition varchar(10) = 'day',
-  @parition_increment  int = 1,
-  @process_group varchar(250) = 'default',
-  @parameters nvarchar(max)='{}',
-  @restart bit = 1
+  @project            varchar(250),
+  @adf_process_id     varchar(50) = null,
+  @from_period        datetime = null,
+  @to_period          datetime = null,
+  @partition          varchar(10) = 'day',
+  @parition_increment int = 1,
+  @process_group      varchar(250) = 'default',
+  @parameters         nvarchar(max)='{}',
+  @restart            bit = 1
 )
 AS
 begin
@@ -15,26 +15,30 @@ begin
   set xact_abort on
 
   declare @_from_period datetime = coalesce(@from_period, getutcdate())
-  declare @_to_period datetime = coalesce(@to_period, @from_period)
+  declare @_to_period datetime = coalesce(@to_period, @_from_period)
   declare @l_from_period table (from_period datetime)
   declare @timeslice table (from_timeslice datetime, to_timeslice datetime)
   declare @to_timeslice datetime
 
-
-  while @_from_period < @_to_period
+  if (@parition_increment > 0 and @_to_period > @_from_period)
   begin
-      declare @sql nvarchar(max) = 'select dateadd('+@partition+','+cast(@parition_increment as varchar(10))+','''+convert(varchar, @_from_period, 120) +''')'
-      delete from @l_from_period
-      insert into @l_from_period
-      execute sp_executesql @sql
-      set @to_timeslice = (select top 1 from_period from @l_from_period)
+    while @_from_period < @_to_period
+    begin
+        declare @sql nvarchar(max) = 'select dateadd('+@partition+','+cast(@parition_increment as varchar(10))+','''+convert(varchar, @_from_period, 120) +''')'
+        delete from @l_from_period
+        insert into @l_from_period
+        execute sp_executesql @sql
+        set @to_timeslice = (select top 1 from_period from @l_from_period)
 
-      insert into @timeslice (
-          [from_timeslice],
-          [to_timeslice]
-          )
-      select @_from_period, @to_timeslice
-      set @_from_period = @to_timeslice
+        insert into @timeslice ([from_timeslice], [to_timeslice])
+        select @_from_period, @to_timeslice
+        set @_from_period = @to_timeslice
+    end
+  end
+  else
+  begin
+    insert into @timeslice ([from_timeslice], [to_timeslice])
+    select @_from_period, @_to_period
   end
 
   declare @_adf_process_id varchar(50) = coalesce(@adf_process_id, cast(newid() as varchar(50)))

@@ -12,6 +12,8 @@ Post-Deployment Script Template
 
 :r ./reference_data.sql
 GO
+:r ./test_project.sql
+GO
 :r ./header_footer.sql
 GO
 :r ./ad_works_lt_json.sql
@@ -22,10 +24,4 @@ GO
 GO
 :r ./ad_works_parquet.sql
 GO
--- :r ./test_project.sql
--- GO
--- :r ./test_metadata.sql
--- GO
--- -- run the unit tests
--- :r ./test.sql
--- GO
+
