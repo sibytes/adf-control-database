@@ -6,7 +6,7 @@ DECLARE @tables table (schema_name varchar(132), table_name varchar(132))
 INSERT INTO @tables (schema_name, table_name)
 VALUES
 ('HumanResources','Department'                        ),
-('HumanResources','_vEmployee'                          ),
+('HumanResources','Employee'                          ),
 ('HumanResources','EmployeeDepartmentHistory'         ),
 ('HumanResources','EmployeePayHistory'                ),
 ('HumanResources','JobCandidate'                      ),
@@ -113,6 +113,20 @@ SELECT
   [schema]          = [schema_name], 
   [table]           = [table_name]
 from @tables
+where [table_name] != 'employee'
+
+INSERT INTO [stage].[database_table](
+  [import_batch_id],
+  [project],
+  [type],
+  [schema],
+  [table],
+  [select]--,
+  -- [where],
+  -- [partition]
+)
+values
+(@ibi, @project, 'query', 'HumanResources', 'Employee', '[BusinessEntityID], [NationalIDNumber], [LoginID], cast([OrganizationNode] as varbinary) as [OrganizationNode], [OrganizationLevel], [JobTitle], [BirthDate], [MaritalStatus], [Gender], [HireDate], [SalariedFlag], [VacationHours], [SickLeaveHours], [CurrentFlag], [rowguid], [ModifiedDate]')
 
 
 INSERT INTO [stage].[file_service](

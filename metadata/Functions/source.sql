@@ -1,6 +1,7 @@
 create FUNCTION [metadata].[source] (
     @map_id int,
-    @timeslice datetime
+    @from_timeslice datetime,
+    @to_timeslice datetime
 )
 RETURNS TABLE
 AS
@@ -17,12 +18,12 @@ RETURN
       replace(
         fs.[directory], 
         '{{path_date_format}}', 
-        format(@timeslice, fs.[path_date_format])
+        format(@from_timeslice, fs.[path_date_format])
       ) as [directory],
       replace(
         fs.[filename],
          '{{filename_date_format}}', 
-        format(@timeslice, fs.[filename_date_format])
+        format(@from_timeslice, fs.[filename_date_format])
       ) as [filename],
       fs.[service_account],
       fs.[path_date_format],
@@ -64,7 +65,11 @@ RETURN
         ds.[secret_name],
         ds.[table],
         ds.[select],
-        ds.[where],
+        replace(replace(
+          ds.[where],
+          '{{from_timeslice}}',convert(varchar(23), @from_timeslice, 120)), 
+          '{{to_timeslice}}'  ,convert(varchar(23), @to_timeslice  , 120)) 
+        as [Where],
         ds.[type],
         ds.[partition]
       FROM [metadata].[database_source] ds

@@ -35,8 +35,8 @@ AS
   join [metadata].[map]                      m   on p.[map_id]     = m.[id]
   join [metadata].[project]                  r   on m.[project_id] = r.[id]
   join [ops].[status]                        s   on s.[id]         = p.[status_id]
-  cross apply [metadata].[source](m.[id], p.timeslice) src
-  cross apply [metadata].[destination](m.[id], p.timeslice) dst
+  cross apply [metadata].[source](m.[id], p.from_timeslice, p.to_timeslice) src
+  cross apply [metadata].[destination](m.[id], p.from_timeslice, p.to_timeslice) dst
   where p.[id]      = @process_id
     and s.[status]  = 'EXECUTING'
     and m.[enabled] = 1
