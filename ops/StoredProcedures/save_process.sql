@@ -6,6 +6,8 @@ begin
 
   insert into [ops].[process_history] (
     [process_id],
+    [project_id],
+    [process_group],
     [map_id],
     [adf_process_id],
     [status_id],
@@ -22,6 +24,8 @@ begin
   )
   select
     p.[id],
+    p.[project_id],
+    p.[process_group],
     p.[map_id],
     p.[adf_process_id],
     p.[status_id],

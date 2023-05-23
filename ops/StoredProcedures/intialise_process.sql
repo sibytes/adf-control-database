@@ -79,6 +79,8 @@ begin
     -- add the new run.
     insert into [ops].[process](
       [map_id],
+      [project_id],
+      [process_group],
       [adf_process_id],
       [status_id],
       [from_timeslice],
@@ -87,6 +89,8 @@ begin
     )
     select
       m.[id],
+      m.[project_id],
+      m.[process_group],
       @_adf_process_id as [adf_process_id],
       @waiting         as [status_id],
       t.from_timeslice as [from_timeslice],

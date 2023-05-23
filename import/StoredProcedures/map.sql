@@ -36,11 +36,23 @@ BEGIN
         p.[id] as [project_id],
         s.[process_group],
         st.[id] as [source_type_id],
-        coalesce(sfs.[id], sds.[id]) as [source_service_id],
-        coalesce(sf.id, sdt.id) as [source_id],
+        case s.[source_type]
+          when 'rdbms' then sds.[id]
+          when 'file' then sfs.[id]
+        end as [source_service_id],
+        case s.[source_type]
+          when 'rdbms' then sdt.[id]
+          when 'file' then sf.[id]
+        end as [source_id],
         dt.[id] as [destination_type_id],
-        coalesce(dfs.id, dds.id) as [destination_service_id],
-        coalesce(df.id, ddt.id) as [destination_id],
+        case s.[destination_type]
+          when 'rdbms' then dds.[id]
+          when 'file' then dfs.[id]
+        end as [destination_service_id],
+        case s.[destination_type]
+          when 'rdbms' then ddt.[id]
+          when 'file' then df.[id]
+        end as [destination_id],
         s.[enabled]
       FROM [stage].[map] s
       --
