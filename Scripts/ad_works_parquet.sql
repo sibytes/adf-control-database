@@ -260,6 +260,19 @@ begin
   ;throw 50001, @@msg, 1
 end
 
+-- test metadata
+set @@actual = (
+  select count(*) 
+  FROM [ops].[process_metadata]
+  where project_name = @@project
+)
+if @@actual!=@@expected_mappings
+begin
+  set @@msg = 'expected number of [ops].[process_metadata] items isn''t correct for project ' + @@project
+  ;throw 50001, @@msg, 1
+end
+
+
 -- test get process
 declare @process_id int = (
   select top 1 process_id 

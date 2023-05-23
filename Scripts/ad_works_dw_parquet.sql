@@ -1,20 +1,41 @@
 
 DECLARE @ibi uniqueidentifier = newid()
-DECLARE @project varchar(250) = 'ad_works_lt_json'
+DECLARE @project varchar(250) = 'ad_works_dw_parquet'
 
-DECLARE @tables table (table_name varchar(132), file_name varchar(132))
-INSERT INTO @tables (table_name, file_name)
+DECLARE @tables table (schema_name varchar(132), table_name varchar(132))
+INSERT INTO @tables (schema_name, table_name)
 VALUES
-('Address'                        ,'address'),
-('Customer'                       ,'customer'),
-('CustomerAddress'                ,'customer-address'),
-('Product'                        ,'product'),
-('ProductCategory'                ,'product-category'),
-('ProductDescription'             ,'product-description'),
-('ProductModel'                   ,'product-model'),
-('ProductModelProductDescription' ,'product-model-product-description'),
-('SalesOrderDetail'               ,'sales-order-detail'),
-('SalesOrderHeader'               ,'sales-order-header');
+-- ('dbo','AdventureWorksDWBuildVersion'                 ),
+-- ('dbo','DatabaseLog'                                  ),  
+('dbo','DimAccount'                                   ),  
+('dbo','DimCurrency'                                  ),  
+('dbo','DimCustomer'                                  ),  
+('dbo','DimDate'                                      ),
+('dbo','DimDepartmentGroup'                           ),         
+('dbo','DimEmployee'                                  ),  
+('dbo','DimGeography'                                 ),   
+('dbo','DimOrganization'                              ),      
+('dbo','DimProduct'                                   ), 
+('dbo','DimProductCategory'                           ),         
+('dbo','DimProductSubcategory'                        ),            
+('dbo','DimPromotion'                                 ),   
+('dbo','DimReseller'                                  ),  
+('dbo','DimSalesReason'                               ),     
+('dbo','DimSalesTerritory'                            ),        
+('dbo','DimScenario'                                  ),  
+('dbo','FactAdditionalInternationalProductDescription'),                                    
+('dbo','FactCallCenter'                               ),     
+('dbo','FactCurrencyRate'                             ),       
+('dbo','FactFinance'                                  ),  
+('dbo','FactInternetSales'                            ),        
+('dbo','FactInternetSalesReason'                      ),              
+('dbo','FactProductInventory'                         ),           
+('dbo','FactResellerSales'                            ),        
+('dbo','FactSalesQuota'                               ),     
+('dbo','FactSurveyResponse'                           ),         
+('dbo','NewFactCurrencyRate'                          ),          
+('dbo','ProspectiveBuyer'                             )--,       
+-- ('dbo','sysdiagrams'                                  )
 
 INSERT intO [stage].[project](
   [import_batch_id],
@@ -23,7 +44,7 @@ INSERT intO [stage].[project](
   [enabled]
 )
 VALUES
-  (@ibi, @project, 'adventure works lightweight  - adventure works LT json ingest', 1);
+  (@ibi, @project, 'adventure works dw  - adventure works dw parquet ingest', 1);
 
 
 INSERT INTO [stage].[database_service](
@@ -36,7 +57,7 @@ INSERT INTO [stage].[database_service](
   [secret_name]
 )
 VALUES
-(@ibi, @project, 'source', 'Source AD Works LT', 'AdventureWorksLT2019', 'adf', 'ADVENTURE-WORKS-LT');
+(@ibi, @project, 'source', 'Source AD Works dw', 'AdventureWorksDW2019', 'adf', 'ADVENTURE-WORKS-DW');
 
 
 INSERT INTO [stage].[database_table](
@@ -52,10 +73,9 @@ INSERT INTO [stage].[database_table](
 SELECT
   [import_batch_id] = @ibi,
   [project]         = @project,
-  [schema]          = 'SalesLT', 
+  [schema]          = [schema_name], 
   [table]           = [table_name]
 from @tables
-
 
 INSERT INTO [stage].[file_service](
   [import_batch_id],
@@ -71,7 +91,7 @@ INSERT INTO [stage].[file_service](
   [filename_timeslice_format]
 )
 VALUES
-(@ibi, @project, 'Landing AD Works LT', 'landing', '/mnt', 'landing', '/data/ad_works_lt/json/{{table}}/{{from_timeslice}}', '{{table}}-{{from_timeslice}}', 'sa_test', 'yyyyMMdd', 'yyyyMMdd');
+(@ibi, @project, 'Landing AD Works DW', 'landing', '/mnt', 'landing', '/data/ad_works_dw/json/{{table}}/{{from_timeslice}}', '{{table}}-{{from_timeslice}}', 'sa_test', 'yyyyMMdd', 'yyyyMMdd');
 
 INSERT intO [stage].[file](
   [import_batch_id],
@@ -94,8 +114,8 @@ INSERT intO [stage].[file](
 SELECT
   [import_batch_id]     = @ibi,
   [project]             = @project,
-  [file]                = t.file_name,
-  [ext]                 = 'json', 
+  [file]                = t.[schema_name] + '_' + t.[table_name],
+  [ext]                 = 'parquet', 
   [frequency]           = 'daily', 
   [utc_time]            = cast('09:00:00' as time), 
   [first_row_as_header] = 0
@@ -117,11 +137,11 @@ select
   [enabled]             = 1,
   [project]             = @project,
   [source_type]         = 'rdbms',
-  [source_service]      = 'Source AD Works LT',
+  [source_service]      = 'Source AD Works DW',
   [source]              = table_name,
   [destination_type]    = 'file',
-  [destination_service] = 'Landing AD Works LT',
-  [destination]         = file_name
+  [destination_service] = 'Landing AD Works DW',
+  [destination]         = [schema_name] + '_' + [table_name]
 from @tables
 
 
@@ -130,10 +150,10 @@ EXEC [import].[import] @@import_batch_id=@ibi, @@project=@project
 GO
 
 declare  @@adf_process_id uniqueidentifier = newid()
-declare  @@project varchar(250) = 'ad_works_lt_json'
+declare  @@project varchar(250) = 'ad_works_dw_parquet'
 declare  @@from_period datetime = convert(datetime, '2023-01-01', 120)
 declare  @@restart bit = 0
-declare  @@expected_mappings int = 10
+declare  @@expected_mappings int = 28
 declare  @@actual int
 declare  @@msg varchar(500)
 
@@ -200,9 +220,9 @@ begin
   ;throw 50001, @@msg, 1
 end
 
-
 -- test get process
 declare @process_id int = (
   select top 1 process_id 
   from @processes)
 exec [ops].[get_process] @process_id = @process_id
+

@@ -24,4 +24,9 @@ GO
 GO
 :r ./ad_works_parquet.sql
 GO
+:r ./ad_works_dw_json.sql
+GO
+:r ./ad_works_dw_parquet.sql
+GO
+
 

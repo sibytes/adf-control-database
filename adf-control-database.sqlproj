@@ -35,6 +35,8 @@
     <Build Remove="Scripts\ad_works_parquet.sql" />
     <Build Remove="Scripts\ad_works_json.sql" />
     <Build Remove="Scripts\troubleshoot.sql" />
+    <Build Remove="Scripts\ad_works_dw_json.sql" />
+    <Build Remove="Scripts\ad_works_dw_parquet.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\AzureV12\SqlSchemas\master.dacpac" Condition="'$(NetCoreBuild)' != 'true'">
