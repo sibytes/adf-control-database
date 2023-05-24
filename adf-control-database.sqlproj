@@ -23,20 +23,20 @@
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
-    <Build Remove="Scripts\test_project.sql" />
-    <Build Remove="Scripts\test.sql" />
-    <Build Remove="Scripts\header_footer.sql" />
+
     <Build Remove="Scripts\reference_data.sql" />
-    <Build Remove="Scripts\ad_works.sql" />
-    <Build Remove="Scripts\ad_works_lt.sql" />
-    <Build Remove="Scripts\test_adworks_lt.sql" />
-    <Build Remove="Scripts\ad_works_lt_json.sql" />
-    <Build Remove="Scripts\ad_works_lt_parquet.sql" />
-    <Build Remove="Scripts\ad_works_parquet.sql" />
-    <Build Remove="Scripts\ad_works_json.sql" />
     <Build Remove="Scripts\troubleshoot.sql" />
-    <Build Remove="Scripts\ad_works_dw_json.sql" />
-    <Build Remove="Scripts\ad_works_dw_parquet.sql" />
+    <Build Remove="Scripts\ad_works\ad_works_csv.sql" />
+    <Build Remove="Scripts\ad_works\ad_works_json.sql" />
+    <Build Remove="Scripts\ad_works\ad_works_parquet.sql" />
+    <Build Remove="Scripts\ad_works_dw\ad_works_dw_csv.sql" />
+    <Build Remove="Scripts\ad_works_dw\ad_works_dw_json.sql" />
+    <Build Remove="Scripts\ad_works_dw\ad_works_dw_parquet.sql" />
+    <Build Remove="Scripts\ad_works_lt\ad_works_lt_csv.sql" />
+    <Build Remove="Scripts\ad_works_lt\ad_works_lt_json.sql" />
+    <Build Remove="Scripts\ad_works_lt\ad_works_lt_parquet.sql" />
+    <Build Remove="Scripts\header_footer\header_footer.sql" />
+    <Build Remove="Scripts\test_project\test_project.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\AzureV12\SqlSchemas\master.dacpac" Condition="'$(NetCoreBuild)' != 'true'">

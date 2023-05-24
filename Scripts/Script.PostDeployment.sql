@@ -12,21 +12,27 @@ Post-Deployment Script Template
 
 :r ./reference_data.sql
 GO
-:r ./test_project.sql
+:r ./test_project/test_project.sql
 GO
-:r ./header_footer.sql
+:r ./header_footer/header_footer.sql
 GO
-:r ./ad_works_lt_json.sql
+:r ./ad_works_lt/ad_works_lt_json.sql
 GO
-:r ./ad_works_lt_parquet.sql
+:r ./ad_works_lt/ad_works_lt_parquet.sql
 GO
-:r ./ad_works_json.sql
+:r ./ad_works_lt/ad_works_lt_csv.sql
 GO
-:r ./ad_works_parquet.sql
+:r ./ad_works/ad_works_json.sql
 GO
-:r ./ad_works_dw_json.sql
+:r ./ad_works/ad_works_parquet.sql
 GO
-:r ./ad_works_dw_parquet.sql
+:r ./ad_works/ad_works_csv.sql
+GO
+:r ./ad_works_dw/ad_works_dw_json.sql
+GO
+:r ./ad_works_dw/ad_works_dw_parquet.sql
+GO
+:r ./ad_works_dw/ad_works_dw_csv.sql
 GO
 
 

@@ -1,12 +1,12 @@
 
 DECLARE @ibi uniqueidentifier = newid()
-DECLARE @project varchar(250) = 'ad_works_dw_parquet'
+DECLARE @project varchar(250) = 'ad_works_dw_csv'
 
 DECLARE @tables table (schema_name varchar(132), table_name varchar(132))
 INSERT INTO @tables (schema_name, table_name)
 VALUES
--- ('dbo','AdventureWorksDWBuildVersion'                 ),
--- ('dbo','DatabaseLog'                                  ),  
+-- ('dbo','AdventureWorksDWBuildVersion'              ),
+-- ('dbo','DatabaseLog'                               ),  
 ('dbo','DimAccount'                                   ),  
 ('dbo','DimCurrency'                                  ),  
 ('dbo','DimCustomer'                                  ),  
@@ -44,7 +44,7 @@ INSERT intO [stage].[project](
   [enabled]
 )
 VALUES
-  (@ibi, @project, 'adventure works dw  - adventure works dw parquet ingest', 1);
+  (@ibi, @project, 'adventure works dw  - adventure works dw csv ingest', 1);
 
 
 INSERT INTO [stage].[database_service](
@@ -91,7 +91,7 @@ INSERT INTO [stage].[file_service](
   [filename_timeslice_format]
 )
 VALUES
-(@ibi, @project, 'Landing AD Works DW', 'landing', '/mnt', 'landing', '/data/ad_works_dw/json/{{table}}/{{from_timeslice}}', '{{table}}-{{from_timeslice}}', 'sa_test', 'yyyyMMdd', 'yyyyMMdd');
+(@ibi, @project, 'Landing AD Works DW', 'landing', '/mnt', 'landing', '/data/ad_works_dw/csv/{{table}}/{{from_timeslice}}', '{{table}}-{{from_timeslice}}', 'sa_test', 'yyyyMMdd', 'yyyyMMdd');
 
 INSERT intO [stage].[file](
   [import_batch_id],
@@ -101,24 +101,32 @@ INSERT intO [stage].[file](
   [frequency],
   [utc_time],
   -- [linked_service],
-  -- [compression_type],
-  -- [compression_level],
-  -- [column_delimiter],
-  -- [row_delimiter],
-  -- [encoding],
-  -- [escape_character],
-  -- [quote_character],
-  [first_row_as_header]--,
-  -- [null_value]
+  [compression_type],
+  [compression_level],
+  [column_delimiter],
+  [row_delimiter],
+  [encoding],
+  [escape_character],
+  [quote_character],
+  [first_row_as_header],
+  [null_value]
 )
 SELECT
   [import_batch_id]     = @ibi,
   [project]             = @project,
   [file]                = t.[schema_name] + '_' + t.[table_name],
-  [ext]                 = 'parquet', 
+  [ext]                 = 'csv', 
   [frequency]           = 'daily', 
-  [utc_time]            = cast('09:00:00' as time), 
-  [first_row_as_header] = 0
+  [utc_time]            = cast('09:00:00' as time),
+  [compression_type]    = 'None',
+  [compression_level]   = 'optimal',
+  [column_delimiter]    = '|',
+  [row_delimiter]       = char(10),
+  [encoding]            = 'UTF-8',
+  [escape_character]    = '"',
+  [quote_character]     = '"',
+  [first_row_as_header] = 1,
+  [null_value]          = ''
 FROM @tables t
 
 INSERT intO [stage].[map](
@@ -150,7 +158,7 @@ EXEC [import].[import] @@import_batch_id=@ibi, @@project=@project
 GO
 
 declare  @@adf_process_id uniqueidentifier = newid()
-declare  @@project varchar(250) = 'ad_works_dw_parquet'
+declare  @@project varchar(250) = 'ad_works_dw_csv'
 declare  @@from_period datetime = convert(datetime, '2023-01-01', 120)
 declare  @@restart bit = 0
 declare  @@expected_mappings int = 28
@@ -159,12 +167,12 @@ declare  @@msg varchar(500)
 
 -- test mappings
 set @@actual = (
-  select count(*) 
+  select count(*)
   from metadata.map m
   join metadata.project p on m.[project_id] = p.[id]
   where p.[name] = @@project
 )
--- print cast(@@actual as varchar)
+print cast(@@actual as varchar)
 if @@actual!=@@expected_mappings
 begin
   set @@msg = 'expected number of metadata.map items isn''t correct for project ' + @@project
