@@ -1,4 +1,4 @@
-CREATE PROCEDURE [import].[file]
+create procedure [import].[file]
 (
   @@import_batch_id uniqueidentifier,
   @@project varchar(150)

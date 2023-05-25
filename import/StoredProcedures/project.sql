@@ -1,4 +1,4 @@
-CREATE PROCEDURE [import].[project]
+create procedure [import].[project]
 (
   @@import_batch_id uniqueidentifier
 )

@@ -1,15 +1,16 @@
 create procedure [ops].[intialise_process](
-  @project            varchar(250),
-  @adf_process_id     varchar(50) = null,
-  @from_period        datetime = null,
-  @to_period          datetime = null,
-  @partition          varchar(10) = 'day',
-  @parition_increment int = 1,
-  @process_group      varchar(250) = 'default',
-  @parameters         nvarchar(max)='{}',
-  @restart            bit = 1
+  @project                varchar(250),
+  @adf_process_id         varchar(50) = null,
+  @from_period            datetime = null,
+  @to_period              datetime = null,
+  @partition              varchar(10) = 'day',
+  @parition_increment     int = 1,
+  @process_group          varchar(250) = 'default',
+  @parameters             nvarchar(max)='{}',
+  @restart                bit = 1,
+  @delete_process_history  int = null
 )
-AS
+as
 begin
 
   set xact_abort on
@@ -19,6 +20,13 @@ begin
   declare @l_from_period table (from_period datetime)
   declare @timeslice table (from_timeslice datetime, to_timeslice datetime)
   declare @to_timeslice datetime
+
+  if @delete_process_history is not null
+  begin
+    exec [ops].[delete_process_history] @older_than_days=@delete_process_history, @project=@project
+  end
+
+
 
   if (@parition_increment > 0 and @_to_period > @_from_period)
   begin

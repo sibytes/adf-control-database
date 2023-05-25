@@ -8,13 +8,17 @@
     <ModelCollation>1033, CI</ModelCollation>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="dbo" />
+    <Folder Include="dbo\StoredProcedures" />
     <Folder Include="metadata\Functions" />
+    <Folder Include="metadata\StoredProcedures" />
     <Folder Include="metadata\Views" />
     <Folder Include="ops" />
     <Folder Include="ops\StoredProcedures" />
     <Folder Include="ops\Tables" />
     <Folder Include="ops\Views" />
     <Folder Include="Scripts" />
+    <Folder Include="stage\StoredProcedures" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
@@ -23,7 +27,6 @@
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
-
     <Build Remove="Scripts\reference_data.sql" />
     <Build Remove="Scripts\troubleshoot.sql" />
     <Build Remove="Scripts\ad_works\ad_works_csv.sql" />

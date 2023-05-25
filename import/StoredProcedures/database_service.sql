@@ -1,4 +1,4 @@
-CREATE PROCEDURE [import].[database_service]
+create procedure [import].[database_service]
 (
   @@import_batch_id uniqueidentifier,
   @@project varchar(150)

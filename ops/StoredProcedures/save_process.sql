@@ -1,4 +1,4 @@
-CREATE PROCEDURE [ops].[save_process]
+create procedure [ops].[save_process]
   @project varchar(250),
   @process_group varchar(250) = 'default'
 AS
