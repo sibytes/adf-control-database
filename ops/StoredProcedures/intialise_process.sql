@@ -21,7 +21,7 @@ begin
   declare @timeslice table (from_timeslice datetime, to_timeslice datetime)
   declare @to_timeslice datetime
 
-  if @delete_process_history is not null
+  if @delete_older_than_days is not null
   begin
     exec [ops].[delete_process_history] @older_than_days=@delete_older_than_days, @project=@project
   end

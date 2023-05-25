@@ -16,7 +16,7 @@ create table [stage].[file]
   [compression_level]	varchar(100) null,
   [column_delimiter]	char(1) null,
   [row_delimiter]	varchar(2) null,
-  [encoding]	varchar(10) not null default('utf-8'),
+  [encoding]	varchar(10) not null default('UTF-8'),
   [escape_character]	varchar(100) null,
   [quote_character]	varchar(100) null,
   [first_row_as_header]	bit not null,
