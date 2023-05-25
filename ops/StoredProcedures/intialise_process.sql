@@ -8,7 +8,7 @@ create procedure [ops].[intialise_process](
   @process_group          varchar(250) = 'default',
   @parameters             nvarchar(max)='{}',
   @restart                bit = 1,
-  @delete_process_history  int = null
+  @delete_older_than_days  int = null
 )
 as
 begin
@@ -23,7 +23,7 @@ begin
 
   if @delete_process_history is not null
   begin
-    exec [ops].[delete_process_history] @older_than_days=@delete_process_history, @project=@project
+    exec [ops].[delete_process_history] @older_than_days=@delete_older_than_days, @project=@project
   end
 
 
