@@ -41,10 +41,16 @@ INSERT intO [stage].[project](
   [import_batch_id],
   [name],
   [description],
-  [enabled]
+  [enabled],
+  [adf_landing_pipeline],
+  -- [delete_older_than_days],
+  [dbx_job_enabled],
+  [dbx_job_name]--,
+  -- [dbx_wait_until_done],
+  -- [dbx_api_wait_seconds]
 )
 VALUES
-  (@ibi, @project, 'adventure works dw  - adventure works dw csv ingest', 1);
+  (@ibi, @project, 'adventure works dw  - adventure works dw csv ingest', 1, 'op_sqls-to-landing_blbs_csv', 0, 'load_base_ad_works_dw');
 
 
 INSERT INTO [stage].[database_service](

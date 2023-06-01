@@ -6,10 +6,17 @@ INSERT intO [stage].[project](
   [import_batch_id],
   [name],
   [description],
-  [enabled]
+  [enabled],
+  [adf_landing_pipeline],
+  -- [delete_older_than_days],
+  [dbx_job_enabled],
+  [dbx_job_name]--,
+  -- [dbx_wait_until_done],
+  -- [dbx_api_wait_seconds]
 )
 VALUES
-  (@ibi, @project, 'Test Project', 1);
+  (@ibi, @project, 'Test Project', 1, 'blbs-to-landing_blbs_csv', 0, 'test_project');
+
 
 INSERT intO [stage].[file_service](
   [import_batch_id],

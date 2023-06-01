@@ -21,30 +21,54 @@ BEGIN
       SELECT 
         sp.[name],
         sp.[description],
-        sp.[enabled]
+        sp.[enabled],
+        sp.[adf_landing_pipeline],
+        sp.[delete_older_than_days],
+        sp.[dbx_job_enabled],
+        sp.[dbx_job_name],
+        sp.[dbx_wait_until_done],
+        sp.[dbx_api_wait_seconds]
       FROM [stage].[project] sp
       WHERE sp.[import_batch_id] = @@import_batch_id
         AND sp.[imported] IS null
     ) as src ON tgt.[name] = src.[name]
     WHEN MATCHED THEN
         UPDATE SET 
-          [name]         = src.[name],
-          [description]  = src.[description],
-          [enabled]      = src.[enabled],
-          [modified]     = getutcdate(),
-          [modified_by]  = suser_sname(),
-          [deleted]      = null
+          [name]                    = src.[name],
+          [description]             = src.[description],
+          [enabled]                 = src.[enabled],
+          [adf_landing_pipeline]    = src.[adf_landing_pipeline],
+          [delete_older_than_days]  = src.[delete_older_than_days],
+          [dbx_job_enabled]         = src.[dbx_job_enabled],
+          [dbx_job_name]            = src.[dbx_job_name],
+          [dbx_wait_until_done]     = src.[dbx_wait_until_done],
+          [dbx_api_wait_seconds]    = src.[dbx_api_wait_seconds],
+          [modified]                = getutcdate(),
+          [modified_by]             = suser_sname(),
+          [deleted]                 = null
     WHEN NOT MATCHED THEN  
         INSERT (
           [name],
           [description],
-          [enabled]
+          [enabled],
+          [adf_landing_pipeline],
+          [delete_older_than_days],
+          [dbx_job_enabled],
+          [dbx_job_name],
+          [dbx_wait_until_done],
+          [dbx_api_wait_seconds]
         )  
         VALUES
         (
           src.[name],
           src.[description],
-          src.[enabled]
+          src.[enabled],
+          src.[adf_landing_pipeline],
+          src.[delete_older_than_days],
+          src.[dbx_job_enabled],
+          src.[dbx_job_name],
+          src.[dbx_wait_until_done],
+          src.[dbx_api_wait_seconds]
         )
     -- WHEN NOT MATCHED BY SOURCE THEN
     --     UPDATE SET

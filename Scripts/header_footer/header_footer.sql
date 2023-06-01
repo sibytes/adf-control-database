@@ -6,10 +6,16 @@ INSERT intO [stage].[project](
   [import_batch_id],
   [name],
   [description],
-  [enabled]
+  [enabled],
+  [adf_landing_pipeline],
+  -- [delete_older_than_days],
+  [dbx_job_enabled],
+  [dbx_job_name]--,
+  -- [dbx_wait_until_done],
+  -- [dbx_api_wait_seconds]
 )
 VALUES
-  (@ibi, @project, 'demo pattern - processing files with headers and footers', 1);
+  (@ibi, @project, 'demo pattern - processing files with headers and footers', 1, 'blbs-to-landing_blbs', 1, 'load_raw_header_footer');
 
 INSERT intO [stage].[file_service](
   [import_batch_id],
