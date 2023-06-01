@@ -2,39 +2,39 @@
 DECLARE @ibi uniqueidentifier = newid()
 DECLARE @project varchar(250) = 'ad_works_dw_csv'
 
-DECLARE @tables table (schema_name varchar(132), table_name varchar(132))
-INSERT INTO @tables (schema_name, table_name)
+DECLARE @tables table (schema_name varchar(132), table_name varchar(132), [filename] varchar(250))
+INSERT INTO @tables (schema_name, table_name, [filename])
 VALUES
 -- ('dbo','AdventureWorksDWBuildVersion'              ),
 -- ('dbo','DatabaseLog'                               ),  
-('dbo','DimAccount'                                   ),  
-('dbo','DimCurrency'                                  ),  
-('dbo','DimCustomer'                                  ),  
-('dbo','DimDate'                                      ),
-('dbo','DimDepartmentGroup'                           ),         
-('dbo','DimEmployee'                                  ),  
-('dbo','DimGeography'                                 ),   
-('dbo','DimOrganization'                              ),      
-('dbo','DimProduct'                                   ), 
-('dbo','DimProductCategory'                           ),         
-('dbo','DimProductSubcategory'                        ),            
-('dbo','DimPromotion'                                 ),   
-('dbo','DimReseller'                                  ),  
-('dbo','DimSalesReason'                               ),     
-('dbo','DimSalesTerritory'                            ),        
-('dbo','DimScenario'                                  ),  
-('dbo','FactAdditionalInternationalProductDescription'),                                    
-('dbo','FactCallCenter'                               ),     
-('dbo','FactCurrencyRate'                             ),       
-('dbo','FactFinance'                                  ),  
-('dbo','FactInternetSales'                            ),        
-('dbo','FactInternetSalesReason'                      ),              
-('dbo','FactProductInventory'                         ),           
-('dbo','FactResellerSales'                            ),        
-('dbo','FactSalesQuota'                               ),     
-('dbo','FactSurveyResponse'                           ),         
-('dbo','NewFactCurrencyRate'                          ),          
-('dbo','ProspectiveBuyer'                             )--,       
+('dbo','DimAccount'                                   , 'dim_account'),  
+('dbo','DimCurrency'                                  , 'dim_currency'),  
+('dbo','DimCustomer'                                  , 'dim_customer'),  
+('dbo','DimDate'                                      , 'dim_date'),
+('dbo','DimDepartmentGroup'                           , 'dim_department'),         
+('dbo','DimEmployee'                                  , 'dim_employee'),  
+('dbo','DimGeography'                                 , 'dim_geography'),   
+('dbo','DimOrganization'                              , 'dim_organization'),      
+('dbo','DimProduct'                                   , 'dim_product'), 
+('dbo','DimProductCategory'                           , 'dim_product_category'),         
+('dbo','DimProductSubcategory'                        , 'dim_product_sub_category'),            
+('dbo','DimPromotion'                                 , 'dim_promotion'),   
+('dbo','DimReseller'                                  , 'dim_reseller'),  
+('dbo','DimSalesReason'                               , 'dim_sales_reason'),     
+('dbo','DimSalesTerritory'                            , 'dim_sales_territory'),        
+('dbo','DimScenario'                                  , 'dim_scenario'),  
+('dbo','FactAdditionalInternationalProductDescription', 'fact_additional_international_product_description'),                                    
+('dbo','FactCallCenter'                               , 'fact_call_centre'),     
+('dbo','FactCurrencyRate'                             , 'fact_currency_rate'),       
+('dbo','FactFinance'                                  , 'fact_finance'),  
+('dbo','FactInternetSales'                            , 'fact_internet_sales'),        
+('dbo','FactInternetSalesReason'                      , 'fact_internet_sales_region'),              
+('dbo','FactProductInventory'                         , 'fact_product_inventory'),           
+('dbo','FactResellerSales'                            , 'fact_reseller_sales'),        
+('dbo','FactSalesQuota'                               , 'fact_sales_quota'),     
+('dbo','FactSurveyResponse'                           , 'fact_survey_response'),         
+('dbo','NewFactCurrencyRate'                          , 'fact_new_fact_currency_rate'),          
+('dbo','ProspectiveBuyer'                             , 'fact_prospective_buyer')--,       
 -- ('dbo','sysdiagrams'                                  )
 
 INSERT intO [stage].[project](
@@ -120,7 +120,7 @@ INSERT intO [stage].[file](
 SELECT
   [import_batch_id]     = @ibi,
   [project]             = @project,
-  [file]                = t.[schema_name] + '_' + t.[table_name],
+  [file]                = t.[filename],
   [ext]                 = 'csv', 
   [frequency]           = 'daily', 
   [utc_time]            = cast('09:00:00' as time),
@@ -155,7 +155,7 @@ select
   [source]              = table_name,
   [destination_type]    = 'file',
   [destination_service] = 'Landing AD Works DW',
-  [destination]         = [schema_name] + '_' + [table_name]
+  [destination]         = [filename]
 from @tables
 
 

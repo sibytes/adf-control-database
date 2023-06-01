@@ -201,7 +201,7 @@ select
   [source]              = table_name,
   [destination_type]    = 'file',
   [destination_service] = 'Landing AD Works',
-  [destination]         = [schema_name] + '_' + [table_name]
+  [destination]         = [filename]
 from @tables
 
 
