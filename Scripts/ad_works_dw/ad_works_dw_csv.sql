@@ -60,7 +60,9 @@ INSERT INTO [stage].[database_service](
   [name],
   [database],
   [service_account],
-  [secret_name]
+  [connection_secret]--,
+  -- [password_secret],
+  -- [username]
 )
 VALUES
 (@ibi, @project, 'source', 'Source AD Works dw', 'AdventureWorksDW2019', 'adf', 'ADVENTURE-WORKS-DW');
@@ -89,6 +91,7 @@ INSERT INTO [stage].[file_service](
   [name],
   [stage],
   [root],
+  -- [password_secret],
   [container],
   [directory],
   [filename],

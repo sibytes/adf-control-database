@@ -23,6 +23,7 @@ INSERT intO [stage].[file_service](
   [name],
   [stage],
   [root],
+  -- [password_secret],
   [container],
   [directory],
   [filename],

@@ -7,6 +7,7 @@ create VIEW [metadata].[file_source]
     sfs.[stage],
     sfs.[name],
     sfs.[root],
+    sfs.[password_secret],
     sfs.[container],
     replace(sfs.[directory], '{{table}}', sf.[file]) as [directory],
     replace(sfs.[filename], '{{table}}', sf.[file]) as [filename],

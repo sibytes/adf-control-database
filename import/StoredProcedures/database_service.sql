@@ -31,7 +31,9 @@ BEGIN
         s.[name],
         s.[database],
         s.[service_account],
-        s.[secret_name]
+        s.[connection_secret],
+        s.[password_secret],
+        s.[username]
       FROM [stage].[database_service] s
       JOIN [metadata].[project] p on s.[project] = p.[name]
       WHERE s.[import_batch_id] = @@import_batch_id
@@ -45,7 +47,9 @@ BEGIN
           [name]                  = src.[name],
           [database]              = src.[database],
           [service_account]       = src.[service_account],
-          [secret_name]           = src.[secret_name],
+          [connection_secret]     = src.[connection_secret],
+          [password_secret]       = src.[password_secret],
+          [username]              = src.[username],
           [modified]              = getutcdate(),
           [modified_by]           = suser_sname(),
           [deleted]               = null
@@ -56,7 +60,9 @@ BEGIN
           [name],
           [database],
           [service_account],
-          [secret_name]
+          [connection_secret],
+          [password_secret],
+          [username]
         )  
         VALUES
         (
@@ -65,7 +71,9 @@ BEGIN
           src.[name],
           src.[database],
           src.[service_account],
-          src.[secret_name]
+          src.[connection_secret],
+          src.[password_secret],
+          src.[username]
         )
     WHEN NOT MATCHED BY SOURCE AND tgt.project_id = @project_id THEN
         UPDATE SET

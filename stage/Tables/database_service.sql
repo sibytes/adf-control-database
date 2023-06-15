@@ -11,6 +11,8 @@ create table [stage].[database_service]
   [name]	varchar(100) not null,
   [database] varchar(132) not null,
   [service_account] varchar(150) not null,
-  [secret_name] varchar(150) not null,
+  [connection_secret] varchar(150) not null,
+  [password_secret] varchar(150) null,
+  [username] varchar(150) null,
   constraint pk_stage_database_service_id primary key clustered ([id])
 )

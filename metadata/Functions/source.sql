@@ -14,6 +14,7 @@ RETURN
       fs.[stage],
       fs.[name],
       fs.[root],
+      fs.[password_secret],
       fs.[container],
       replace(replace(
         fs.[directory], 
@@ -62,7 +63,9 @@ RETURN
         ds.[database],
         ds.[schema],
         ds.[service_account],
-        ds.[secret_name],
+        ds.[connection_secret],
+        ds.[password_secret],
+        ds.[username],
         ds.[table],
         ds.[select],
         replace(replace(

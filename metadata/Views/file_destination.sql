@@ -7,6 +7,7 @@ CREATE VIEW [metadata].[file_destination]
     dfs.[stage],
     dfs.[name],
     dfs.[root],
+    dfs.[password_secret],
     dfs.[container],
     replace(dfs.[directory], '{{table}}', df.[file]) as [directory],
     replace(dfs.[filename], '{{table}}', df.[file]) as [filename],
