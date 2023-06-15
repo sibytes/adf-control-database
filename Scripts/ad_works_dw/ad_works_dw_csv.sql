@@ -28,7 +28,7 @@ VALUES
 ('dbo','FactCurrencyRate'                             , 'fact_currency_rate'),       
 ('dbo','FactFinance'                                  , 'fact_finance'),  
 ('dbo','FactInternetSales'                            , 'fact_internet_sales'),        
-('dbo','FactInternetSalesReason'                      , 'fact_internet_sales_region'),              
+('dbo','FactInternetSalesReason'                      , 'fact_internet_sales_reason'),              
 ('dbo','FactProductInventory'                         , 'fact_product_inventory'),           
 ('dbo','FactResellerSales'                            , 'fact_reseller_sales'),        
 ('dbo','FactSalesQuota'                               , 'fact_sales_quota'),     
