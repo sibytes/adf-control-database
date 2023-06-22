@@ -18,6 +18,22 @@ VALUES
 (4, 'FAILED'   )
 SET identity_INSERT [ops].[status] OFF;
 
+SET identity_INSERT [metadata].[frequency] ON;
+INSERT INTO [metadata].[frequency](
+    [id], 
+    [frequency]
+)
+VALUES
+(1, 'NONE'      ),
+(2, 'DAILY'     ),
+(3, 'WEEKDAY'   ),
+(4, 'WEEKEND'   ),
+(5, 'WEEKLY'    ),
+(6, 'MONTHLY'   ),
+(7, 'QUARTERLY' ),
+(8, 'YEARLY'    )
+SET identity_INSERT [ops].[status] OFF;
+
 CREATE USER [DataPlatfromRhone-ADF] FROM EXTERNAL PROVIDER;
 
 ALTER ROLE db_owner ADD MEMBER [DataPlatfromRhone-ADF];

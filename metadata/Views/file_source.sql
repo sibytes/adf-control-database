@@ -16,8 +16,6 @@ create VIEW [metadata].[file_source]
     sfs.[filename_timeslice_format],
     sf.[file],
     sf.[ext],
-    sf.[frequency],
-    sf.[utc_time],
     sf.[linked_service],
     sf.[compression_type],
     sf.[compression_level],

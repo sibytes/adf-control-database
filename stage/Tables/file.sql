@@ -9,8 +9,6 @@ create table [stage].[file]
   [project] varchar(250) not null,  
   [file]	varchar(100) not null,
   [ext]	varchar(15) not null,
-  [frequency]	varchar(15) not null,
-  [utc_time]	time not null,
   [linked_service]	varchar(100) null,
   [compression_type]	varchar(100) null,
   [compression_level]	varchar(100) null,

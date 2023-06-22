@@ -41,8 +41,6 @@ INSERT intO [stage].[file](
   [project],
   [file],
   [ext],
-  [frequency],
-  [utc_time],
   -- [linked_service],
   -- [compression_type],
   -- [compression_level],
@@ -55,9 +53,9 @@ INSERT intO [stage].[file](
   -- [null_value]
 )
 VALUES
-  (@ibi, @project, 'customer_details_1', 'csv', 'daily', cast('09:00:00' as time)     , 0),
-  (@ibi, @project, 'customer_details_2', 'csv', 'daily', cast('09:00:00' as time)     , 0),
-  (@ibi, @project, 'customerdetailscomplete', 'flg', 'daily', cast('09:00:00' as time), 0);
+  (@ibi, @project, 'customer_details_1',      'csv', 0),
+  (@ibi, @project, 'customer_details_2',      'csv', 0),
+  (@ibi, @project, 'customerdetailscomplete', 'flg', 0);
 
 
 INSERT intO [stage].[map](

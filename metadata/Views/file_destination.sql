@@ -16,8 +16,6 @@ CREATE VIEW [metadata].[file_destination]
     dfs.[filename_timeslice_format],
     df.[file],
     df.[ext],
-    df.[frequency],
-    df.[utc_time],
     df.[linked_service],
     df.[compression_type],
     df.[compression_level],

@@ -107,8 +107,6 @@ INSERT intO [stage].[file](
   [project],
   [file],
   [ext],
-  [frequency],
-  [utc_time],
   -- [linked_service],
   [compression_type],
   -- [compression_level],
@@ -125,8 +123,6 @@ SELECT
   [project]             = @project,
   [file]                = t.[filename],
   [ext]                 = 'parquet', 
-  [frequency]           = 'daily', 
-  [utc_time]            = cast('09:00:00' as time), 
   [compression_type]    = 'snappy',
   [first_row_as_header] = 0
 FROM @tables t

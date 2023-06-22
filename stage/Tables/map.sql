@@ -9,6 +9,8 @@ create table [stage].[map]
   [destination_type] varchar(100) not null,
   [destination_service] varchar(100) not null,
   [destination] varchar(100) not null,
+  [frequency_name] varchar(20) not null default('NONE'),
+  [frequency] int not null default(1),
   [enabled] bit default(1) not null,
   [import_id] int null,
   [import_batch_id] uniqueidentifier not null,

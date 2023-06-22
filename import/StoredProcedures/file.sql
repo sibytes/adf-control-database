@@ -29,8 +29,6 @@ BEGIN
          p.[id] as [project_id]
         ,s.[file]
         ,s.[ext]
-        ,s.[frequency]
-        ,s.[utc_time]
         ,s.[linked_service]
         ,s.[compression_type]
         ,s.[compression_level]
@@ -42,7 +40,7 @@ BEGIN
         ,s.[first_row_as_header]
         ,s.[null_value]
       FROM [stage].[file] s
-      JOIN [metadata].[project] p on s.[project] = p.[name]
+      JOIN [metadata].[project]   p on s.[project] = p.[name]
       WHERE s.[import_batch_id] = @@import_batch_id
         AND s.[imported] IS null
     ) as src ON tgt.[file]       = src.[file]
@@ -52,8 +50,6 @@ BEGIN
           [project_id]            = src.[project_id],
           [file]                  = src.[file],
           [ext]                   = src.[ext],
-          [frequency]             = src.[frequency],
-          [utc_time]              = src.[utc_time],
           [linked_service]        = src.[linked_service],
           [compression_type]      = src.[compression_type],
           [compression_level]     = src.[compression_level],
@@ -69,29 +65,25 @@ BEGIN
           [deleted]               = null
     WHEN NOT MATCHED THEN  
         INSERT (
-        [project_id]
-        ,[file]
-        ,[ext]
-        ,[frequency]
-        ,[utc_time]
-        ,[linked_service]
-        ,[compression_type]
-        ,[compression_level]
-        ,[column_delimiter]
-        ,[row_delimiter]
-        ,[encoding]
-        ,[escape_character]
-        ,[quote_character]
-        ,[first_row_as_header]
-        ,[null_value]
+          [project_id]
+          ,[file]
+          ,[ext]
+          ,[linked_service]
+          ,[compression_type]
+          ,[compression_level]
+          ,[column_delimiter]
+          ,[row_delimiter]
+          ,[encoding]
+          ,[escape_character]
+          ,[quote_character]
+          ,[first_row_as_header]
+          ,[null_value]
         )  
         VALUES
         (
            src.[project_id]
           ,src.[file]
           ,src.[ext]
-          ,src.[frequency]
-          ,src.[utc_time]
           ,src.[linked_service]
           ,src.[compression_type]
           ,src.[compression_level]

@@ -53,12 +53,15 @@ BEGIN
           when 'rdbms' then ddt.[id]
           when 'file' then df.[id]
         end as [destination_id],
+        f.[id] as [frequency_id],
+        s.[frequency],
         s.[enabled]
       FROM [stage].[map] s
       --
       JOIN [metadata].[project] p on s.[project] = p.[name]
       JOIN [metadata].[dataset_type] st on s.[source_type] = st.[name]
       JOIN [metadata].[dataset_type] dt on s.[destination_type] = dt.[name]
+      JOIN [metadata].[frequency] f on s.[frequency_name] = f.[frequency]
       -- source
       LEFT JOIN [metadata].[database_service] sds on s.[source_service] = sds.[name]  and p.[id] = sds.[project_id]
       LEFT JOIN [metadata].[file_service]     sfs on s.[source_service] = sfs.[name]  and p.[id] = sfs.[project_id]
@@ -82,6 +85,8 @@ BEGIN
     WHEN MATCHED THEN
         UPDATE SET 
           [process_group] = [SOURCE].[process_group],
+          [frequency_id]  = [SOURCE].[frequency_id],
+          [frequency]     = [SOURCE].[frequency],
           [enabled]       = [SOURCE].[enabled],
           [modified]      = getutcdate(),
           [modified_by]   = suser_sname(),
@@ -96,6 +101,8 @@ BEGIN
           [destination_type_id],     
           [destination_service_id],  
           [destination_id],
+          [frequency_id],
+          [frequency],
           [enabled] 
         )  
         VALUES
@@ -108,6 +115,8 @@ BEGIN
           [SOURCE].[destination_type_id],
           [SOURCE].[destination_service_id],
           [SOURCE].[destination_id],
+          [SOURCE].[frequency_id],
+          [SOURCE].[frequency],
           [SOURCE].[enabled]
         )
     -- WHEN NOT MATCHED BY SOURCE THEN DELETE

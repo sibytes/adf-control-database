@@ -31,8 +31,6 @@ RETURN
       fs.[filename_timeslice_format],
       fs.[file],
       fs.[ext],
-      fs.[frequency],
-      fs.[utc_time],
       fs.[linked_service],
       fs.[compression_type],
       fs.[compression_level],
