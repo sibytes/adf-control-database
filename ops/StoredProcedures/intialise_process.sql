@@ -107,7 +107,7 @@ begin
       @parameters      as [parameters]
     from [metadata].[map]       m
     join [metadata].[project]   r on m.[project_id] = r.[id]
-    join [metadata].[frequency] f on m.[frequency_id] = m.[frequency_id]
+    join [metadata].[frequency] f on m.[frequency_id] = f.[id]
     cross join @timeslice t
     where m.[enabled] = 1
       and m.[process_group] = @process_group
@@ -115,14 +115,16 @@ begin
       and m.[deleted] is null
       and r.[deleted] is null
       and (
-        (f.[frequency] in ('DAILY', 'NONE'))
-        or (f.[frequency] = 'WEEKDAY'   and DATEPART(DW, t.from_period) not in (1,7))
-        or (f.[frequency] = 'WEEKEND'   and DATEPART(DW, t.from_period) in (1,7))
-        or (f.[frequency] = 'WEEKLY'    and DATEPART(DW, t.from_period)  = m.frequency)
-        or (f.[frequency] = 'MONTHLY'   and day(t.from_period)  = m.frequency)
-        -- if monhtly and frequency is -1 then set to run on last day of month
-        or (f.[frequency] = 'MONTHLY'   and cast(t.from_period as date)  = EOMONTH(cast(t.from_period as date)) and m.frequency = -1)
-        or frequency_check_on = 0
+        (
+          (f.[frequency] in ('DAILY', 'NONE'))
+          or (f.[frequency] = 'WEEKDAY'   and DATEPART(DW, t.from_timeslice) not in (1,7))
+          or (f.[frequency] = 'WEEKEND'   and DATEPART(DW, t.from_timeslice) in (1,7))
+          or (f.[frequency] = 'WEEKLY'    and DATEPART(DW, t.from_timeslice)  = m.frequency)
+          or (f.[frequency] = 'MONTHLY'   and day(t.from_timeslice)  = m.frequency)
+          -- if monhtly and frequency is -1 then set to run on last day of month
+          or (f.[frequency] = 'MONTHLY'   and cast(t.from_timeslice as date)  = EOMONTH(cast(t.from_timeslice as date)) and m.frequency = -1)
+        )
+        or @frequency_check_on = 0
       )
   end
 

@@ -30,7 +30,7 @@ VALUES
 (4, 'WEEKEND'   ),
 (5, 'WEEKLY'    ),
 (6, 'MONTHLY'   )
-SET identity_INSERT [ops].[status] OFF;
+SET identity_INSERT [metadata].[frequency] OFF;
 
 CREATE USER [DataPlatfromRhone-ADF] FROM EXTERNAL PROVIDER;
 
