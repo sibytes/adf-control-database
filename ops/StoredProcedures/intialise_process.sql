@@ -8,7 +8,8 @@ create procedure [ops].[intialise_process](
   @process_group          varchar(250) = 'default',
   @parameters             nvarchar(max)='{}',
   @restart                bit = 1,
-  @delete_older_than_days  int = null
+  @delete_older_than_days  int = null,
+  @frequency_check_on     bit = 1
 )
 as
 begin
@@ -121,6 +122,7 @@ begin
         or (f.[frequency] = 'MONTHLY'   and day(t.from_period)  = m.frequency)
         -- if monhtly and frequency is -1 then set to run on last day of month
         or (f.[frequency] = 'MONTHLY'   and cast(t.from_period as date)  = EOMONTH(cast(t.from_period as date)) and m.frequency = -1)
+        or frequency_check_on = 0
       )
   end
 
