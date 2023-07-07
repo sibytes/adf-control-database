@@ -32,7 +32,7 @@ INSERT intO [stage].[file_service](
   [filename_timeslice_format]
 )
 VALUES
-  (@ibi, @project, 'source' , 'Source Customer Details', '/mnt', 'source' , '/data/' + @project , '{{table}}-{{from_timeslice}}*', 'sa_test', 'yyyyMMdd', 'yyyyMMdd'),
+  (@ibi, @project, 'source' , 'Source Customer Details',  '/mnt', 'source' , '/data/' + @project                                  , '{{table}}-{{from_timeslice}}*', 'sa_test', 'yyyyMMdd', 'yyyyMMdd'),
   (@ibi, @project, 'landing', 'Landing Customer Details', '/mnt', 'landing', '/data/' + @project + '/{{table}}/{{from_timeslice}}', '{{table}}-{{from_timeslice}}*', 'sa_test', 'yyyyMMdd', 'yyyyMMdd');
 
 INSERT intO [stage].[file](
@@ -55,7 +55,8 @@ VALUES
   (@ibi, @project, 'customer_details_1'      ,'csv', 0),
   (@ibi, @project, 'customer_details_2'      ,'csv', 0),
   (@ibi, @project, 'customer_preferences'    ,'csv', 0),
-  (@ibi, @project, 'customerdetailscomplete' ,'flg', 0);
+  (@ibi, @project, 'customerdetailscomplete' ,'flg', 0),
+  (@ibi, @project, 'test_file_not_exists'    ,'csv', 0);
 
 
 INSERT intO [stage].[map](
@@ -70,10 +71,11 @@ INSERT intO [stage].[map](
   [destination]
 )
 VALUES
-  (@ibi, 1, @project, 'file', 'source', 'customer_details_1'     , 'file', 'landing', 'customer_details_1'),
-  (@ibi, 1, @project, 'file', 'source', 'customer_details_2'     , 'file', 'landing', 'customer_details_2'),
-  (@ibi, 1, @project, 'file', 'source', 'customer_preferences'   , 'file', 'landing', 'customer_preferences'),
-  (@ibi, 1, @project, 'file', 'source', 'customerdetailscomplete', 'file', 'landing', 'customerdetailscomplete');
+  (@ibi, 1, @project, 'file', 'source', 'customer_details_1'     , 'file', 'landing', 'customer_details_1'     ),
+  (@ibi, 1, @project, 'file', 'source', 'customer_details_2'     , 'file', 'landing', 'customer_details_2'     ),
+  (@ibi, 1, @project, 'file', 'source', 'customer_preferences'   , 'file', 'landing', 'customer_preferences'   ),
+  (@ibi, 1, @project, 'file', 'source', 'customerdetailscomplete', 'file', 'landing', 'customerdetailscomplete'),
+  (@ibi, 1, @project, 'file', 'source', 'test_file_not_exists'   , 'file', 'landing', 'test_file_not_exists'   );
 
 EXEC [import].[import] @@import_batch_id=@ibi, @@project=@project
 
@@ -83,7 +85,7 @@ declare  @@adf_process_id uniqueidentifier = newid()
 declare  @@project varchar(250) = 'header_footer'
 declare  @@from_period datetime = convert(datetime, '2023-01-01', 120)
 declare  @@restart bit = 0
-declare  @@expected_mappings int = 4
+declare  @@expected_mappings int = 5
 declare  @@actual int
 declare  @@msg varchar(500)
 

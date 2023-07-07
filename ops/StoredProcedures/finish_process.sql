@@ -1,6 +1,12 @@
 create procedure [metadata].[finish_process]
   @process_id int,
-  @succeeded bit = 1
+  @succeeded bit = 1,
+  @data_read int = null,
+  @data_written int = null,
+  @files_read int = null,
+  @files_written int = null,
+  @copy_duration int = null,
+  @throughput money = null
 as
 begin
   set xact_abort ON
@@ -22,10 +28,16 @@ begin
 
   update p
   set
-    p.[status_id]   = @status,
-    p.[started]     = getutcdate(),
-    p.[modified]    = getutcdate(),
-    p.[modified_by] = suser_sname()
+    p.[status_id]     = @status,
+    p.[finished]      = getutcdate(),
+    p.[modified]      = getutcdate(),
+    p.[modified_by]   = suser_sname(),
+    p.[data_read]     = @data_read,
+    p.[data_written]  = @data_written,
+    p.[files_read]    = @files_read,
+    p.[files_written] = @files_written,
+    p.[copy_duration] = @copy_duration,
+    p.[throughput]    = @throughput
   from [ops].[process] p
   join [ops].[status]  s on s.[id] = p.[status_id]
   where p.[id]     = @process_id
