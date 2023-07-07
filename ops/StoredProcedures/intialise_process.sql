@@ -122,7 +122,7 @@ begin
           or (f.[frequency] = 'WEEKLY'    and DATEPART(DW, t.from_timeslice)  = m.frequency)
           or (f.[frequency] = 'MONTHLY'   and day(t.from_timeslice)  = m.frequency)
           -- if monhtly and frequency is -1 then set to run on last day of month
-          or (f.[frequency] = 'MONTHLY'   and cast(t.from_timeslice as date)  = EOMONTH(cast(t.from_timeslice as date)) and m.frequency = -1)
+          or (f.[frequency] = 'EOMONTHLY' and cast(t.from_timeslice as date)  = EOMONTH(cast(t.from_timeslice as date)))
         )
         or @frequency_check_on = 0
       )
