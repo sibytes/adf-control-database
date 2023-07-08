@@ -6,6 +6,7 @@ begin
 
   insert into [ops].[process_history] (
     [process_id],
+    [batch_id],
     [project_id],
     [process_group],
     [map_id],
@@ -29,6 +30,7 @@ begin
   )
   select
     p.[id],
+    p.[batch_id],
     p.[project_id],
     p.[process_group],
     p.[map_id],

@@ -1,6 +1,7 @@
 create table [ops].[process]
 (
   [id] int identity(1,1) not null primary key,
+  [batch_id] int not null,
   [project_id] int not null,
   [process_group] varchar(250) not null,
   [map_id] int not null,

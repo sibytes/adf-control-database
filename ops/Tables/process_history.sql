@@ -1,6 +1,7 @@
 create table [ops].[process_history]
 (
   [id] int identity(1,1) not null primary key,
+  [batch_id] int not null,
   [process_id] int not null,
   [project_id] int not null,
   [process_group] varchar(250) not null,
