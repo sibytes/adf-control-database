@@ -240,6 +240,8 @@ begin
     [parameters]
   from @process p
 
+  select @batch_id as batch_id
+
 
 
 end
