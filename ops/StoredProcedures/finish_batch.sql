@@ -1,4 +1,4 @@
-create procedure [metadata].[finish_finish]
+create procedure [metadata].[finish_batch]
   @batch_id int
 as
 begin
