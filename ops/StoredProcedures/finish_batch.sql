@@ -1,4 +1,4 @@
-create procedure [metadata].[finish_batch]
+create procedure [ops].[finish_batch]
   @batch_id int,
   @raise_error_if_not_complete bit = 0
 as

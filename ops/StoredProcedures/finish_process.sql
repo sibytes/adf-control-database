@@ -1,4 +1,4 @@
-create procedure [metadata].[finish_process]
+create procedure [ops].[finish_process]
   @process_id int,
   @succeeded bit = 1,
   @data_read int = null,
