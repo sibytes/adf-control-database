@@ -41,6 +41,10 @@
     <Build Remove="Scripts\header_footer\header_footer.sql" />
     <Build Remove="Scripts\test_project\test_project.sql" />
     <Build Remove="Scripts\scraper.sql" />
+    <Build Remove="Scripts\contoso_retail_dw\contoso_retail_dw_csv.sql" />
+    <Build Remove="Scripts\contoso_retail_dw\contoso_retail_dw_json.sql" />
+    <Build Remove="Scripts\contoso_retail_dw\contoso_retail_dw_parquet.sql" />
+    <Build Remove="Scripts\wide_world_importers\wide_world_importers_csv.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\AzureV12\SqlSchemas\master.dacpac" Condition="'$(NetCoreBuild)' != 'true'">
@@ -51,6 +55,13 @@
       <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
       <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
     </ArtifactReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Scripts\Script.PostDeployment.sql" />
+    <None Remove="Scripts\Script.PreDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Remove="Scripts\wide_world_importers\**" />
   </ItemGroup>
   <Target Name="BeforeBuild">
     <Delete Files="$(BaseIntermediateOutputPath)\project.assets.json" />
