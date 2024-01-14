@@ -1,3 +1,4 @@
+--marked
 create table [stage].[trigger_parameter]
 (
   [id] int identity(1,1) not null,

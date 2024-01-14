@@ -29,6 +29,7 @@ as
   join [project] p on d.[project_id] = p.[id]
   where p.[name] = @@project;
 
+  --marked
   delete d
   from [metadata].[trigger_parameter] d
   join [project] p on d.[project_id] = p.[id]

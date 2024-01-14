@@ -1,5 +1,6 @@
 create table [metadata].[trigger_parameter]
 (
+  --marked
   [id]                                int identity(1,1) not null,
   [adf]                               varchar(250)      not null,
   [trigger]                           varchar(150)      not null,

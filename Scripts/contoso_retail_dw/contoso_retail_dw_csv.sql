@@ -46,6 +46,7 @@ INSERT into [stage].[project](
 VALUES
   (@ibi, @project, 'contoso retail dw - contoso retail dw csv ingest', 1, 'op_sqls-to-landing_blbs_csv', 0, 'ingest_contoso_retail_dw');
 
+--marked
 insert into [stage].[trigger_parameter](
   [import_batch_id],
   [project],
@@ -223,6 +224,7 @@ exec [ops].[intialise_process]
   @project        = @@project,
   @from_period    = @@from_period,
   @restart        = @@restart,
+  --marked
   @frequency_check_on = 0
 
 

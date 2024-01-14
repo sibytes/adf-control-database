@@ -1,3 +1,4 @@
+--marked
 create procedure [ops].[get_trigger_parameters]
   @adf varchar(250),
   @trigger varchar(250),
