@@ -1,5 +1,6 @@
 CREATE PROCEDURE [ops].[get_project]
-  @project varchar (250)
+  @project varchar (250),
+  @process_group varchar (250)
 AS
 begin
   select
@@ -9,7 +10,7 @@ begin
     [adf_landing_pipeline]      ,
     [delete_older_than_days]    ,
     [dbx_job_enabled]           ,
-    [dbx_job_name]              ,
+    replace([dbx_job_name], '{{process_group}}', @process_group) as [dbx_job_name],
     [dbx_wait_until_done]       ,
     [dbx_api_wait_seconds]      
   from [metadata].[project]

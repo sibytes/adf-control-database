@@ -78,6 +78,21 @@ SELECT
   [schema]          = [schema_name], 
   [table]           = [table_name]
 from @tables
+where [table_name] not in ('DimGeography','DimStore')
+
+INSERT INTO [stage].[database_table](
+  [import_batch_id],
+  [project],
+  [type],
+  [schema],
+  [table],
+  [select]--,
+  -- [where],
+  -- [partition]
+)
+values
+(@ibi, @project, 'query', 'dbo', 'DimGeography', '[GeographyKey],[GeographyType],[ContinentName],[CityName],[StateProvinceName],[RegionCountryName],cast([Geometry] as varbinary(max)) as [Geometry],[ETLLoadID],[LoadDate],[UpdateDate]'),
+(@ibi, @project, 'query', 'dbo', 'DimStore'    , '[StoreKey],[GeographyKey],[StoreManager],[StoreType],[StoreName],[StoreDescription],[Status],[OpenDate],[CloseDate],[EntityKey],[ZipCode],[ZipCodeExtension],[StorePhone],[StoreFax],[AddressLine1],[AddressLine2],[CloseReason],[EmployeeCount],[SellingAreaSize],[LastRemodelDate],cast([GeoLocation] as varbinary(max)) as [GeoLocation],cast([Geometry] as varbinary(max)) as [Geometry],[ETLLoadID],[LoadDate],[UpdateDate]')
 
 
 INSERT INTO [stage].[file_service](

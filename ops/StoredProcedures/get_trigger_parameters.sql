@@ -1,0 +1,37 @@
+create procedure [ops].[get_trigger_parameters]
+  @adf varchar(250),
+  @trigger varchar(250),
+  @from_period datetime = null
+as
+begin
+
+  declare @dft_from_period date = cast(coalesce(@from_period, getdate()) as date)
+
+  select
+    tp.[id],
+    tp.[adf],
+    tp.[trigger],
+    tp.[project_id],
+    @dft_from_period as from_period,
+    cast(dateadd(
+      day,
+      --tp.[partition], 
+      (tp.[partition_increment]*tp.[number_of_partitions]),
+      @dft_from_period
+    ) as date) as to_period,
+    tp.[process_group],
+    tp.[partition],
+    tp.[partition_increment],
+    tp.[parameters],
+    tp.[restart],
+    tp.[dbx_host],
+    tp.[dbx_load_type],
+    tp.[dbx_max_parallel],
+    tp.[frequency_check_on],
+    tp.[raise_error_if_batch_not_complete]
+  from [metadata].[trigger_parameter] tp
+  join [metadata].[project] p on tp.[project_id] = p.[id]
+  where tp.[trigger] = @trigger
+    and tp.[adf] = @adf
+
+end

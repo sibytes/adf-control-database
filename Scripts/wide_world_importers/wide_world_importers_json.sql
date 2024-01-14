@@ -129,6 +129,43 @@ SELECT
   [table]           = [table_name]
 from @tables
 
+where [schema_name]+'.'+[table_name] not in 
+('Application.Cities',
+'Application.Cities_Archive',
+'Application.Countries',
+'Application.Countries_Archive',
+'Application.SystemParameters',
+'Application.StateProvinces',
+'Application.StateProvinces_Archive',
+'Sales.Customers',
+'Sales.Customers_Archive',
+'Purchasing.Suppliers_Archive',
+'Purchasing.Suppliers'
+)
+
+INSERT INTO [stage].[database_table](
+  [import_batch_id],
+  [project],
+  [type],
+  [schema],
+  [table],
+  [select]--,
+  -- [where],
+  -- [partition]
+)
+values
+(@ibi, @project, 'query', 'Application' , 'Cities'                , '[CityID],[CityName],[StateProvinceID],cast([Location] as varbinary(max)) as [Location],[LatestRecordedPopulation],[LastEditedBy],[validFrom],[validTo]'),
+(@ibi, @project, 'query', 'Application' , 'Cities_Archive'        , '[CityID],[CityName],[StateProvinceID],cast([Location] as varbinary(max)) as [Location],[LatestRecordedPopulation],[LastEditedBy],[validFrom],[validTo]'),
+(@ibi, @project, 'query', 'Application' , 'Countries'             , '[CountryID],[CountryName],[FormalName],[IsoAlpha3Code],[IsoNumericCode],[CountryType],[LatestRecordedPopulation],[Continent],[Region],[Subregion],cast([Border] as varbinary(max)) as [Border],[LastEditedBy],[ValidFrom],[ValidTo]'),
+(@ibi, @project, 'query', 'Application' , 'Countries_Archive'     , '[CountryID],[CountryName],[FormalName],[IsoAlpha3Code],[IsoNumericCode],[CountryType],[LatestRecordedPopulation],[Continent],[Region],[Subregion],cast([Border] as varbinary(max)) as [Border],[LastEditedBy],[ValidFrom],[ValidTo]'),
+(@ibi, @project, 'query', 'Application' , 'SystemParameters'      , '[SystemParameterID],[DeliveryAddressLine1],[DeliveryAddressLine2],[DeliveryCityID],[DeliveryPostalCode],cast([DeliveryLocation] as varbinary(max)) as [DeliveryLocation],[PostalAddressLine1],[PostalAddressLine2],[PostalCityID],[PostalPostalCode],[ApplicationSettings],[LastEditedBy],[LastEditedWhen]'),
+(@ibi, @project, 'query', 'Application' , 'StateProvinces'        , '[StateProvinceID],[StateProvinceCode],[StateProvinceName],[CountryID],[SalesTerritory],cast([Border] as varbinary(max)) as [Border],[LatestRecordedPopulation],[LastEditedBy],[ValidFrom],[ValidTo]'),
+(@ibi, @project, 'query', 'Application' , 'StateProvinces_Archive', '[StateProvinceID],[StateProvinceCode],[StateProvinceName],[CountryID],[SalesTerritory],cast([Border] as varbinary(max)) as [Border],[LatestRecordedPopulation],[LastEditedBy],[ValidFrom],[ValidTo]'),
+(@ibi, @project, 'query', 'Sales'       , 'Customers'             , '[CustomerID],[CustomerName],[BillToCustomerID],[CustomerCategoryID],[BuyingGroupID],[PrimaryContactPersonID],[AlternateContactPersonID],[DeliveryMethodID],[DeliveryCityID],[PostalCityID],[CreditLimit],[AccountOpenedDate],[StandardDiscountPercentage],[IsStatementSent],[IsOnCreditHold],[PaymentDays],[PhoneNumber],[FaxNumber],[DeliveryRun],[RunPosition],[WebsiteURL],[DeliveryAddressLine1],[DeliveryAddressLine2],[DeliveryPostalCode],cast([DeliveryLocation] as varbinary(max)) as [DeliveryLocation],[PostalAddressLine1],[PostalAddressLine2],[PostalPostalCode],[LastEditedBy],[ValidFrom],[ValidTo]'),
+(@ibi, @project, 'query', 'Sales'       , 'Customers_Archive'     , '[CustomerID],[CustomerName],[BillToCustomerID],[CustomerCategoryID],[BuyingGroupID],[PrimaryContactPersonID],[AlternateContactPersonID],[DeliveryMethodID],[DeliveryCityID],[PostalCityID],[CreditLimit],[AccountOpenedDate],[StandardDiscountPercentage],[IsStatementSent],[IsOnCreditHold],[PaymentDays],[PhoneNumber],[FaxNumber],[DeliveryRun],[RunPosition],[WebsiteURL],[DeliveryAddressLine1],[DeliveryAddressLine2],[DeliveryPostalCode],cast([DeliveryLocation] as varbinary(max)) as [DeliveryLocation],[PostalAddressLine1],[PostalAddressLine2],[PostalPostalCode],[LastEditedBy],[ValidFrom],[ValidTo]'),
+(@ibi, @project, 'query', 'Purchasing'  , 'Suppliers_Archive'     , '[SupplierID],[SupplierName],[SupplierCategoryID],[PrimaryContactPersonID],[AlternateContactPersonID],[DeliveryMethodID],[DeliveryCityID],[PostalCityID],[SupplierReference],[BankAccountName],[BankAccountBranch],[BankAccountCode],[BankAccountNumber],[BankInternationalCode],[PaymentDays],[InternalComments],[PhoneNumber],[FaxNumber],[WebsiteURL],[DeliveryAddressLine1],[DeliveryAddressLine2],[DeliveryPostalCode],cast([DeliveryLocation] as varbinary(max)) as [DeliveryLocation],[PostalAddressLine1],[PostalAddressLine2],[PostalPostalCode],[LastEditedBy],[ValidFrom],[ValidTo]'),
+(@ibi, @project, 'query', 'Purchasing'  , 'Suppliers'             , '[SupplierID],[SupplierName],[SupplierCategoryID],[PrimaryContactPersonID],[AlternateContactPersonID],[DeliveryMethodID],[DeliveryCityID],[PostalCityID],[SupplierReference],[BankAccountName],[BankAccountBranch],[BankAccountCode],[BankAccountNumber],[BankInternationalCode],[PaymentDays],[InternalComments],[PhoneNumber],[FaxNumber],[WebsiteURL],[DeliveryAddressLine1],[DeliveryAddressLine2],[DeliveryPostalCode],cast([DeliveryLocation] as varbinary(max)) as [DeliveryLocation],[PostalAddressLine1],[PostalAddressLine2],[PostalPostalCode],[LastEditedBy],[ValidFrom],[ValidTo]')
+
 
 INSERT INTO [stage].[file_service](
   [import_batch_id],

@@ -34,5 +34,17 @@ GO
 GO
 :r ./ad_works_dw/ad_works_dw_csv.sql
 GO
+:r ./wide_world_importers/wide_world_importers_csv.sql
+GO
+:r ./wide_world_importers/wide_world_importers_json.sql
+GO
+:r ./wide_world_importers/wide_world_importers_parquet.sql
+GO
+:r ./contoso_retail_dw/contoso_retail_dw_csv.sql
+GO
+:r ./contoso_retail_dw/contoso_retail_dw_json.sql
+GO
+:r ./contoso_retail_dw/contoso_retail_dw_parquet.sql
+GO
 
 
