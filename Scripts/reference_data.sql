@@ -30,7 +30,8 @@ VALUES
 (4, 'WEEKEND'   ),
 (5, 'WEEKLY'    ),
 (6, 'MONTHLY'   ),
-(7, 'EOMONTHLY' )
+(7, 'EOMONTHLY' ),
+(8, 'WORKDAY'   )
 SET identity_INSERT [metadata].[frequency] OFF;
 
 CREATE USER [DataPlatfromRhone-ADF] FROM EXTERNAL PROVIDER;

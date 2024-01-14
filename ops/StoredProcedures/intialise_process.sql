@@ -125,21 +125,18 @@ begin
              and processed.[to_timeslice]   = t.[to_timeslice]
              and processed.[project_id]     = r.[id]
              and processed.[map_id]         = m.[id]
+  cross apply [metadata].[frequency_check](
+    t.[from_timeslice],
+    f.[frequency],
+    m.[frequency]
+  ) fc
   where m.[enabled] = 1
     and m.[process_group] = @process_group
     and r.[name] = @project
     and m.[deleted] is null
     and r.[deleted] is null
     and (
-      (
-           (f.[frequency] in ('DAILY', 'NONE'))
-        or (f.[frequency] = 'WEEKDAY'   and DATEPART(DW, t.[from_timeslice])  not in (1,7))
-        or (f.[frequency] = 'WEEKEND'   and DATEPART(DW, t.[from_timeslice])  in (1,7))
-        or (f.[frequency] = 'WEEKLY'    and DATEPART(DW, t.[from_timeslice])  = m.[frequency])
-        or (f.[frequency] = 'MONTHLY'   and day(t.[from_timeslice])           = m.[frequency])
-        -- if monhtly and frequency is -1 then set to run on last day of month
-        or (f.[frequency] = 'EOMONTHLY' and cast(t.[from_timeslice] as date)  = EOMONTH(cast(t.[from_timeslice] as date)))
-      )
+      fc.[frequency_check] = 1
       or @frequency_check_on = 0
     )
     -- when restarting only load those files that haven't logged as loaded yet.

@@ -1,11 +1,6 @@
 DECLARE @ibi uniqueidentifier = newid()
 DECLARE @project varchar(250) = 'contoso_retail_dw_csv'
 
--- DimGeography	Geometry	  geometry
--- DimStore	    GeoLocation	geography
--- DimStore	    Geometry	  geometry
--- sysdiagrams	definition	varbinary
-
 DECLARE @tables table (schema_name varchar(132), table_name varchar(132), [filename] varchar(250))
 INSERT INTO @tables (schema_name, table_name, [filename])
 VALUES
@@ -51,6 +46,25 @@ INSERT into [stage].[project](
 VALUES
   (@ibi, @project, 'contoso retail dw - contoso retail dw csv ingest', 1, 'op_sqls-to-landing_blbs_csv', 0, 'ingest_contoso_retail_dw');
 
+insert into [stage].[trigger_parameter](
+  [import_batch_id],
+  [project],
+  [adf],
+  [trigger],
+  [process_group],
+  -- [partition],
+  -- [partition_increment],
+  -- [number_of_partitions],
+  -- [parameters],
+  [restart],
+  [dbx_host],
+  -- [dbx_load_type],
+  -- [dbx_max_parallel],
+  [frequency_check_on],
+  [raise_error_if_batch_not_complete]
+)
+values
+  (@ibi, @project, 'DataPlatfromRhone-ADF', 'contoso_retail_dw', 'default', 1, 'adb-8723178682651460.0.azuredatabricks.net', 1, 1)
 
 INSERT INTO [stage].[database_service](
   [import_batch_id],
@@ -157,7 +171,9 @@ INSERT intO [stage].[map](
   [source],
   [destination_type],
   [destination_service],
-  [destination]
+  [destination],
+  [frequency_name],
+  [frequency]
 )
 select
   [import_batch_id]     = @ibi,
@@ -168,7 +184,9 @@ select
   [source]              = table_name,
   [destination_type]    = 'file',
   [destination_service] = 'Landing Contoso Retail DW',
-  [destination]         = [filename]
+  [destination]         = [filename],
+  [frequency_name]      = 'WORKDAY',
+  [frequency]           = 1
 from @tables
 
 
@@ -203,7 +221,9 @@ exec [ops].[intialise_process]
   @adf_process_id = @@adf_process_id,
   @project        = @@project,
   @from_period    = @@from_period,
-  @restart        = @@restart
+  @restart        = @@restart,
+  @frequency_check_on = 0
+
 
 set @@actual = (
   select count(*) 

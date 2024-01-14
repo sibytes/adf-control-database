@@ -58,7 +58,21 @@ begin
     tp.[raise_error_if_batch_not_complete]
   from [metadata].[trigger_parameter] tp
   join [metadata].[project] p on tp.[project_id] = p.[id]
+  join (
+      select distinct 
+        m.[project_id], 
+        m.[process_group], 
+        f.[frequency], 
+        m.[frequency] as [frequency_index]
+      from [metadata].[map] m
+      join [metadata].[frequency] f on f.[id] = m.[frequency_id]
+  ) f on f.[project_id]    = p.[id]
+     and f.[process_group] = tp.[process_group]
+  cross apply [metadata].[frequency_check](
+    @dft_from_period, f.[frequency], f.[frequency_index]
+  ) fc
   where tp.[trigger] = @trigger
     and tp.[adf] = @adf
+    and fc.frequency_check = 1
 
 end

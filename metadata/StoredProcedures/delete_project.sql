@@ -30,5 +30,10 @@ as
   where p.[name] = @@project;
 
   delete d
+  from [metadata].[trigger_parameter] d
+  join [project] p on d.[project_id] = p.[id]
+  where p.[name] = @@project;
+
+  delete d
   from [metadata].[project] d
   where d.[name] = @@project;

@@ -1,6 +1,6 @@
 CREATE PROCEDURE [ops].[get_project]
   @project varchar (250),
-  @process_group varchar (250)
+  @process_group varchar (250) = 'default'
 AS
 begin
   select
