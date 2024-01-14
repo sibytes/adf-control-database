@@ -37,6 +37,7 @@ BEGIN
         s.[dbx_host],
         s.[dbx_load_type],
         s.[dbx_max_parallel],
+        s.[dbx_enabled],
         s.[frequency_check_on],
         s.[raise_error_if_batch_not_complete]
       FROM [stage].[trigger_parameter] s
@@ -59,7 +60,8 @@ BEGIN
           [restart]                             = src.[restart],    
           [dbx_host]                            = src.[dbx_host],     
           [dbx_load_type]                       = src.[dbx_load_type],          
-          [dbx_max_parallel]                    = src.[dbx_max_parallel],             
+          [dbx_max_parallel]                    = src.[dbx_max_parallel],   
+          [dbx_enabled]                         = src.[dbx_enabled],          
           [frequency_check_on]                  = src.[frequency_check_on],               
           [raise_error_if_batch_not_complete]   = src.[raise_error_if_batch_not_complete],
           [modified]                            = getutcdate(),
@@ -78,7 +80,8 @@ BEGIN
           [restart]                          ,  
           [dbx_host]                         ,  
           [dbx_load_type]                    ,  
-          [dbx_max_parallel]                 ,  
+          [dbx_max_parallel]                 ,
+          [dbx_enabled]                      ,  
           [frequency_check_on]               ,  
           [raise_error_if_batch_not_complete]
         )  
@@ -95,7 +98,8 @@ BEGIN
           src.[restart],    
           src.[dbx_host],     
           src.[dbx_load_type],          
-          src.[dbx_max_parallel],             
+          src.[dbx_max_parallel],
+          src.[dbx_enabled],             
           src.[frequency_check_on],               
           src.[raise_error_if_batch_not_complete]
         )

@@ -13,6 +13,7 @@ create table [metadata].[trigger_parameter]
   [dbx_host]                          varchar(250)      not null,
   [dbx_load_type]                     varchar(100)      default('default') not null,
   [dbx_max_parallel]                  tinyint           not null default(4),
+  [dbx_enabled]                       bit               not null default(1),
   [frequency_check_on]                bit               not null default(0),
   [raise_error_if_batch_not_complete] bit               not null default(1),
   [created]                           datetime          default (getutcdate()) not null,
@@ -20,5 +21,6 @@ create table [metadata].[trigger_parameter]
   [deleted]                           datetime null,
   [created_by]                        varchar(200)      default (SUSER_SNAME()) not null,
   [modified_by]                       varchar(200)      default (SUSER_SNAME()) not null,
-  constraint [pk_metadata_trigger_parameter_id] primary key clustered ([id] ASC)
+  constraint [pk_metadata_trigger_parameter_id] primary key clustered ([id] ASC),
+  constraint [uk__metadata_trigger_parameter] unique([adf],[project_id],[trigger],[process_group]) 
 )

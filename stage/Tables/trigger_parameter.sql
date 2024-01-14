@@ -18,7 +18,9 @@ create table [stage].[trigger_parameter]
   [dbx_host] varchar(250) not null,
   [dbx_load_type] varchar(100) not null default('default'),
   [dbx_max_parallel] tinyint not null default(4),
+  [dbx_enabled] bit not null default(1),
   [frequency_check_on] bit not null default(0),
-  [raise_error_if_batch_not_complete] bit default(1)
-  ,constraint pk_stage_trigger_parameter_id primary key clustered ([id])
+  [raise_error_if_batch_not_complete] bit default(1),
+  constraint pk_stage_trigger_parameter_id primary key clustered ([id]),
+  constraint [uk__metadata_trigger_parameter] unique([adf],[project],[trigger],[process_group]) 
 )

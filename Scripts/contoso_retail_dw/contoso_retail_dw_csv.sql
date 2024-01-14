@@ -60,11 +60,12 @@ insert into [stage].[trigger_parameter](
   [dbx_host],
   -- [dbx_load_type],
   -- [dbx_max_parallel],
+  [dbx_enabled],
   [frequency_check_on],
   [raise_error_if_batch_not_complete]
 )
 values
-  (@ibi, @project, 'DataPlatfromRhone-ADF', 'contoso_retail_dw', 'default', 1, 'adb-8723178682651460.0.azuredatabricks.net', 1, 1)
+  (@ibi, @project, 'DataPlatfromRhone-ADF', 'contoso_retail_dw', 'default', 1, 'adb-8723178682651460.0.azuredatabricks.net', 1, 1, 1)
 
 INSERT INTO [stage].[database_service](
   [import_batch_id],

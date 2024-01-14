@@ -5,13 +5,13 @@ create procedure [ops].[get_trigger_parameters]
 as
 begin
 
-  declare @dft_from_period date = cast(coalesce(@from_period, getdate()) as date)
+  declare @dft_from_period date = cast(coalesce(cast(@from_period as date), getdate()) as date)
 
   select
     tp.[id],
     tp.[adf],
     tp.[trigger],
-    tp.[project_id],
+    p.[name] as [project],
     @dft_from_period as from_period,
     case
       when tp.[partition] = 'day' then 
@@ -52,8 +52,10 @@ begin
     tp.[parameters],
     tp.[restart],
     tp.[dbx_host],
+    @dft_from_period as [dbx_timeslice],
     tp.[dbx_load_type],
     tp.[dbx_max_parallel],
+    tp.[dbx_enabled],
     tp.[frequency_check_on],
     tp.[raise_error_if_batch_not_complete]
   from [metadata].[trigger_parameter] tp
