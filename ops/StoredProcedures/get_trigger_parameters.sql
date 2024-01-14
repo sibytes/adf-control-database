@@ -13,12 +13,39 @@ begin
     tp.[trigger],
     tp.[project_id],
     @dft_from_period as from_period,
-    cast(dateadd(
-      day,
-      --tp.[partition], 
-      (tp.[partition_increment]*tp.[number_of_partitions]),
-      @dft_from_period
-    ) as date) as to_period,
+    case
+      when tp.[partition] = 'day' then 
+        cast(dateadd(
+          day,
+          (tp.[partition_increment]*tp.[number_of_partitions]),
+          @dft_from_period
+        ) as date)
+      when tp.[partition] = 'month' then 
+        cast(dateadd(
+          month,
+          (tp.[partition_increment]*tp.[number_of_partitions]),
+          @dft_from_period
+        ) as date)
+      when tp.[partition] = 'week' then 
+        cast(dateadd(
+          week,
+          (tp.[partition_increment]*tp.[number_of_partitions]),
+          @dft_from_period
+        ) as date)
+      when tp.[partition] = 'quarter' then 
+        cast(dateadd(
+          quarter,
+          (tp.[partition_increment]*tp.[number_of_partitions]),
+          @dft_from_period
+        ) as date)
+      when tp.[partition] = 'year' then 
+        cast(dateadd(
+          year,
+          --tp.[partition], 
+          (tp.[partition_increment]*tp.[number_of_partitions]),
+          @dft_from_period
+        ) as date)
+    end as to_period,
     tp.[process_group],
     tp.[partition],
     tp.[partition_increment],
