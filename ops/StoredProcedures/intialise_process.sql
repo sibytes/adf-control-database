@@ -9,7 +9,8 @@ create procedure [ops].[intialise_process](
   @parameters              nvarchar(max)='{}',
   @restart                 bit = 1,
   @delete_older_than_days  int = null,
-  @frequency_check_on      bit = 1
+  @frequency_check_on      bit = 1,
+  @batch_retries           tinyint = 0
 )
 as
 begin
@@ -175,7 +176,8 @@ begin
       [frequency_check_on],
       [status_id],
       [total_processes],
-      [completed_processes]
+      [completed_processes],
+      [batch_retries]
     )
     select
       project_id,
@@ -191,8 +193,9 @@ begin
       @delete_older_than_days as [delete_older_than_days],
       @frequency_check_on     as [frequency_check_on],
       @executing              as [status_id],
-      count(distinct map_id)    as [total_processes],
-      0                       as [completed_processes]
+      count(distinct map_id)  as [total_processes],
+      0                       as [completed_processes],
+      @batch_retries          as [batch_retries]
     from @process
     group by project_id
 
@@ -208,7 +211,8 @@ begin
       [delete_older_than_days]  = @delete_older_than_days,
       [frequency_check_on]      = @frequency_check_on,
       [status_id]               = @executing,
-      [completed_processes]     = iif(@restart=1, [completed_processes], 0)
+      [completed_processes]     = iif(@restart=1, [completed_processes], 0),
+      [completed_processes]     = iif(@restart=1 and [batch_retries] > 0, ([batch_retries]-1), [batch_retries])
     from [ops].[batch] b
     where b.[id] = @batch_id
   end

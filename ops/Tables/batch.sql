@@ -14,6 +14,7 @@ CREATE TABLE [ops].[batch]
   [status_id] int not null,
   [total_processes] int not null,
   [completed_processes] int not null, 
+  [batch_retries] tinyint not null default(0),
   [created] datetime not null default(GETUTCDATE()),
   [modified]	datetime not null default(GETUTCDATE()),
   [created_by] varchar(150) not null default(SUSER_SNAME()),

@@ -40,7 +40,8 @@ BEGIN
         s.[dbx_max_parallel],
         s.[dbx_enabled],
         s.[frequency_check_on],
-        s.[raise_error_if_batch_not_complete]
+        s.[raise_error_if_batch_not_complete],
+        s.[batch_retries]
       FROM [stage].[trigger_parameter] s
       JOIN [metadata].[project] p on s.[project] = p.[name]
       WHERE s.[import_batch_id] = @@import_batch_id
@@ -65,6 +66,7 @@ BEGIN
           [dbx_enabled]                         = src.[dbx_enabled],          
           [frequency_check_on]                  = src.[frequency_check_on],               
           [raise_error_if_batch_not_complete]   = src.[raise_error_if_batch_not_complete],
+          [batch_retries]                       = src.[batch_retries],
           [modified]                            = getutcdate(),
           [modified_by]                         = suser_sname(),
           [deleted]                             = null
@@ -84,7 +86,8 @@ BEGIN
           [dbx_max_parallel]                 ,
           [dbx_enabled]                      ,  
           [frequency_check_on]               ,  
-          [raise_error_if_batch_not_complete]
+          [raise_error_if_batch_not_complete],
+          [batch_retries]
         )  
         VALUES
         (
@@ -102,7 +105,8 @@ BEGIN
           src.[dbx_max_parallel],
           src.[dbx_enabled],             
           src.[frequency_check_on],               
-          src.[raise_error_if_batch_not_complete]
+          src.[raise_error_if_batch_not_complete],
+          src.[batch_retries]
         )
     WHEN NOT MATCHED BY SOURCE AND tgt.project_id = @project_id THEN
         UPDATE SET

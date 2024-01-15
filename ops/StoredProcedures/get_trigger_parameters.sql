@@ -58,7 +58,8 @@ begin
     tp.[dbx_max_parallel],
     tp.[dbx_enabled],
     tp.[frequency_check_on],
-    tp.[raise_error_if_batch_not_complete]
+    tp.[raise_error_if_batch_not_complete],
+    tp.[batch_retries]
   from [metadata].[trigger_parameter] tp
   join [metadata].[project] p on tp.[project_id] = p.[id]
   join (

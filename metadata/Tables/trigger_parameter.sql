@@ -22,6 +22,7 @@ create table [metadata].[trigger_parameter]
   [deleted]                           datetime null,
   [created_by]                        varchar(200)      default (SUSER_SNAME()) not null,
   [modified_by]                       varchar(200)      default (SUSER_SNAME()) not null,
+  [batch_retries]                     tinyint           not null default(0),
   constraint [pk_metadata_trigger_parameter_id] primary key clustered ([id] ASC),
   constraint [uk__metadata_trigger_parameter] unique([adf],[project_id],[trigger],[process_group]) 
 )
