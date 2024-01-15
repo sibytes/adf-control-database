@@ -30,7 +30,7 @@ begin
     where 1=1
       and [batch_id] = @batch_id
       and s.[status] = 'SUCCEEDED'
-      and p.[files_written] = 1
+      and p.[files_written] > 1
     group by p.batch_id
   )
   update b
