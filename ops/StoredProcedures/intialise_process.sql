@@ -1,4 +1,4 @@
-create procedure [ops].[intialise_process](
+create procedure [ops].[intialise_batch](
   @project                 varchar(250),
   @adf_process_id          varchar(50) = null,
   @from_period             datetime = null,

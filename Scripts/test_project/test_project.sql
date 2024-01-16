@@ -103,7 +103,7 @@ begin
 end
 
 -- test initialise
-exec [ops].[intialise_process]
+exec [ops].[intialise_barch]
   @adf_process_id = @@adf_process_id,
   @project        = @@project,
   @from_period    = @@from_period,
