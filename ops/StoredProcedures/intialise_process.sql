@@ -212,7 +212,7 @@ begin
       [frequency_check_on]      = @frequency_check_on,
       [status_id]               = @executing,
       [completed_processes]     = iif(@restart=1, [completed_processes], 0),
-      [completed_processes]     = iif(@restart=1 and [batch_retries] > 0, ([batch_retries]-1), [batch_retries])
+      [batch_retries]           = iif(@restart=1 and [batch_retries] > 0, ([batch_retries]-1), [batch_retries])
     from [ops].[batch] b
     where b.[id] = @batch_id
   end
