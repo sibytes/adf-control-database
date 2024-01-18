@@ -37,3 +37,7 @@ SET identity_INSERT [metadata].[frequency] OFF;
 CREATE USER [DataPlatfromRhone-ADF] FROM EXTERNAL PROVIDER;
 
 ALTER ROLE db_owner ADD MEMBER [DataPlatfromRhone-ADF];
+
+CREATE USER DbxUser FROM LOGIN DbxLogin;
+
+ALTER ROLE db_datareader ADD MEMBER DbxUser; 

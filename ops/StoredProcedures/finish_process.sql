@@ -1,12 +1,14 @@
 create procedure [ops].[finish_process]
   @process_id int,
   @succeeded bit = 1,
-  @data_read int = null,
-  @data_written int = null,
-  @files_read int = null,
-  @files_written int = null,
-  @copy_duration int = null,
-  @throughput money = null
+  @data_read bigint = null,
+  @data_written bigint = null,
+  @files_read bigint = null,
+  @files_written bigint = null,
+  @copy_duration bigint = null,
+  @throughput money = null,
+  @rows_written bigint = null,
+  @rows_read bigint = null
 as
 begin
 
@@ -40,7 +42,9 @@ begin
     p.[files_read]    = @files_read,
     p.[files_written] = @files_written,
     p.[copy_duration] = @copy_duration,
-    p.[throughput]    = @throughput
+    p.[throughput]    = @throughput,
+    p.[rows_written]  = @rows_written,
+    p.[rows_read]     = @rows_read
   from [ops].[process] p
   join [ops].[status]  s on s.[id] = p.[status_id]
   where p.[id]     = @process_id
