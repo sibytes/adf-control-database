@@ -10,7 +10,8 @@ create procedure [ops].[intialise_batch](
   @restart                 bit = 1,
   @delete_older_than_days  int = null,
   @frequency_check_on      bit = 1,
-  @batch_retries           tinyint = 0
+  @batch_retries           tinyint = 0,
+  @force                   bit = 0
 )
 as
 begin
@@ -121,7 +122,7 @@ begin
     from ops.[process_history] ph
     join ops.[status] phs on ph.[status_id] = phs.[id]
     where phs.[status]        = 'SUCCEEDED'
-      and ph.[files_written]  = 1
+      and ph.[files_written]  > 1
   ) processed on processed.[from_timeslice] = t.[from_timeslice]
              and processed.[to_timeslice]   = t.[to_timeslice]
              and processed.[project_id]     = r.[id]
