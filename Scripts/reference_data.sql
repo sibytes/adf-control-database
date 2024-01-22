@@ -24,14 +24,17 @@ INSERT INTO [metadata].[frequency](
     [frequency]
 )
 VALUES
-(1, 'NONE'      ),
-(2, 'DAILY'     ),
-(3, 'WEEKDAY'   ),
-(4, 'WEEKEND'   ),
-(5, 'WEEKLY'    ),
-(6, 'MONTHLY'   ),
-(7, 'EOMONTHLY' ),
-(8, 'WORKDAY'   )
+(1, 'NONE'            ),
+(2, 'DAILY'           ),
+(3, 'WEEKDAY'         ),
+(4, 'WEEKEND'         ),
+(5, 'WEEKLY'          ),
+(6, 'MONTHLY'         ),
+(7, 'EOMONTHLY'       ),
+(8, 'WEEK_WORKDAY'    ),
+(8, 'MONTH_WORKDAY'   ),
+(8, 'QUARTER_WORKDAY' ),
+(8, 'YEAR_WORKDAY'    )
 SET identity_INSERT [metadata].[frequency] OFF;
 
 CREATE USER [DataPlatfromRhone-ADF] FROM EXTERNAL PROVIDER;
